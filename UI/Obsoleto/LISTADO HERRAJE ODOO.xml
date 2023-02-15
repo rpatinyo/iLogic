@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>LISTADO HERRAJE ODOO</Name>
+  <Guid>3e5e10e8-26ac-45d5-bff0-14f43a9ab991</Guid>
+  <SizeConstraints>
+    <MinimumSize>
+      <Width>
+        <Value>86.53125</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>44.53125</Value>
+        <Units>Em</Units>
+      </Height>
+    </MinimumSize>
+    <MaximumSize>
+      <Width>
+        <Value>86.53125</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>44.53125</Value>
+        <Units>Em</Units>
+      </Height>
+    </MaximumSize>
+  </SizeConstraints>
+  <Items>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 2</Name>
+      <Guid>4c3ab3e5-e4c4-42d0-a502-517d4c5255a8</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>DESACTIVAR CONEXIÓN A VAULT</Name>
+          <Guid>42727295-0a87-4625-8fea-b803c389fff2</Guid>
+          <ToolTip>ES NECESARIO DESACTIVAR LA CONEXIÓN A VAULT</ToolTip>
+          <Font>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <ContentsFont>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </ContentsFont>
+          <Items />
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>LISTADO HERRAJE ODOO</Name>
+      <Guid>86e8e684-bf76-4a41-81a2-33a0814f907e</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA HERRAJE CONEXION</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA HERRAJE CONEXION.iLogicVb</Path>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 1</Name>
+      <Guid>9a2f2ef8-21b5-4d28-8557-cc3824daa827</Guid>
+      <Items>
+        <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+          <Name>TIPO HERRAJE</Name>
+          <Guid>306a6ef1-cf23-475b-8ff0-575679c155e5</Guid>
+          <ToolTip />
+          <ParameterName>TIPO_HERRAJE</ParameterName>
+          <EditControlType>ComboBox</EditControlType>
+          <AllowCustomValues>false</AllowCustomValues>
+          <MinimumItemsToShow>2</MinimumItemsToShow>
+          <RadioGroupColumnCount>1</RadioGroupColumnCount>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>INSCA HERRAJE MODELO</Name>
+          <Guid>52326cac-1981-4d64-88dc-a9ba87477f46</Guid>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>INSCA HERRAJE MODELO</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>INSCA HERRAJE MODELO.iLogicVb</Path>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 5</Name>
+          <Guid>bfacc40f-1dae-432e-b5f8-847630a68593</Guid>
+          <Items>
+            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+              <Name>MODELO</Name>
+              <Guid>7dc9b5e6-849e-48e8-b020-0a8db5351c93</Guid>
+              <ToolTip />
+              <ParameterName>MODELO</ParameterName>
+              <EditControlType>ComboBox</EditControlType>
+              <AllowCustomValues>false</AllowCustomValues>
+              <MinimumItemsToShow>2</MinimumItemsToShow>
+              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>INSCA HERRAJE DESCRIPCION</Name>
+              <Guid>f351382e-e5a1-4db6-b79a-d7e6ba94833c</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA HERRAJE DESCRIPCION</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA HERRAJE DESCRIPCION.iLogicVb</Path>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 3</Name>
+      <Guid>1ffda007-c6f0-49d5-9f5a-65ed13257d69</Guid>
+      <Items>
+        <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+          <Name>DESCRIPCION</Name>
+          <Guid>75f0c349-ef23-4c2f-88ba-ced2fb3a9a09</Guid>
+          <ToolTip />
+          <ParameterName>DESCRIPCION</ParameterName>
+          <EditControlType>ComboBox</EditControlType>
+          <AllowCustomValues>false</AllowCustomValues>
+          <MinimumItemsToShow>2</MinimumItemsToShow>
+          <RadioGroupColumnCount>1</RadioGroupColumnCount>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>INSCA HERRAJE BUSCAR</Name>
+          <Guid>9b681930-37f2-424f-9cd4-41dc606fd2c7</Guid>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>INSCA HERRAJE BUSCAR</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>INSCA HERRAJE BUSCAR.iLogicVb</Path>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 4</Name>
+      <Guid>e857b6f1-c645-41ba-ba7d-89229931c823</Guid>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>CODIGO HERRAJE</Name>
+          <Guid>b9839f19-fc7f-4c0d-a8aa-b34044d44c19</Guid>
+          <PropertyName>CODIGO_HERRAJE</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 6</Name>
+      <Guid>0ccf027b-e043-4d85-9ee1-199c88fedf6d</Guid>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>CATEGORIA</Name>
+          <Guid>11dcaaa5-2cc3-4e69-b34d-32755a425106</Guid>
+          <PropertyName>CATEGORIA</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 7</Name>
+      <Guid>3d279ddc-27f9-4cb7-9582-6f9acf30f147</Guid>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>NOTAS</Name>
+          <Guid>4e3bf81b-64ff-4054-a52b-7221fa93b5f8</Guid>
+          <PropertyName>NOTAS</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlGroupSpec">
+      <Name>VAULT</Name>
+      <Guid>52c230dc-c2ec-4cf5-ace6-4d19e837af84</Guid>
+      <Font>
+        <FamilyName>Tahoma</FamilyName>
+        <Size>21.75</Size>
+        <Bold>true</Bold>
+        <Italic>false</Italic>
+      </Font>
+      <ContentsFont>
+        <FamilyName>Tahoma</FamilyName>
+        <Size>21.75</Size>
+        <Bold>true</Bold>
+        <Italic>false</Italic>
+      </ContentsFont>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>VAULT</Name>
+          <Guid>77b5d9a0-dc13-4823-919e-849342a9930d</Guid>
+          <Font>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>8.25</Size>
+            <Bold>false</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <PropertyName>BANNER</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+      <BordersVisible>true</BordersVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="EmptySpaceSpec">
+      <Name>Espacio vacío 1</Name>
+      <Guid>e6c4b347-3629-4ce2-b676-1f24d4dea7ee</Guid>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>GUARDAR DESDE ODOO</Name>
+      <Guid>1d33dbca-a11a-4351-8c46-b3621d7e15ab</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA HERRAJE GUARDAR</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA HERRAJE GUARDAR.iLogicVb</Path>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>None</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

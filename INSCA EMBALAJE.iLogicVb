@@ -1,0 +1,20 @@
+﻿Dim nombre As String = iProperties.Value("Project", "Part Number")
+Dim virt As String = "EM0." & Mid(nombre, 5, 17 -4)
+
+Dim oDoc As AssemblyDocument = ThisDoc.Document
+
+Dim oDef As AssemblyComponentDefinition = oDoc.ComponentDefinition
+
+Dim oCS As ComponentOccurrences = oDef.Occurrences
+	
+Dim oTG As TransientGeometry
+oTG = ThisApplication.TransientGeometry
+
+Dim oMatrix As Matrix
+oMatrix = oTG.CreateMatrix
+
+oCS.AddVirtual(virt, oMatrix)
+
+iProperties.Value(virt & ":1", "Project", "Description") = "EMBALAJE"
+
+oDoc.Rebuild2

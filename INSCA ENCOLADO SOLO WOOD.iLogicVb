@@ -1,0 +1,77 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+
+
+Sub Main()
+
+MultiValue.SetValueOptions(True, DefaultIndex := 0)
+
+MultiValue.SetList("WOOD_CONFIG","")
+MultiValue.SetList("WOOD_CONFIG_CODE", "")
+
+
+Conexion("wood_config", "WOOD_CONFIG", 10)
+Conexion("wood_config", "WOOD_CONFIG_CODE", 1)
+
+
+
+End Sub
+
+Sub Conexion(tabla As String, iProp As String,campo As Integer)
+
+	Dim Table_ As String = tabla
+	Dim query As String = "SELECT * FROM " & Table_
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New dataset
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+
+
+End Sub
+
+'Sub Filtro(prop As String, prop_filtrada As String)
+
+'array_prop = MultiValue.List(prop)
+'array_fprop = MultiValue.List(prop_filtrada)
+
+'For Each valor In array_prop
+'	If array_fprop.Contains(valor) Then
+'	Else
+
+'		array_fprop.Add(valor)
+'	End If
+'Next
+
+'MultiValue.List(prop_filtrada) = array_fprop
+
+
+'End Sub
+

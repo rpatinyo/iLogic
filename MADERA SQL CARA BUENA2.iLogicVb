@@ -1,0 +1,30 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Dim oDoc As PartDocument
+oDoc = ThisDoc.Document
+
+Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(oDoc,"2ª Cara buena")
+
+oComp = oDoc.ComponentDefinition
+
+Dim oObject As Face
+oObject = ThisApplication.CommandManager.Pick(kPartFaceFilter, "SELECCIONAR SEGUNDA CARA BUENA")
+
+entidades = ThisDoc.NamedEntities
+entidades.SetName(oObject,"Buena 2")
+
+'Dim doc = ThisApplication.ActiveDocument
+
+'oColor = COLOR_BUENA
+
+'oStyle = doc.RenderStyles.Item(oColor) 
+'oObject.SetRenderStyle(kOverrideRenderStyle, oStyle)
+
+undo.End

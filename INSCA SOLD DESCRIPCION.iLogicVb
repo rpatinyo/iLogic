@@ -1,0 +1,27 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+iLogicVb.RunExternalRule("INSCA MEDIDAS")
+
+LA = CDbl(iProperties.Value("Custom", "LARGO"))
+AN = CDbl(iProperties.Value("Custom", "ANCHO"))
+ES = CDbl(iProperties.Value("Custom", "HONDO"))
+
+If LA<100 Then
+	iProperties.Value("Custom", "LARGO") = "00" & FormatNumber(LA,1).ToString
+ElseIf LA >= 100 And LA <1000 Then
+	iProperties.Value("Custom", "LARGO") = "0" & FormatNumber(LA,1).ToString
+End If
+
+If AN<100 Then
+	iProperties.Value("Custom", "ANCHO") = "00" & FormatNumber(AN,1).ToString
+ElseIf AN >= 100 And AN <1000 Then
+	iProperties.Value("Custom", "ANCHO") = "0" & FormatNumber(AN,1).ToString
+End If
+
+If ES<100 Then
+	iProperties.Value("Custom", "HONDO") = "00" & FormatNumber(ES,1).ToString
+ElseIf ES >= 100 And ES <1000 Then
+	iProperties.Value("Custom", "HONDO") = "0" & FormatNumber(ES,1).ToString
+End If
+
+
+iProperties.Value("Project", "Description") = "SPH " & iProperties.Value("Custom", "LARGO") & "x" & iProperties.Value("Custom", "ANCHO") & "x" & iProperties.Value("Custom", "HONDO") & "mm"

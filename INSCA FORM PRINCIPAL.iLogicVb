@@ -1,0 +1,205 @@
+﻿Sub main()
+	Select Parameter("Tipo")
+	Case "Soldadura SQL"
+		iLogicVb.RunExternalRule("TUBO R-C SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "SOPORTE HIERRO"
+		End If
+		If Parameter("TIPO_MATERIAL") = "" Then
+			Parameter("TIPO_MATERIAL") = "ACERO AL CARBONO RST32"
+		End If
+		PARAMETER("OP_PINTAR") = True
+		iLogicVb.RunExternalRule("SOLDADURA SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+		iLogicVb.RunExternalRule("CHAPA SQL TIPO MATERIAL")
+		iLogicVb.RunExternalRule("SOLDADURA SQL ATRIBUTOS MATERIAL")
+		iLogicVb.RunExternalRule("TUBO R-C SQL COLOR MATERIAL")
+		iProperties.Value("Custom", "VDS_NumSchm") = "SOLDADURA"
+		iLogicForm.ShowGlobal("SOLDADURA SQL")
+		
+	Case "Tubo O_SQL"
+		iLogicVb.RunExternalRule("TUBO R-C SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "0_N#A"
+		End If
+		If Parameter("TIPO_MATERIAL") = "" Then
+			Parameter("TIPO_MATERIAL") = "ACERO AL CARBONO RST32"
+		End If
+		iLogicVb.RunExternalRule("CHAPA SQL TIPO MATERIAL")
+		iLogicVb.RunExternalRule("TUBO O SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("TUBO R-C SQL COLOR MATERIAL")
+		iProperties.Value("Custom", "VDS_NumSchm") = "METAL"
+		iLogicForm.ShowGlobal("TUBO O SQL")
+		
+	Case "Tubo RC_SQL"
+		iLogicVb.RunExternalRule("TUBO R-C SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "0_N#A"
+		End If
+		If Parameter("TIPO_MATERIAL") = "" Then
+			Parameter("TIPO_MATERIAL") = "ACERO AL CARBONO RST32"
+		End If
+		iLogicVb.RunExternalRule("CHAPA SQL TIPO MATERIAL")
+		iLogicVb.RunExternalRule("TUBO R-C SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("TUBO R-C SQL COLOR MATERIAL")
+		'L1 = FormatNumber(CDbl(Parameter("L1")), "1", vbFalse)
+		PARAMETER("L1") = CDbl(Parameter("L1"))
+		iProperties.Value("Custom", "VDS_NumSchm") = "METAL"
+		iLogicForm.ShowGlobal("TUBO RC SQL")	
+
+	Case "Chapa_SQL"
+		If Parameter("L3") = 0 Then
+			Renombra_parametro("L3", "L3_OLD")
+			Renombra_parametro("INS_ESPESOR", "L3")
+		End If
+			iLogicVb.RunExternalRule("MADERA SQL TIPO PIEZA")
+			If Parameter("TIPO_PIEZA") = "" Then
+				Parameter("TIPO_PIEZA") = "0_N#A"
+			End If
+			If Parameter("TIPO_MATERIAL") = "" Then
+				Parameter("TIPO_MATERIAL") = "ACERO AL CARBONO RST32"
+			End If
+			iLogicVb.RunExternalRule("CHAPA SQL DESARROLLO")
+			iLogicVb.RunExternalRule("CHAPA SQL TIPO MATERIAL")
+			iLogicVb.RunExternalRule("CHAPA SQL DESCRIPCION")
+			iLogicVb.RunExternalRule("CHAPA SQL COLOR MATERIAL")
+			iProperties.Value("Custom", "VDS_NumSchm") = "METAL"
+			iLogicForm.ShowGlobal("CHAPA SQL")	
+
+	Case "Madera_SQL"
+		iLogicVb.RunExternalRule("MADERA SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "PIEZA"
+		End If
+		iLogicVb.RunExternalRule("MADERA SQL TIPO MATERIAL")
+		iLogicVb.RunExternalRule("MADERA SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("MADERA SQL COLOR MATERIAL")
+		iLogicVb.RunExternalRule("MADERA SQL MATERIAL CANTOS")		
+		iLogicVb.RunExternalRule("MADERA SQL COLOR CANTOS")
+		iProperties.Value("Custom", "VDS_NumSchm") = "MADERA"
+		If Parameter("OP_CHAPAR_CANTOS") = False Then
+			parameter("CANTOS_LARGOS_CHA") = "2"
+			parameter("CANTOS_CORTOS_CHA") = "2"
+		End If
+		If Parameter("OP_PINTAR_CANTOS") = False Then
+			parameter("CANTOS_LARGOS_PIN") = "2"
+			parameter("CANTOS_CORTOS_PIN") = "2"
+		End If
+		iLogicForm.ShowGlobal("MADERA SQL")
+		
+	Case "Azulejo"
+		iLogicVb.RunExternalRule("MADERA SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "AZULEJO"
+		End If
+		iLogicVb.RunExternalRule("AZULEJO SQL DESCRIPCION")
+		iProperties.Value("Custom", "VDS_NumSchm") = "AZULEJO"
+		iLogicForm.ShowGlobal("AZULEJO")
+
+	Case "Iluminacion"
+		iLogicVb.RunExternalRule("INSCA ILUMINACION CONEXION")		
+		iProperties.Value("Custom", "VDS_NumSchm") = "ILUMINACION"
+		iLogicForm.ShowGlobal("ILUMINACIÓN")
+	
+	Case "A00 SQL"
+		iLogicVb.RunExternalRule("A00 SQL CONEXION CODIGO")
+		iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+		iProperties.Value("Custom", "VDS_NumSchm") = "PRODUCTO TERMINADO"
+		iLogicForm.ShowGlobal("A00 SQL")
+	
+	Case "A32 SQL"
+		iLogicVb.RunExternalRule("TUBO R-C SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "0_N#A"
+		End If
+		iLogicVb.RunExternalRule("A12-A15-A32 SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("A32 SQL COLOR MATERIAL")		
+		iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+		iProperties.Value("Custom", "VDS_NumSchm") = "A32"
+		iLogicForm.ShowGlobal("A32")
+	
+	Case "A72 SQL"
+		iLogicVb.RunExternalRule("INSCA HERRAJE CONEXION")
+		iProperties.Value("Custom", "VDS_NumSchm") = "A72"
+		iLogicForm.ShowGlobal("A72 SQL")
+	
+	Case "A15 SQL"
+		iLogicVb.RunExternalRule("TUBO R-C SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "0_N#A"
+		End If
+		iLogicVb.RunExternalRule("A12-A15-A32 SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("A12 SQL COLOR MATERIAL")		
+		iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+		iProperties.Value("Custom", "VDS_NumSchm") = "A15"
+		iLogicForm.ShowGlobal("A15")
+	
+	Case "A12 SQL"
+		iLogicVb.RunExternalRule("TUBO R-C SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "0_N#A"
+		End If
+		iLogicVb.RunExternalRule("A12-A15-A32 SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("A12 SQL COLOR MATERIAL")		
+		iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+		iProperties.Value("Custom", "VDS_NumSchm") = "A12"
+		iLogicForm.ShowGlobal("A12")
+		
+	Case "Cristal/Metacrilato"
+		iLogicVb.RunExternalRule("INSCA A80 CONEXION")
+		PARAMETER("L1") = CDbl(Parameter("L1"))
+		iProperties.Value("Custom", "VDS_NumSchm") = "A80"
+		iLogicForm.ShowGlobal("CRISTAL Y METACRILATO")
+		
+	Case "Textil"
+		iLogicVb.RunExternalRule("INSCA TEXTIL CONEXION")
+		PARAMETER("L1") = CDbl(Parameter("L1"))
+		iProperties.Value("Custom", "VDS_NumSchm") = "TEXTIL FABRICAR"
+		iLogicForm.ShowGlobal("TEXTIL")
+		
+	Case "Herraje"
+		iLogicVb.RunExternalRule("INSCA HERRAJE CONEXION")
+		iProperties.Value("Custom", "VDS_NumSchm") = "HERRAJE"
+		iLogicForm.ShowGlobal("HERRAJE")
+		
+	Case "Rotulacion"
+		iLogicVb.RunExternalRule("A60 CONEXION TYPE")
+		iProperties.Value("Custom", "VDS_NumSchm") = "A60"
+		iLogicForm.ShowGlobal("A60")
+		
+	Case "Encolado SQL"
+		iLogicVb.RunExternalRule("MADERA SQL TIPO PIEZA")
+		If Parameter("TIPO_PIEZA") = "" Then
+			Parameter("TIPO_PIEZA") = "PIEZA"
+		End If
+		iLogicVb.RunExternalRule("MADERA SQL DESCRIPCION")
+		iLogicVb.RunExternalRule("MADERA SQL COLOR MATERIAL")
+		iLogicVb.RunExternalRule("MADERA SQL MATERIAL CANTOS")		
+		iLogicVb.RunExternalRule("MADERA SQL COLOR CANTOS")
+		iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+		iProperties.Value("Custom", "VDS_NumSchm") = "ENCOLADO"
+		If Parameter("OP_CHAPAR_CANTOS") = False Then
+			parameter("CANTOS_LARGOS_CHA") = "2"
+			parameter("CANTOS_CORTOS_CHA") = "2"
+		End If
+		If Parameter("OP_PINTAR_CANTOS") = False Then
+			parameter("CANTOS_LARGOS_PIN") = "2"
+			parameter("CANTOS_CORTOS_PIN") = "2"
+		End If
+		iLogicForm.ShowGlobal("ENCOLADO SQL")
+		
+	Case Else
+		MessageBox.Show("CASO NO DEFINIDO.", "ERROR")
+
+		
+End select
+End Sub
+
+
+Sub Renombra_parametro(antiguo As String, nuevo As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros(antiguo).Name = nuevo
+	End Sub

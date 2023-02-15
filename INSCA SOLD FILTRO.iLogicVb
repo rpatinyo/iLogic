@@ -1,0 +1,22 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+parameter("F_MAT") = Parameter("MAT")
+
+MM = MultiValue.List("MAT")
+CM = MultiValue.List("MAT_CODE")
+VC = MultiValue.List("VIRTUAL_CODE")
+
+
+For i = 0 To MM.Count - 1
+
+	If MM(i) = parameter("F_MAT") Then
+		iProperties.Value("Custom", "MATERIAL")=MM(i)
+		iProperties.Value("Custom", "MATERIAL_CODE") = CM(i)
+		iProperties.Value("Custom", "CODIGO_VIRTUAL") = VC(i)
+		
+	
+	End If
+Break
+	
+Next
+
+	

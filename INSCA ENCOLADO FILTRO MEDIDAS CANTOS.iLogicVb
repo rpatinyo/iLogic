@@ -1,0 +1,20 @@
+﻿
+MED = MultiValue.List("ACA_TEMP_CANTOS")
+DE = MultiValue.List("F_DESCRIPCION_ACA_CANTOS")
+PC = MultiValue.List("ACA_P_CANTOS_CODE")
+
+
+'Dim DESC_TEMP As New ArrayList
+'Dim COD_TEMP As New ArrayList
+'Dim CANTOS_TEMP As New ArrayList
+Dim CODE As String
+For i = 0 To MED.Count - 1
+	
+	If MED(i) = PARAMETER("F_MEDIDAS_ACA_CANTOS") Then
+
+		iProperties.Value("Custom", "MATERIAL_CANTOS") = DE(i)
+		iProperties.Value("Custom", "P_CANTOS_CODE") = PC(i)
+
+	End If
+Next
+

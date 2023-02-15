@@ -1,0 +1,56 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+AddReference "CookComputing.XmlRpcV2.dll"
+AddReference "Odoo.XmlRpcAdapter.dll"
+AddReference "Figlut.Server.Toolkit45.dll"
+Imports CookComputing.XmlRpc
+Imports Odoo.XmlRpcAdapter
+Imports Odoo.XmlRpcAdapter.Domain.Operators.Mappers
+Imports Odoo.XmlRpcAdapter.Domain
+Imports Odoo.XmlRpcAdapter.Results
+Imports Odoo.XmlRpcAdapter.XmlRpcProxy
+Imports Odoo.XmlRpcAdapter.Contants
+
+Sub main
+
+'local_code_concat = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") & "-" & iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_2") & "-" & iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_3")
+
+'iProperties.Value("Custom", "CODIGO_WOODCONFIG") = ""
+	
+	 Dim Odoo As OdooXmlRpcAdapter = New OdooXmlRpcAdapter(
+	   	"http://odoo3.insca.com:8069/xmlrpc/2/common",
+       	"http://odoo3.insca.com:8069/xmlrpc/2/object",
+    	"base",
+    	"insca",
+    	"insca2021",
+		"",
+    	bypassRemoteSslCertificateValidation := True)
+	Logger.Info("Permisos | {0}", Odoo.CheckAccessRights)
+	
+	Dim ids2 As Integer() = Odoo.Search("product.template", 0, 100000, New OdooDomainExpression("technical_office", OdooComparisonOperator.Equals, 1))
+	Dim records1 As XmlRpcStruct() = Odoo.Read("product.template", ids2, New String() {"default_code", "name", "description" })
+	Dim Wood As New ArrayList
+	For i As Integer = 0 To records1.Count - 1
+    	oExists = False
+		' Logger.Info(records1(i).Values(1) & "-" & records1(i).Values(2))
+		' Logger.Info(records1(i).Values(3))
+		Wood.Add(records1(i).Values(1) & " # " & records1(i).Values(2))
+		Wood.Sort
+	Next
+	Logger.Info(records1(245).Values(3).Replace(vbCr, "").Replace(vbLf, " "))
+	'iProperties.Value("Custom", "NOTAS") = records1(245).Values(3).Replace(vbCr, "").Replace(vbLf, " ")
+	MultiValue.List("CODIGO_CONFIG") = Wood
+	iProperties.Value("Custom", "NOTAS") = Wood(10)
+	CAMPO = iProperties.Value("Custom", "NOTAS")
+	LARGO = Len(CAMPO)
+	
+	iProperties.Value("Custom", "CODE") = Left(CAMPO,17)
+	iProperties.Value("Custom", "DESCR") = Mid(CAMPO, 21, (LARGO -21))
+	Logger.Info(records1.Count)
+ 
+End Sub

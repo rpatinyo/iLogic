@@ -1,0 +1,28 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+COLOR_LIST = MultiValue.List("COL")
+COLOR_CODE1 = MultiValue.List("COL_CODE")
+CODIGO_LIST = MultiValue.List("COL_CODIGO")
+
+Dim array_filtro As New ArrayList
+
+	
+'MultiValue.List("Desc_filtrado") = array_filtro
+
+
+COL_IND = COLOR_LIST.IndexOf(parameter("COL"))
+parameter("COL_CODE") = COLOR_CODE1.Item(COL_IND)
+parameter("COL_CODIGO") = CODIGO_LIST.Item(COL_IND)
+
+iProperties.Value("Custom", "COLOR_CODE") = parameter("COL_CODE")
+iProperties.Value("Custom", "COLOR_CODIGO") = parameter("COL_CODIGO")
+
+'If PINTURA = False Then
+	
+'	iProperties.Value("Custom", "MATERIAL_CODE") = ""
+'	iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+	
+'End If
+
+
+InventorVb.DocumentUpdate()
+

@@ -1,0 +1,36 @@
+﻿AddReference "Autodesk.Connectivity.WebServices"
+AddReference "Autodesk.DataManagement.Client.Framework.Forms"
+AddReference "Autodesk.DataManagement.Client.Framework.Vault"
+AddReference "Autodesk.DataManagement.Client.Framework.Vault.Forms"
+AddReference "Connectivity.InventorAddin.EdmAddin"
+Imports ACW = Autodesk.Connectivity.WebServices
+Imports VDF = Autodesk.DataManagement.Client.Framework
+Imports Autodesk.DataManagement.Client.Framework.Vault.Services
+Imports Autodesk.DataManagement.Client.Framework.Vault.Currency.Connections
+Imports edm = Connectivity.InventorAddin.EdmAddin
+Sub Main()
+'Replace "CCNS" with your numbering scheme name.	
+MsgBox(getFilenameFromVaultNamingScheme("TEXTIL COMPRA", ""))
+End Sub
+
+Public Function getFilenameFromVaultNamingScheme(RequiredSchemeName As String, RequiredSchemeString As String) As String
+	Dim Connection As VDF.Vault.Currency.Entities.EntityClass = edm.EdmSecurity.Instance.VaultConnection()
+	'var entityClassId = VDF.Vault.Currency.Entities.EntityClassIds.Files
+	
+	
+	Dim genNum As String = String.Empty
+	If Not Connection Is Nothing Then
+		Dim numSchemes As ACW.NumSchm() = Connection.WebServiceManager.DocumentService.GetNumberingSchemesByType(Autodesk.Connectivity.WebServices.NumSchmType.Activated)
+		'Dim numSchemes As ACW.NumSchm() = Connection.WebServiceManager.NumberingService.GetNumberingSchemes(Autodesk.Connectivity.WebServices.NumSchmType.Activated)
+																		'NumberingService.GetNumberingSchemes
+'		Autodesk.Connectivity.WebServicesTools.WebServiceManager
+		Dim requiredScheme As ACW.NumSchm = (From sch As ACW.NumSchm In numSchemes
+											Where sch.Name = RequiredSchemeName
+											Select sch).FirstOrDefault()
+		Dim numGenArgs() As String = {RequiredSchemeString}
+		genNum = Connection.WebServiceManager.DocumentService.GenerateFileNumber(requiredScheme.SchmID, numGenArgs)
+	Else
+		MsgBox("Vault didn't work!")			
+	End If
+	Return genNum + RequiredSchemeString
+End Function

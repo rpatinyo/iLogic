@@ -1,0 +1,131 @@
+﻿Dim ODOC As AssemblyDocument
+ODOC = ThisDoc.Document
+
+OCOMP = ODOC.ComponentDefinition
+MODEL_STATES = OCOMP.ModelStates
+
+Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(ODOC,"Versión de soldadura")
+
+CODIGO = Left(ThisDoc.FileName(False), 9)
+Prefijo = Left(CODIGO, 4)
+Sufijo = Right(CODIGO, 5)
+	
+'CODIGO = ThisDoc.FileName(False)
+
+ThisDoc.Document.Update2
+
+
+If parameter("PINTURA") = True Then
+
+Try
+
+'Antiguo
+VALOR = Prefijo & "0" & Sufijo & "." & iProperties.Value("Custom", "MATERIAL_CODE") & iProperties.Value("Custom", "COLOR_CODE")
+'VALOR = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE") & iProperties.Value("Custom", "COLOR_CODE")
+'VALOR = CODIGO & "." & "000" & iProperties.Value("Custom", "COLOR_CODE")
+
+MODEL_STATES.Add(VALOR)
+
+iProperties.Value("Custom", "PR_PINTURA") = True
+
+ThisDoc.ActiveModelState = VALOR
+
+iProperties.Value("Project", "Part Number") = VALOR
+iProperties.Value("Custom","MATERIAL" ) = parameter("F_MAT")
+parameter("MAT_CODE") = iProperties.Value("Custom", "MATERIAL_CODE")
+'iProperties.Value("Custom", "MATERIAL_CODE") = MAT_CODE
+iProperties.Value("Custom", "COLOR_CODE") = parameter("COL_CODE")
+iProperties.Value("Custom", "MATERIAL_COLOR") = parameter("COL")
+iProperties.Value("Custom", "COLOR_CODIGO") = parameter("COL_CODIGO")
+'Logger.Info(MAT_CODE)
+'Logger.Info(VALOR)
+ThisDoc.Document.Update2
+iProperties.Value("Custom", "CODIGO_VIRTUAL") = ""
+iProperties.Value("Custom", "INSCA RUTA FABRICACION") = "PIN"
+'iLogicVb.RunExternalRule("INSCA MEDIDAS")
+iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+iLogicVb.RunExternalRule("INSCA SOLD PINT")
+iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "INSCA RUTA FABRICACION")
+InventorVb.DocumentUpdate()
+
+'Antiguo
+VALOR2 = Prefijo & "0" & Sufijo & "." & iProperties.Value("Custom", "MATERIAL_CODE") & "000"
+'Logger.Info(parameter("MAT_CODE"))
+'Logger.Info(VALOR2)
+'VALOR2= CODIGO & "." & "000" & "000"
+MODEL_STATES.Add(VALOR2)
+ThisDoc.ActiveModelState = VALOR2
+
+iProperties.Value("Project", "Part Number") = VALOR2
+
+iProperties.Value("Custom", "PR_PINTURA") = False
+iProperties.Value("Custom","MATERIAL" ) = parameter("F_MAT")
+iProperties.Value("Custom","MATERIAL_CODE" ) = parameter("MAT_CODE")
+iProperties.Value("Custom", "COLOR_CODE") = ""
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODIGO") = ""
+iProperties.Value("Custom", "CRUDO") = VALOR2
+
+iProperties.Value("Custom", "INSCA RUTA FABRICACION") = "SOL"
+iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "INSCA RUTA FABRICACION")
+iProperties.Value("Custom", "CODIGO_VIRTUAL") = ""
+If iProperties.Value("Custom", "PR_PINTURA") = False Then
+	iProperties.Value("Custom", "SPINT") = "0"
+End If
+'iLogicVb.RunExternalRule("INSCA MEDIDAS")
+iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+'iLogicVb.RunExternalRule("INSCA SOLD PINT")
+InventorVb.DocumentUpdate()
+
+Catch
+'i = MessageBox.Show(VALOR2 & "Ya estaba generado", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+
+End Try
+
+ThisDoc.Document.Update2
+Else
+	
+Try
+	
+ODOC.Update2
+'Antiguo
+VALOR3 = Prefijo & "0" & Sufijo & "." & iProperties.Value("Custom", "MATERIAL_CODE") & "000"
+'VALOR3 = CODIGO & "." & "000"  & "000"
+MODEL_STATES.Add(VALOR3)
+ThisDoc.ActiveModelState = VALOR3
+iProperties.Value("Custom", "PR_PINTURA") = False
+iProperties.Value("Custom","MATERIAL" ) = parameter("F_MAT")
+iProperties.Value("Custom","MATERIAL_CODE" ) = parameter("MAT_CODE")
+iProperties.Value("Custom", "COLOR_CODE") = ""
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODIGO") = ""
+iProperties.Value("Project", "Part Number") = VALOR3
+
+iProperties.Value("Custom", "CRUDO") = VALOR3
+
+iProperties.Value("Custom", "INSCA RUTA FABRICACION") = "SOL"
+iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "INSCA RUTA FABRICACION")
+If iProperties.Value("Custom", "PR_PINTURA") = False Then
+	iProperties.Value("Custom", "SPINT") = "0"
+End If
+'iLogicVb.RunExternalRule("INSCA MEDIDAS")
+iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+iProperties.Value("Custom", "CODIGO_VIRTUAL") = ""
+'iLogicVb.RunExternalRule("INSCA SOLD PINT")
+InventorVb.DocumentUpdate()
+
+Catch
+'i = MessageBox.Show(VALOR3 & "Ya estaba generado", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+End Try
+
+End If
+
+MODEL_STATES.Item("Principal").Activate
+iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+iProperties.Value("Custom", "CODIGO_VIRTUAL") = ""
+ThisDoc.Document.Update2
+
+undo.End
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormStatePersist xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Size>
+    <Width>426</Width>
+    <Height>373</Height>
+  </Size>
+  <Location>
+    <X>1044</X>
+    <Y>258</Y>
+  </Location>
+  <DipToPixelConversionFactors>
+    <WidthFactor>1</WidthFactor>
+    <HeightFactor>1</HeightFactor>
+  </DipToPixelConversionFactors>
+  <SplitterLocations />
+  <GroupExpansionStateList>
+    <GroupExpansionState>
+      <Name>DATOS ILUMINACIÓN</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>VAULT</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+  </GroupExpansionStateList>
+  <TabGroupSelectedPageList />
+</FormStatePersist>

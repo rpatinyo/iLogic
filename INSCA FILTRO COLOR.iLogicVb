@@ -1,0 +1,35 @@
+﻿If Parameter("Tipo") = "Madera" Then
+
+COLOR_LIST = MultiValue.List("COL")
+COLOR_CODE = MultiValue.List("COL_CODE")
+If iProperties.Value("Custom", "Pintar") = True Then
+'Dim array_filtro As New ArrayList
+
+COL_IND = COLOR_LIST.IndexOf(PARAMETER("COL"))
+PARAMETER("COL_CODE") = COLOR_CODE.Item(COL_IND)
+Else 
+PARAMETER("COL_CODE") = "I0039Y"
+End If
+
+Else If Parameter("Tipo") = "Tubo redondo" Or Parameter("Tipo") = "Macizo redondo" Or Parameter("Tipo") = "Tubo rectangular/cuadrado" Or Parameter("Tipo") = "Chapa" Then
+
+COLOR_LIST = MultiValue.List("COL")
+COLOR_CODE = MultiValue.List("COL_CODE")
+COLOR_CODIGO = MultiValue.List("COL_CODIGO")
+
+'Dim array_filtro As New ArrayList
+
+	
+'MultiValue.List("Desc_filtrado") = array_filtro
+
+COL_IND = COLOR_LIST.IndexOf(PARAMETER("COL"))
+
+parameter("COL_CODE") = COLOR_CODE.Item(COL_IND)
+parameter("COL_CODIGO") = COLOR_CODIGO.Item(COL_IND)
+iProperties.Value("Custom", "COLOR_CODE") = Parameter("COL_CODE")
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+'MATERIAL_COLOR
+Else
+'logger.Info("ejemplo")	
+End If
+

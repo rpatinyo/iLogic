@@ -1,0 +1,20 @@
+﻿COLOR_LIST = MultiValue.List("COL_CANTOS")
+COLOR_CODE = MultiValue.List("COL_CANTOS_CODE")
+
+Dim array_filtro As New ArrayList
+If iProperties.Value("Custom", "Pintar_cantos")= True Then
+	
+'MultiValue.List("Desc_filtrado") = array_filtro
+
+COL_IND = COLOR_LIST.IndexOf(parameter("COL_CANTOS"))
+parameter("COL_CANTOS_CODE") = COLOR_CODE.Item(COL_IND)
+
+Else 
+	
+parameter("COL_CANTOS_CODE") = "I0039Y"
+	
+End If
+
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+

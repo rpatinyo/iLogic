@@ -1,0 +1,80 @@
+﻿Imports Inventor
+' <FireOthersImmediately>False</FireOthersImmediately>
+
+Sub Main()
+Dim oDoc As AssemblyDocument
+oDoc = ThisDoc.Document
+Dim AllModelStatesPartNumberList As New ArrayList
+
+' Obtener los model states de los documentos referenciados
+For Each oRefDoc As Document In oDoc.AllReferencedDocuments
+	If oRefDoc.DocumentType = DocumentTypeEnum.kPartDocumentObject And oRefDoc.DisplayName.Substring(0, 3) <> "AZU" Then
+		' Logger.Info("--------------" & oRefDoc.DisplayName)
+		Dim oPartCompDef As PartComponentDefinition
+		oPartCompDef = oRefDoc.ComponentDefinition
+
+		Dim oStates As ModelStates
+		oStates = oPartCompDef.ModelStates
+
+		Dim oTable As ModelStateTable
+		oTable = oStates.ModelStateTable
+
+		Dim oRow As ModelStateTableRow
+		For Each oRow In oTable.TableRows
+			' Logger.Info(oRow.Item("Part Number [Project]").Value)
+			AllModelStatesPartNumberList.Add(oRow.Item("Part Number [Project]").Value)
+		Next
+	ElseIf oRefDoc.DocumentType = DocumentTypeEnum.kAssemblyDocumentObject Then
+		' Logger.Info("--------------" & oRefDoc.DisplayName)
+		Dim oCompDef As ComponentDefinition
+		oCompDef = oRefDoc.ComponentDefinition
+
+		Dim oStates As ModelStates
+		oStates = oCompDef.ModelStates
+
+		Dim oTable As ModelStateTable
+		oTable = oStates.ModelStateTable
+
+		Dim oRow As ModelStateTableRow
+		For Each oRow In oTable.TableRows
+			'Logger.Info(oRow.Item("Part Number [Project]").Value)
+			AllModelStatesPartNumberList.Add(oRow.Item("Part Number [Project]").Value)
+		Next
+	End If
+Next
+
+HasDuplicateValues(AllModelStatesPartNumberList)
+
+For Each oRec In AllModelStatesPartNumberList
+	If (oRec.Substring(0, 3) = "A30" Or oRec.Substring(0, 3) = "A31") And Strings.Right(oRec, 3) <> "000" _
+	And Strings.Len(oRec) = 17 Then
+	oNewRec = Strings.Left(oRec, 14) + "000"
+	' Logger.Info(oRec & " | " & oNewRec)
+	oSearchString += oNewRec + " or "
+	' Logger.Info(oSearchString)
+	End If
+Next
+
+' Nombre del model state activo propio
+oSearchString += oDoc.ModelStateName
+iProperties.Value("Custom", "BUSQUEDA") = oSearchString
+
+End Sub
+
+Function HasDuplicateValues(ByVal arr As ArrayList) As Boolean
+	Dim ht As New Collections.Hashtable(arr.Count)
+	Dim index As Integer
+
+	For index = 0 To arr.Count - 1
+		Dim value As Object = arr.Item(index)
+
+		If ht.Contains(value) Then
+			' return True if the value is already in the hashtable
+			MessageBox.Show(value, "Valor Duplicado")
+			Return True
+		Else
+			' else just add it to the hashtable now
+			ht.Add(value, Nothing)
+		End If
+	Next
+End Function

@@ -1,0 +1,489 @@
+﻿Try
+
+If Parameter("Tipo") = "Madera" Then
+
+	Try
+		INDICE_RUTA = 0
+		iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+
+	For i = 1 To 8
+		iProperties.Value("Custom", "Ruta0" & i.tostring) = ""
+	Next
+
+	Dim array_operaciones As New ArrayList
+
+	If iProperties.Value("Custom", "Cortar")= True Then
+		INDICE_RUTA = INDICE_RUTA + 1
+		RUTA = "Ruta0" & INDICE_RUTA
+		iProperties.Value("Custom", RUTA) = "SEC"
+		array_operaciones.Add("SEC")
+	End If
+
+	If iProperties.Value("Custom","CORTE_MANUAL") = True Then
+		INDICE_RUTA = INDICE_RUTA + 1
+		RUTA = "Ruta0" & INDICE_RUTA
+		iProperties.Value("Custom", RUTA) = "MAN"
+		array_operaciones.Add("MAN")
+	End If
+
+	If iProperties.Value("Custom","Chapar_cantos") = True Then
+		INDICE_RUTA = INDICE_RUTA + 1
+		RUTA = "Ruta0" & INDICE_RUTA
+		iProperties.Value("Custom", RUTA) = "CHA"
+		array_operaciones.Add("CHA")
+	End If
+
+	If iProperties.Value("Custom","Mecanizar") = True Then
+		INDICE_RUTA = INDICE_RUTA + 1
+		RUTA = "Ruta0" & INDICE_RUTA
+		iProperties.Value("Custom", RUTA) = "PTG"
+		array_operaciones.Add("PTG")
+	End If
+
+	If iProperties.Value("Custom","Pintar") = True Then
+		INDICE_RUTA = INDICE_RUTA + 1
+		RUTA = "Ruta0" & INDICE_RUTA
+		iProperties.Value("Custom", RUTA) = "PIN"
+		array_operaciones.Add("PIN")
+	End If
+
+	For i = 0 To array_operaciones.Count-1
+		iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+	Next
+
+	NUM = Len(iProperties.Value("Custom", "RUTA_PRODUCCION")) -1
+
+	If NUM<0 Then
+	NUM = 0
+	End If
+
+	RUTA = Left(iProperties.Value("Custom", "RUTA_PRODUCCION"), NUM)
+
+	iProperties.Value("Custom", "RUTA_PRODUCCION") = RUTA
+	InventorVb.DocumentUpdate()
+
+	Catch
+	End Try
+
+	Else If Parameter("Tipo") = "Chapa" Then
+	
+		If iProperties.Value("Custom", "PR_PINTURA") = True Then
+			iProperties.Value("Custom", "RUTA_PRODUCCION") = "PIN "
+			Else
+				INDICE_RUTA = 0
+				iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+				For i = 1 To 8
+					iProperties.Value("Custom", "Ruta0" & i.tostring) = ""
+				Next
+				Dim array_operaciones As New ArrayList
+				array_operaciones.Add("LSC")
+
+				If iProperties.Value("Custom", "PR_PLEGADORA") = True Then
+					INDICE_RUTA = INDICE_RUTA + 1
+					RUTA = "Ruta0" & INDICE_RUTA
+					iProperties.Value("Custom", RUTA) = "PLG"
+					array_operaciones.Add("PLG")
+				End If
+
+				If iProperties.Value("Custom", "PR_OPERACIONES_MANUALES")= True Then
+					INDICE_RUTA = INDICE_RUTA + 1
+					RUTA = "Ruta0" & INDICE_RUTA
+					iProperties.Value("Custom", RUTA) = "MAN"
+					array_operaciones.Add("MAN")
+				End If
+
+				If iProperties.Value("Custom", "PR_SOLDADURA") = True Then
+					INDICE_RUTA = INDICE_RUTA + 1
+					RUTA = "Ruta0" & INDICE_RUTA
+					iProperties.Value("Custom", RUTA) = "SOL"
+					array_operaciones.Add("SOL")
+				End If
+
+				If iProperties.Value("Custom", "PR_PRENSA") = True Then
+					INDICE_RUTA = INDICE_RUTA + 1
+					RUTA = "Ruta0" & INDICE_RUTA
+					iProperties.Value("Custom", RUTA) = "PRN"
+					array_operaciones.Add("PRN")
+				End If
+
+				volume = Round(iProperties.Volume, 3)
+
+				If iProperties.Value("Custom", "PR_SERIGRAFIA") = True Then
+					INDICE_RUTA = INDICE_RUTA + 1
+					RUTA = "Ruta0" & INDICE_RUTA
+					iProperties.Value("Custom", RUTA) = "SER"
+					array_operaciones.Add("SER")
+				End If
+
+				If iProperties.Value("Custom", "PR_ILUMINACION") = True Then
+					INDICE_RUTA = INDICE_RUTA + 1
+					RUTA = "Ruta0" & INDICE_RUTA
+					iProperties.Value("Custom", RUTA) = "ILU"
+					array_operaciones.Add("ILU")
+				End If
+
+
+				For i = 0 To array_operaciones.Count-1
+					iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+				Next
+
+				NUM = Len(iProperties.Value("Custom", "RUTA_PRODUCCION")) -1
+
+				If NUM<0 Then
+					NUM = 0
+				End If
+
+				RUTA = Left(iProperties.Value("Custom", "RUTA_PRODUCCION"), NUM)
+				iProperties.Value("Custom", "RUTA_PRODUCCION") = RUTA
+				InventorVb.DocumentUpdate()
+
+
+			End If
+
+Else If Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+
+INDICE_RUTA = 0
+iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+
+
+For i = 1 To 8
+	iProperties.Value("Custom", "Ruta0" & i.tostring) = ""
+Next
+
+Dim array_operaciones As New ArrayList
+
+If Parameter("F_ACABADO") = "MZC" Or Parameter("F_ACABADO") = "MZR" Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "CMZ"
+	array_operaciones.Add("CMZ")
+End If
+
+
+If Parameter("F_ACABADO") = "TR" Or Parameter("F_ACABADO") = "TC" Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "LST"
+	array_operaciones.Add("LST")
+End If
+
+
+If iProperties.Value("Custom", "PR_PRENSA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "PRN"
+	array_operaciones.Add("PRN")
+End If
+
+If iProperties.Value("Custom", "PR_SOLDADURA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "SOL"
+	array_operaciones.Add("SOL")
+End If
+
+
+volume = Round(iProperties.Volume, 3)
+
+
+If  iProperties.Value("Custom", "PR_OPERACIONES_MANUALES")= True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "MAN"
+	array_operaciones.Add("MAN")
+End If
+
+If iProperties.Value("Custom", "PR_SERIGRAFIA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "SER"
+	array_operaciones.Add("SER")
+End If
+
+If  iProperties.Value("Custom", "PR_ILUMINACION") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "ILU"
+	array_operaciones.Add("ILU")
+End If
+
+If  iProperties.Value("Custom", "PR_PINTURA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "PIN"
+	array_operaciones.Add("PIN")
+End If
+
+
+
+For i = 0 To array_operaciones.Count-1
+iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+Next
+
+NUM = Len(iProperties.Value("Custom", "RUTA_PRODUCCION")) -1
+
+If NUM<0 Then
+NUM = 0
+End If
+
+RUTA = Left(iProperties.Value("Custom", "RUTA_PRODUCCION"), NUM)
+
+iProperties.Value("Custom", "RUTA_PRODUCCION") = RUTA
+InventorVb.DocumentUpdate()
+	
+Else If Parameter("Tipo") = "Tubo redondo" Then
+INDICE_RUTA = 0
+iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+
+
+For i = 1 To 8
+	iProperties.Value("Custom", "Ruta0" & i.tostring) = ""
+Next
+
+Dim array_operaciones As New ArrayList
+
+'If TIPO = "Macizo redondo" Then
+'	INDICE_RUTA = INDICE_RUTA + 1
+'	RUTA = "Ruta0" & INDICE_RUTA
+'	iProperties.Value("Custom", RUTA) = "CMZ"
+'	array_operaciones.Add("CMZ")
+'End If
+
+
+If Parameter("F_ACABADO") = "TO" Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "LST"
+	array_operaciones.Add("LST")
+End If
+
+If iProperties.Value("Custom", "PR_PRENSA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "PRN"
+	array_operaciones.Add("PRN")
+End If
+
+If iProperties.Value("Custom", "PR_SOLDADURA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "SOL"
+	array_operaciones.Add("SOL")
+End If
+
+
+volume = Round(iProperties.Volume, 3)
+
+If  iProperties.Value("Custom", "PR_OPERACIONES_MANUALES")= True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "MAN"
+	array_operaciones.Add("MAN")
+End If
+
+If iProperties.Value("Custom", "PR_SERIGRAFIA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "SER"
+	array_operaciones.Add("SER")
+End If
+
+If  iProperties.Value("Custom", "PR_ILUMINACION") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "ILU"
+	array_operaciones.Add("ILU")
+End If
+
+If  iProperties.Value("Custom", "PR_PINTURA") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "PIN"
+	array_operaciones.Add("PIN")
+End If
+
+
+
+For i = 0 To array_operaciones.Count-1
+iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+Next
+
+NUM = Len(iProperties.Value("Custom", "RUTA_PRODUCCION")) -1
+
+If NUM<0 Then
+NUM = 0
+End If
+
+RUTA = Left(iProperties.Value("Custom", "RUTA_PRODUCCION"), NUM)
+
+iProperties.Value("Custom", "RUTA_PRODUCCION") = RUTA
+InventorVb.DocumentUpdate()
+
+Else If Parameter("Tipo") = "Macizo redondo" Then
+'	MessageBox.Show(parameter("Tipo"), "Title")
+	INDICE_RUTA = 0
+	iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+
+	For i = 1 To 8
+		iProperties.Value("Custom", "Ruta0" & i.tostring) = ""
+	Next
+
+	Dim array_operaciones As New ArrayList
+	'If TIPO = "Macizo redondo" Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	If Parameter("F_ACABADO") = "MZO" Then
+		INDICE_RUTA = INDICE_RUTA + 1
+		RUTA = "Ruta0" & INDICE_RUTA
+		iProperties.Value("Custom", RUTA) = "MAN"
+		array_operaciones.Add("MAN")
+	End If
+'	MessageBox.Show(iProperties.Value("Custom", RUTA), "Title")
+'	MessageBox.Show(iProperties.Value("Custom", "PR_PINTURA"), "Title")
+'	MessageBox.Show(parameter("OP_PINTAR"), "Title")
+	If iProperties.Value("Custom", "PR_PINTURA") = True Then
+'		MessageBox.Show(iProperties.Value("Custom", "PR_PINTURA"), "Title")
+		INDICE_RUTA = INDICE_RUTA + 1
+		RUTA = "Ruta0" & INDICE_RUTA
+		iProperties.Value("Custom", RUTA) = "PIN"
+		array_operaciones.Add("PIN")
+		iProperties.Value("Custom", "MATERIAL_COLOR") = Parameter("COL")
+		iProperties.Value("Custom", "COLOR_CODE") = Parameter("COL_CODE")
+	End If
+	If iProperties.Value("Custom", "PR_PINTURA") = False Then
+		iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+		iProperties.Value("Custom", "COLOR_CODE") = ""
+	End If	
+	
+	For i = 0 To array_operaciones.Count - 1
+		iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+	Next
+	
+	NUM = Len(iProperties.Value("Custom", "RUTA_PRODUCCION")) -1
+	
+	If NUM<0 Then
+		NUM = 0
+	End If
+
+	RUTA = Left(iProperties.Value("Custom", "RUTA_PRODUCCION"), NUM)
+
+	iProperties.Value("Custom", "RUTA_PRODUCCION") = RUTA
+	InventorVb.DocumentUpdate()
+
+
+Else If Parameter("Tipo") = "Soldadura" Then
+
+parameter("INDICE_RUTA") = 0
+iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+iProperties.Value("Custom", "Ruta01") = ""
+iProperties.Value("Custom", "Ruta02") = ""
+iProperties.Value("Custom", "Ruta03") = ""
+
+Dim array_operaciones As New ArrayList
+
+'Logger.Info(PARAMETER("INDICE_RUTA"))
+	parameter("INDICE_RUTA") = parameter("INDICE_RUTA") + 1
+	RUTA = "Ruta0" & parameter("INDICE_RUTA")
+	iProperties.Value("Custom", RUTA) = "SOL"
+	array_operaciones.Add("SOL")
+
+'Logger.Info(PARAMETER("INDICE_RUTA"))
+If parameter("PINTURA") = True Then
+	parameter("INDICE_RUTA") = parameter("INDICE_RUTA") + 1
+	RUTA = "Ruta0" & parameter("INDICE_RUTA")
+	iProperties.Value("Custom", RUTA) = "PIN"
+	
+	array_operaciones.Add("PIN")
+End If
+
+If parameter("OP_MANUAL") = True Then
+	parameter("INDICE_RUTA") = parameter("INDICE_RUTA") + 1
+	RUTA = "Ruta0" & parameter("INDICE_RUTA")
+	iProperties.Value("Custom", RUTA) = "MAN"
+	array_operaciones.Add("MAN")
+End If
+
+'Logger.Info(PARAMETER("INDICE_RUTA"))
+
+For i = 0 To array_operaciones.Count-1
+iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+Next
+
+NUM = Len(iProperties.Value("Custom", "RUTA_PRODUCCION")) -1
+
+If NUM<0 Then
+NUM = 0
+End If
+
+RUTA = Left(iProperties.Value("Custom", "RUTA_PRODUCCION"), NUM)
+
+iProperties.Value("Custom", "RUTA_PRODUCCION") = RUTA
+InventorVb.DocumentUpdate()
+
+Else If Parameter("Tipo") = "Encolado" Then
+INDICE_RUTA = 0
+iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+iProperties.Value("Custom", "Ruta01") = ""
+iProperties.Value("Custom", "Ruta02") = ""
+iProperties.Value("Custom", "Ruta03") = ""
+
+Dim array_operaciones As New ArrayList
+
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "ENC"
+	array_operaciones.Add("ENC")
+
+'If iProperties.Value("Custom", "Chapar_cantos") = True Then
+If parameter("OP_CHAPAR_CANTOS") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "CHA"
+
+	array_operaciones.Add("CHA")
+
+End If
+'If iProperties.Value("Custom", "C_MECANIZAR") = True Then
+If PARAMETER("MECANIZADO") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "PTG"
+
+	array_operaciones.Add("PTG")
+	
+End If
+
+
+'If iProperties.Value("Custom", "pintar") = True Then
+If PARAMETER("OP_PINTAR") = True Then
+	INDICE_RUTA = INDICE_RUTA + 1
+	RUTA = "Ruta0" & INDICE_RUTA
+	iProperties.Value("Custom", RUTA) = "PIN"
+	
+	array_operaciones.Add("PIN")
+End If
+
+For i = 0 To array_operaciones.Count-1
+iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+Next
+
+NUM = Len(iProperties.Value("Custom", "RUTA_PRODUCCION")) -1
+
+If NUM<0 Then
+NUM = 0
+End If
+Logger.Info(iProperties.Value("Custom", "RUTA_PRODUCCION"))
+RUTA = Left(iProperties.Value("Custom", "RUTA_PRODUCCION"), NUM)
+
+iProperties.Value("Custom", "RUTA_PRODUCCION") = RUTA
+InventorVb.DocumentUpdate()
+
+End If
+
+Catch
+
+End Try
+
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+

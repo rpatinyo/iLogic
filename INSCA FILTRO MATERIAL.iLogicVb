@@ -1,0 +1,279 @@
+﻿Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(ThisDoc.Document,"Filtro material")
+
+If Parameter("Tipo") = "Tubo redondo" Then
+		
+		MM = MultiValue.List("MAT")
+		ACA = MultiValue.List("ACABADO")
+		MED =  MultiValue.List("MEDIDAS")
+		DE = MultiValue.List("DESC")
+		CV = MultiValue.List("CODIGO_VIRTUAL_METAL")
+		COD = MultiValue.List("MAT_CODE")
+		DOD = MultiValue.List("DENSIDAD_ODOO")
+		
+		Dim ACA_TEMP1 As New ArrayList
+		Dim MED_TEMP As New ArrayList
+		Dim VIRT_TEMP As New ArrayList
+		Dim DESC_TEMP As New ArrayList
+		Dim COD_TEMP As New ArrayList
+		Dim DOD_TEMP As New ArrayList
+		
+		For i = 0 To MM.Count -1
+		
+		If MM(i) = Parameter("F_MAT") Then
+		If ACA(i) = "MZO" Or ACA(i) = "TO" Then
+		ACA_TEMP1.Add(ACA(i))
+		MED_TEMP.Add(MED(i))
+		DESC_TEMP.Add(DE(i))
+		VIRT_TEMP.Add(CV(i))
+		COD_TEMP.Add(COD(i))
+		DOD_TEMP.Add(DOD(i))
+		End If
+			
+		End If
+		Next
+		
+		MultiValue.List("ACABADO_TEMPORAL") = ACA_TEMP1
+		
+		
+		Dim ACA1 As New ArrayList
+		
+		For Each valor In ACA_TEMP1
+		If Not ACA1.Contains(valor) Then
+		ACA1.Add(valor)
+		End If
+		Next
+		
+		MultiValue.List("F_ACABADO") = ACA1
+		MultiValue.List("F_MEDIDAS") = MED_TEMP
+		MultiValue.List("F_DESCRIPCION") = DESC_TEMP
+		MultiValue.List("F_CODE") = COD_TEMP
+		MultiValue.List("F_CODIGO_VIRTUAL_METAL") = VIRT_TEMP 
+		MultiValue.List("F_DENSIDAD_ODOO") = DOD_TEMP 
+		
+Else If Parameter("Tipo") = "Chapa" Then
+		
+		MultiValue.SetList("F_ACABADO", "")
+		MultiValue.SetList("F_MEDIDAS","")
+		MultiValue.SetList("F_DESCRIPCION","")
+		MultiValue.SetList("F_CODE", "")
+		MultiValue.SetList("F_CODIGO_VIRTUAL_METAL","")
+		MultiValue.SetList("ACABADO_TEMPORAL", "")
+		MultiValue.SetList("F_DENSIDAD_ODOO","")
+		
+		MM = MultiValue.List("MAT")
+		ACA = MultiValue.List("ACABADO")
+		MED =  MultiValue.List("MEDIDAS")
+		DE = MultiValue.List("DESC")
+		CV = MultiValue.List("CODIGO_VIRTUAL_METAL")
+		COD = MultiValue.List("MAT_CODE")
+		DOD = MultiValue.List("DENSIDAD_ODOO")
+		
+		Dim ACA_TEMP1 As New ArrayList
+		Dim MED_TEMP As New ArrayList
+		Dim VIRT_TEMP As New ArrayList
+		Dim DESC_TEMP As New ArrayList
+		Dim COD_TEMP As New ArrayList
+		Dim DOD_TEMP As New ArrayList
+		
+		For i = 0 To MM.Count -1
+		
+		If MM(i) = Parameter("F_MAT") Then
+		If ACA(i) = "CPC" Then
+		ACA_TEMP1.Add(ACA(i))
+		MED_TEMP.Add(MED(i))
+		DESC_TEMP.Add(DE(i))
+		VIRT_TEMP.Add(CV(i))
+		COD_TEMP.Add(COD(i))
+		DOD_TEMP.Add(DOD(i))
+		End If
+			
+		End If
+		Next
+		
+		MultiValue.List("ACABADO_TEMPORAL") = ACA_TEMP1
+		
+		
+		Dim ACA1 As New ArrayList
+		
+		For Each valor In ACA_TEMP1
+		If Not ACA1.Contains(valor) Then
+		ACA1.Add(valor)
+		End If
+		Next
+		
+		MultiValue.List("F_ACABADO") = ACA1
+		MultiValue.List("F_MEDIDAS") = MED_TEMP
+		MultiValue.List("F_DESCRIPCION") = DESC_TEMP
+		MultiValue.List("F_CODE") = COD_TEMP
+		MultiValue.List("F_CODIGO_VIRTUAL_METAL") = VIRT_TEMP
+		MultiValue.List("F_DENSIDAD_ODOO") = DOD_TEMP
+
+Else If Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+		
+		MultiValue.SetList("F_ACABADO", "")
+		MultiValue.SetList("F_MEDIDAS","")
+		MultiValue.SetList("F_DESCRIPCION","")
+		MultiValue.SetList("F_CODE", "")
+		MultiValue.SetList("F_CODIGO_VIRTUAL_METAL","")
+		MultiValue.SetList("ACABADO_TEMPORAL", "")
+		MultiValue.SetList("F_DENSIDAD_ODOO","")
+		
+		MM = MultiValue.List("MAT")
+		ACA = MultiValue.List("ACABADO")
+		MED =  MultiValue.List("MEDIDAS")
+		DE = MultiValue.List("DESC")
+		CV = MultiValue.List("CODIGO_VIRTUAL_METAL")
+		COD = MultiValue.List("MAT_CODE")
+		DOD = MultiValue.List("DENSIDAD_ODOO")
+		
+		Dim ACA_TEMP1 As New ArrayList
+		Dim MED_TEMP As New ArrayList
+		Dim VIRT_TEMP As New ArrayList
+		Dim DESC_TEMP As New ArrayList
+		Dim COD_TEMP As New ArrayList
+		Dim DOD_TEMP As New ArrayList
+		
+		For i = 0 To MM.Count -1
+		
+		If MM(i) = Parameter("F_MAT") Then
+		If ACA(i) = "TR" Or ACA(i) = "TC" Or ACA(i) = "MZR" Or ACA(i) = "MZC" Then
+		ACA_TEMP1.Add(ACA(i))
+		MED_TEMP.Add(MED(i))
+		DESC_TEMP.Add(DE(i))
+		VIRT_TEMP.Add(CV(i))
+		COD_TEMP.Add(COD(i))
+		DOD_TEMP.Add(DOD(i))
+		End If
+			
+		End If
+		Next
+		
+		MultiValue.List("ACABADO_TEMPORAL") = ACA_TEMP1
+		
+		
+		Dim ACA1 As New ArrayList
+		
+		For Each valor In ACA_TEMP1
+		If Not ACA1.Contains(valor) Then
+		ACA1.Add(valor)
+		End If
+		Next
+		
+		MultiValue.List("F_ACABADO") = ACA1
+		MultiValue.List("F_MEDIDAS") = MED_TEMP
+		MultiValue.List("F_DESCRIPCION") = DESC_TEMP
+		MultiValue.List("F_CODE") = COD_TEMP
+		MultiValue.List("F_CODIGO_VIRTUAL_METAL") = VIRT_TEMP 
+		MultiValue.List("F_DENSIDAD_ODOO") = DOD_TEMP
+		
+	Else If Parameter("Tipo") = "Madera" Then
+		
+		MultiValue.SetList("F_ACABADO", "")
+		MultiValue.SetList("F_MEDIDAS","")
+		MultiValue.SetList("F_DESCRIPCION","")
+		MultiValue.SetList("F_CODE", "")
+		MultiValue.SetList("F_CODIGO_VIRTUAL_MADERA","")
+		MultiValue.SetList("ACABADO_TEMPORAL", "")
+		MultiValue.SetList("F_DENSIDAD_ODOO", "")
+		
+		MM = MultiValue.List("MAT")
+		ACA = MultiValue.List("ACABADO")
+		MED =  MultiValue.List("MEDIDAS")
+		DE = MultiValue.List("DESC")
+		CV = MultiValue.List("CODIGO_VIRTUAL_MADERA")
+		COD = MultiValue.List("MAT_CODE")
+		DOD = MultiValue.List("DENSIDAD_ODOO")
+		
+		Dim ACA_TEMP1 As New ArrayList
+		Dim MED_TEMP As New ArrayList
+		Dim VIRT_TEMP As New ArrayList
+		Dim DESC_TEMP As New ArrayList
+		Dim COD_TEMP As New ArrayList
+		Dim DOD_TEMP As New ArrayList
+		
+		For i = 0 To MM.Count -1
+		
+		If MM(i) = Parameter("F_MAT") Then
+		ACA_TEMP1.Add(ACA(i))
+		MED_TEMP.Add(MED(i))
+		DESC_TEMP.Add(DE(i))
+		VIRT_TEMP.Add(CV(i))
+		COD_TEMP.Add(COD(i))
+		DOD_TEMP.Add(DOD(i))
+		
+		End If
+		Next
+		
+		MultiValue.List("ACABADO_TEMPORAL") = ACA_TEMP1
+		
+		
+		Dim ACA1 As New ArrayList
+		
+		For Each valor In ACA_TEMP1
+		If Not ACA1.Contains(valor) Then
+		ACA1.Add(valor)
+		End If
+		Next
+		
+		MultiValue.List("F_ACABADO") = ACA1
+		MultiValue.List("F_MEDIDAS") = MED_TEMP
+		MultiValue.List("F_DESCRIPCION") = DESC_TEMP
+		MultiValue.List("F_CODE") = COD_TEMP
+		MultiValue.List("F_CODIGO_VIRTUAL_MADERA") = VIRT_TEMP 
+		MultiValue.List("F_DENSIDAD_ODOO") = DOD_TEMP
+
+	ElseIf Parameter("Tipo") = "Macizo redondo" Then
+		
+		MM = MultiValue.List("MAT")
+		ACA = MultiValue.List("ACABADO")
+		MED =  MultiValue.List("MEDIDAS")
+		DE = MultiValue.List("DESC")
+		CV = MultiValue.List("CODIGO_VIRTUAL_METAL")
+		COD = MultiValue.List("MAT_CODE")
+		DOD = MultiValue.List("DENSIDAD_ODOO")
+		
+		Dim ACA_TEMP1 As New ArrayList
+		Dim MED_TEMP As New ArrayList
+		Dim VIRT_TEMP As New ArrayList
+		Dim DESC_TEMP As New ArrayList
+		Dim COD_TEMP As New ArrayList
+		Dim DOD_TEMP As New ArrayList
+		
+		For i = 0 To MM.Count -1
+		
+		If MM(i) = Parameter("F_MAT") Then
+		'If ACA(i) = "MZO" Or ACA(i) = "TO" Then
+			If ACA(i) = "MZO" Then
+		ACA_TEMP1.Add(ACA(i))
+		MED_TEMP.Add(MED(i))
+		DESC_TEMP.Add(DE(i))
+		VIRT_TEMP.Add(CV(i))
+		COD_TEMP.Add(COD(i))
+		DOD_TEMP.Add(DOD(i))
+		End If
+			
+		End If
+		Next
+		
+		MultiValue.List("ACABADO_TEMPORAL") = ACA_TEMP1
+		
+		
+		Dim ACA1 As New ArrayList
+		
+		For Each valor In ACA_TEMP1
+		If Not ACA1.Contains(valor) Then
+		ACA1.Add(valor)
+		End If
+		Next
+		
+		MultiValue.List("F_ACABADO") = ACA1
+		MultiValue.List("F_MEDIDAS") = MED_TEMP
+		MultiValue.List("F_DESCRIPCION") = DESC_TEMP
+		MultiValue.List("F_CODE") = COD_TEMP
+		MultiValue.List("F_CODIGO_VIRTUAL_METAL") = VIRT_TEMP 
+		MultiValue.List("F_DENSIDAD_ODOO") = DOD_TEMP 
+
+End If
+
+undo.End

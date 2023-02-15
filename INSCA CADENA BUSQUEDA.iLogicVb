@@ -1,0 +1,88 @@
+﻿'Dim oApp As Inventor.Application =  ThisApplication
+'Dim oAssy As Inventor.AssemblyDocument = oApp.ActiveDocument
+
+'CADENA_BUSQUEDA = ""
+
+'iProperties.Value("Custom", "BUSQUEDA") = iProperties.Value("Project", "Part Number")
+'Dim array_busqueda As New ArrayList
+
+'For Each oSubDoc As Inventor.Document In oAssy.AllReferencedDocuments
+			
+'		Logger.Info(oSubDoc.DisplayName)
+'		'Logger.Info(oSubDoc.ModelStateName)
+	
+'		Logger.Info(iProperties.Value("Project", "Part Number"))
+		
+'		NOMBRE_MODEL_STATE = oSubDoc.ModelStateName
+		
+		
+'		If Left(NOMBRE_MODEL_STATE, 3) = "A30" Or Left(NOMBRE_MODEL_STATE, 3) = "A31" Then
+'			If Right(NOMBRE_MODEL_STATE, 3) <> "000" Then
+'				CADENA_BUSQUEDA = Left(NOMBRE_MODEL_STATE, 14) & "000"
+'					If iProperties.Value("Custom", "BUSQUEDA") = iProperties.Value("Project", "Part Number")
+'						iProperties.Value("Custom", "BUSQUEDA") = iProperties.Value("Custom", "BUSQUEDA") & " OR " & CADENA_BUSQUEDA
+'						array_busqueda.Add(CADENA_BUSQUEDA)
+'						CADENA_BUSQUEDA = Left(NOMBRE_MODEL_STATE, 10)
+'						iProperties.Value("Custom", "BUSQUEDA") = iProperties.Value("Custom", "BUSQUEDA") & " OR " & CADENA_BUSQUEDA
+'						array_busqueda.Add(CADENA_BUSQUEDA)					
+						
+						
+'						Else If array_busqueda.Contains(CADENA_BUSQUEDA) = False Then
+'							array_busqueda.Add(CADENA_BUSQUEDA)
+'							iProperties.Value("Custom", "BUSQUEDA") = iProperties.Value("Custom", "BUSQUEDA") & " OR " & CADENA_BUSQUEDA
+'							CADENA_BUSQUEDA = Left(NOMBRE_MODEL_STATE, 10)
+'							iProperties.Value("Custom", "BUSQUEDA") = iProperties.Value("Custom", "BUSQUEDA") & " OR " & CADENA_BUSQUEDA
+'							array_busqueda.Add(CADENA_BUSQUEDA)
+							
+							
+'					End If
+		
+'			End If
+'		End If
+'Next	
+
+
+
+
+
+'PARA IAM
+Dim oDoc As AssemblyDocument
+oDoc = ThisDoc.Document
+oPartCompDef = oDoc.ComponentDefinition
+ Dim oModelStates As ModelStates
+    oModelStates = oPartCompDef.ModelStates
+	oModelStates.ActiveModelState
+	
+    ' Get all model state names from ModelStsates object.
+	Dim numeracion As New ArrayList()
+	Dim sortedModelState As New ArrayList()
+	Dim oModelState As ModelState
+    For Each oModelState In oModelStates
+		Logger.Info(iProperties.Value("Project", "Part Number"))
+		oModelState.
+		sortedModelState.Add(iProperties.Value("Project", "Part Number"))
+		DERECHA_3 = Right(iProperties.Value("Project", "Part Number"), 3)
+		DERECHA_6 = Right(iProperties.Value("Project", "Part Number"), 6)
+		IZQUIERDA_3 = Left(DERECHA_6, 3)
+		
+		If IZQUIERDA_3 <> "HRJ" Then
+			DERECHA_3 = "000"
+		End If
+		numeracion.Add(DERECHA_3)
+		
+    Next
+	
+	For Each item As String In sortedModelState
+		Logger.Info("Model State Ordenados : {0}", item)
+	Next
+	numeracion.Sort
+	
+	For Each item As String In numeracion
+		Logger.Info("Numeración : {0}", item)
+	Next
+	a = numeracion.Count
+	MessageBox.Show(a, "Title")
+
+	Logger.Info(numeracion(a - 1))
+	Logger.Info(numeracion(a - 1) + 1)
+	

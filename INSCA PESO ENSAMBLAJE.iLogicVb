@@ -1,0 +1,21 @@
+﻿Dim oDoc As AssemblyDocument = ThisDoc.Document
+Dim oDef As AssemblyComponentDefinition = oDoc.ComponentDefinition
+Dim oCs As ComponentOccurrences = oDef.Occurrences
+Dim PESO_TOTAL As Double = 0
+
+iProperties.Value("Custom", "PESO") = PESO_TOTAL
+For Each oC As ComponentOccurrence In oCs
+	Try    
+
+		
+		PES = Round(CDbl(iProperties.Value(oC.Name, "Custom", "PESO")),3)
+		'Logger.Info(PES)
+		
+        PESO_TOTAL += CDbl(PES)
+	Catch
+	End Try
+
+
+Next
+		'Logger.Info(PESO_TOTAL)
+iProperties.Value("Custom", "PESO") = PESO_TOTAL

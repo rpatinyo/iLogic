@@ -1,0 +1,188 @@
+﻿Try
+	If Parameter("Tipo") = "Madera" Then
+		
+		
+		parameter("OP_PINTAR") = iProperties.Value("Custom", "Pintar")
+		
+		parameter("OP_PINTAR_CANTOS") = iProperties.Value("Custom", "Pintar_cantos")
+		
+		parameter("OP_CHAPAR_CANTOS") = iProperties.Value("Custom", "Chapar_cantos")
+		
+		MAXIMO = MaxOfMany(parameter("L1"),parameter("L2"))
+		MINIMO = MinOfMany(parameter("L1"),parameter("L2"))
+		
+		If iProperties.Value("Custom", "Pintar_cantos") = True Then
+		
+			parameter("SUPERFICIE_CANTOS_PINTADO") = (parameter("PINTAR_CANTOS_LARGO") * (MAXIMO / 1000) * (parameter("L3") / 1000)) + (parameter("PINTAR_CANTOS_CORTO") * (MINIMO / 1000) * (parameter("L3") / 1000))
+			iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = parameter("PINTAR_CANTOS_LARGO") & "CL+" & parameter("PINTAR_CANTOS_CORTO") & "CC"
+			Else
+			
+			parameter("PINTAR_CANTOS_LARGO") = 0
+			parameter("PINTAR_CANTOS_CORTO") = 0
+			parameter("SUPERFICIE_CANTOS_PINTADO") = 0
+			
+			iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = 0 & "CL+" & 0 & "CC"
+		
+		End If
+		
+		
+		
+		
+		If iProperties.Value("Custom", "Chapar_cantos") = True Then
+		
+		parameter("LONG_CANTOS") = (parameter("CANTOS_LARGO") * MAXIMO) + (parameter("CANTOS_CORTO") * MINIMO)
+		iProperties.Value("Custom", "NRO_CANTOS") = parameter("CANTOS_LARGO") & "CL+" & parameter("CANTOS_CORTO") & "CC"
+		
+		Else
+			
+		parameter("CANTOS_LARGO") = 0
+		parameter("CANTOS_CORTO") = 0
+		PARAMETER("LONG_CANTOS") = 0
+		
+		iProperties.Value("Custom", "NRO_CANTOS") = "0" & "CL+" & "0" & "CC"
+		
+		
+		End If
+		
+		If iProperties.Value("Custom", "Pintar") = True Then
+		
+		iProperties.Value("Custom", "SPINT") = (PARAMETER("N_CARAS_PINTADAS") * PARAMETER("L1") * PARAMETER("L2")) / 1000000
+		
+		Else
+		
+		iProperties.Value("Custom", "SPINT") = 0
+		End If
+		
+		Try
+		volume = iProperties.Volume / 1000000000
+		DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+		CALCULO_PESO = Round(volume * DENSIDAD,2)
+		iProperties.Value("Custom", "PESO") = CALCULO_PESO
+		
+		Catch
+'		i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+		
+		End Try
+		
+		
+		RuleParametersOutput()
+		InventorVb.DocumentUpdate()
+		
+		
+			
+			
+	
+	
+	Else If Parameter("Tipo") = "Chapa" Then
+		
+		iProperties.Value("Custom", "LARGO_CHAPA") = CType(Round(SheetMetal.FlatExtentsLength,1),String)
+		iProperties.Value("Custom", "ANCHO_CHAPA") = CType(Round (SheetMetal.FlatExtentsWidth,1),String)
+		
+		If Left(Right(iProperties.Value("Custom", "LARGO_CHAPA"), 2), 1) <> "." Then
+		iProperties.Value("Custom", "LARGO_CHAPA") = iProperties.Value("Custom", "LARGO_CHAPA") & ".0"
+		End If
+		If Left(Right(iProperties.Value("Custom", "ANCHO_CHAPA"), 2), 1) <> "." Then
+		iProperties.Value("Custom", "ANCHO_CHAPA") = iProperties.Value("Custom", "ANCHO_CHAPA") & ".0"
+		End If
+			
+		parameter("OP_PINTAR") = False
+
+		parameter("OP_PINTAR") = iProperties.Value("Custom", "PR_PINTURA")
+
+
+		If iProperties.Value("Custom", "PR_PINTURA") = True Then
+		iProperties.Value("Custom", "SPINT") = Round(((2 * parameter("LARGO_CHAPA") * Parameter("ANCHO_CHAPA")) / 1000000),3)
+		Else
+		iProperties.Value("Custom", "SPINT") = 0
+		End If
+		
+		Try
+		volume = iProperties.Volume / 1000000000
+		DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+		CALCULO_PESO = Round(volume * DENSIDAD,2)
+		iProperties.Value("Custom", "PESO") = CALCULO_PESO
+		iProperties.Value("Custom", "S_PIEZA") = Round(((1 * parameter("LARGO_CHAPA") * Parameter("ANCHO_CHAPA")) / 1000000),3)
+		Catch
+'		i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+		
+		End Try
+						
+		RuleParametersOutput()
+		InventorVb.DocumentUpdate()
+		
+
+		
+	Else If Parameter("Tipo") = "Tubo redondo" Then
+		
+		Parameter("OP_PINTAR") = False
+		
+		parameter("OP_PINTAR") = iProperties.Value("Custom", "PR_PINTURA")
+		
+		If iProperties.Value("Custom", "PR_PINTURA") = True Then
+		
+		iProperties.Value("Custom", "SPINT") = Round((Math.PI * PARAMETER("DIAMETRO") * parameter("L1")) / 1000000,3)
+		
+		Else
+			
+		iProperties.Value("Custom", "SPINT") = 0 
+		
+		End If
+		
+		 iProperties.Value("Custom", "S_PIEZA") = Round((Math.PI * Parameter("DIAMETRO")* parameter("L1")) / 1000000,3)
+		
+		Try
+		volume = iProperties.Volume / 1000000000
+		DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+		CALCULO_PESO = Round(volume * DENSIDAD,2)
+		iProperties.Value("Custom", "PESO") = CALCULO_PESO
+		
+		Catch
+'		i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+		
+		End Try
+		
+		RuleParametersOutput()
+		
+		InventorVb.DocumentUpdate()
+
+		
+	Else If Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+		
+		parameter("OP_PINTAR") = False
+		
+		parameter("OP_PINTAR") = iProperties.Value("Custom", "PR_PINTURA")
+		
+		If iProperties.Value("Custom", "PR_PINTURA") = True Then
+		
+		'iProperties.Value("Custom", "SPINT") = ((2*HONDO*L1)+(2*ANCHO*L1)) / 1000000 & " m²"
+		iProperties.Value("Custom", "SPINT") = Round((2*parameter("HONDO")*parameter("L1"))+(2*parameter("ANCHO")*parameter("L1")) / 1000000,3)
+		Else
+			
+		'iProperties.Value("Custom", "SPINT") = 0 & " m²"
+		iProperties.Value("Custom", "SPINT") = 0
+		End If
+		
+		 iProperties.Value("Custom", "S_PIEZA") = Round((2*parameter("HONDO")*parameter("L1"))+(2*parameter("ANCHO")*parameter("L1")) / 1000000,3)
+		
+		Try
+		volume = iProperties.Volume / 1000000000
+		DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+		CALCULO_PESO = Round(volume * DENSIDAD,2)
+		iProperties.Value("Custom", "PESO") = CALCULO_PESO
+		
+		Catch
+'		i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+		
+		End Try
+		
+		
+		RuleParametersOutput()
+		InventorVb.DocumentUpdate()
+
+	End If
+		
+Catch
+	iProperties.Value("Custom", "SPINT") = 0
+End Try
+
+

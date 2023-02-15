@@ -1,0 +1,98 @@
+﻿iProperties.Value("Custom", "TALADRO") = False
+iProperties.Value("Custom", "ROSCADO") = False
+
+Dim pieza As PartDocument
+pieza = ThisDoc.Document
+
+operaciones = pieza.ComponentDefinition.Features
+
+Dim operacion As PartFeature
+For Each operacion In operaciones
+	'	If operacion.Suppressed = False Then
+	'		op = operacion.Name + " - " + operacion.Type.tostring
+	'		Logger.Info(op)
+	'	End If
+
+	If operacion.Type = 83912192 And operacion.Suppressed = False Then
+		iProperties.Value("Custom", "TALADRO") = True
+
+		If operacion.HoleType = kCounterSinkHole Then
+			iProperties.Value("Custom", "TALADRO_AVELLANADO") = True
+			'			Else 
+			'				iProperties.Value("Custom", "TALADRO_AVELLANADO") = False
+		End If
+
+		If operacion.tapped = True Then
+			iProperties.Value("Custom", "TALADRO_ROSCADO") = True
+			'			Else
+			'				iProperties.Value("Custom", "TALADRO_ROSCADO") = False
+		End If
+	Else
+		iProperties.Value("Custom", "TALADRO") = False
+		iProperties.Value("Custom", "TALADRO_AVELLANADO") = False
+		iProperties.Value("Custom", "TALADRO_ROSCADO") = False
+		ROSCADO = iProperties.Value("Custom", "TALADRO_ROSCADO")
+		AVELLANADO = iProperties.Value("Custom", "TALADRO_AVELLANADO")
+	End If
+Next
+
+'Dim pieza As PartDocument
+'pieza = ThisDoc.Document
+
+comp = pieza.ComponentDefinition
+operaciones = comp.Features
+
+Dim plegados As Integer
+plegados = 0
+
+For Each operacion In comp.Features
+
+	If operacion.Type = 151001344 Or operacion.Type = 151015680 Or operacion.Type = 151001856 And operacion.Suppressed = False Then
+		plegados = comp.Features.flangefeatures.count
+	End If
+Next
+
+iProperties.Value("Custom", "N_PLEGADOS") = plegados
+
+Dim array_operaciones As New ArrayList
+iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+	If Parameter("OP_PINTAR") = True Then
+		array_operaciones.Add("PIN")
+		iProperties.Value("Custom", "RUTA_PRODUCCION") = array_operaciones(0)
+		Else
+			iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+			array_operaciones.Add("LSC")
+
+		If plegados > 0 Then
+			Parameter("OP_PLEGAR") = True
+		End If
+
+		If Parameter("OP_PLEGAR") = True Then
+			array_operaciones.Add("PLG")
+		End If
+
+		If Parameter("OP_SOLDAR") = True Then
+			array_operaciones.Add("SOL")
+		End If
+		
+		If ROSCADO = True Or AVELLANADO = True Then
+			PARAMETER("OP_MANUAL") = True
+		End If
+
+		If Parameter("OP_MANUAL") = True Then
+			array_operaciones.Add("MAN")
+		End If
+
+		If Parameter("OP_SERIGRAFIAR") = True Then
+			array_operaciones.Add("ROT")
+		End If
+
+		For i = 0 To array_operaciones.Count - 1
+			If i = array_operaciones.Count - 1 Then
+				iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i)
+				Else
+					iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+			End If
+		Next
+	End If
+	

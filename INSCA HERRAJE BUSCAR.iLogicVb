@@ -1,0 +1,10 @@
+﻿iLogicVb.RunExternalRule("INSCA HERRAJE CODIGO")
+iLogicVb.RunExternalRule("INSCA HERRAJE CATEGORIA")
+iLogicVb.RunExternalRule("INSCA HERRAJE NOTAS")
+iLogicVb.RunExternalRule("INSCA HERRAJE VAULT_ID")
+iProperties.Value("Custom", "TIPO_HERRAJE") = parameter("TIPO_HERRAJE")
+If Parameter("TIPO_HERRAJE") = "GUIA" Then
+	iLogicVb.RunExternalRule("INSCA HERRAJE SUJECION GUIA DERECHA")
+	iLogicVb.RunExternalRule("INSCA HERRAJE SUJECION GUIA IZQUIERDA")
+End If
+iProperties.Value("Custom", "MODELO") = parameter("MODELO")

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>iLogicBrowserUiFormSpecification</Name>
+  <Guid>5f964e90-9287-4f5b-a612-50ab2343ed58</Guid>
+  <Items>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>INICIO</Name>
+      <Guid>6dfa7b12-36bf-4b27-a243-24dd29c63786</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>TIPO DE DOCUMENTO</Name>
+      <Guid>e65983bb-3e15-4153-80f5-d7ac4bd9221b</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>A00 SQL</Name>
+      <Guid>680f8561-456e-4c33-9d16-de7e0ed601c0</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>A12</Name>
+      <Guid>dc56a101-5977-4599-ae6c-86c85b3e5761</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>A15</Name>
+      <Guid>dc56a101-5977-4599-ae6c-86c85b3e5761</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>A32</Name>
+      <Guid>dc56a101-5977-4599-ae6c-86c85b3e5761</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>A60</Name>
+      <Guid>680f8561-456e-4c33-9d16-de7e0ed601c0</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>A72 SQL</Name>
+      <Guid>680f8561-456e-4c33-9d16-de7e0ed601c0</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>AZULEJO</Name>
+      <Guid>6dfa7b12-36bf-4b27-a243-24dd29c63786</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>CHAPA SQL</Name>
+      <Guid>6dfa7b12-36bf-4b27-a243-24dd29c63786</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>CRISTAL Y METACRILATO</Name>
+      <Guid>680f8561-456e-4c33-9d16-de7e0ed601c0</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>ENCOLADO SQL</Name>
+      <Guid>6dfa7b12-36bf-4b27-a243-24dd29c63786</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>HERRAJE</Name>
+      <Guid>680f8561-456e-4c33-9d16-de7e0ed601c0</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>ILUMINACIÓN</Name>
+      <Guid>680f8561-456e-4c33-9d16-de7e0ed601c0</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>MADERA SQL</Name>
+      <Guid>6dfa7b12-36bf-4b27-a243-24dd29c63786</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>SOLDADURA SQL</Name>
+      <Guid>dc56a101-5977-4599-ae6c-86c85b3e5761</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>TEXTIL</Name>
+      <Guid>680f8561-456e-4c33-9d16-de7e0ed601c0</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>TUBO O SQL</Name>
+      <Guid>b8c722b6-7655-4029-a80b-ca300b741a8b</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="FormButtonControlSpec">
+      <Name>TUBO RC SQL</Name>
+      <Guid>dc56a101-5977-4599-ae6c-86c85b3e5761</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>false</AllowCustomization>
+  <PredefinedButtons>None</PredefinedButtons>
+  <Modal>false</Modal>
+  <IsLauncherPage>true</IsLauncherPage>
+</FormSpecification>

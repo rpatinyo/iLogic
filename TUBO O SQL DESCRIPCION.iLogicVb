@@ -1,0 +1,89 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+
+	parameter("TSQL") = "tipo_pieza"
+	parameter("PAR") = "ABREV_TIPO_PIEZA"
+	parameter("CSQL") = "abreviatura"
+	parameter("SQL") = "Select tipo_pieza.abreviatura " &
+	"From tipo_pieza " &
+	"Where (((tipo_pieza.name)='" & parameter("TIPO_PIEZA") & "'));"
+	con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+If Parameter("DIAMETRO") < 100 Then
+		hn = "0" & FormatNumber(CDbl(PARAMETER("DIAMETRO")), "1", vbFalse)
+		Else
+			hn = FormatNumber(CDbl(PARAMETER("DIAMETRO")), "1", vbFalse)
+	End If
+
+	If Parameter("ESPESOR") >0 And Parameter("ESPESOR") < 100 Then
+		an = "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+		Else
+			an = FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+	End If
+	iProperties.Value("Custom", "L1") = parameter("L1")
+	If Parameter("L1") < 1000 Then
+		LO = "0" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+		Else
+			LO = FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+	End If
+
+If Parameter("ACABADO_MATERIAL") = "TO" Then
+	If Parameter("TIPO_PIEZA") = "0_N#A" Then
+		iProperties.Value("Project", "Description") = Parameter("ACABADO_MATERIAL") & " " & LO & "xØ" & hn & "x" & "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse) & "mm"
+		Else 
+			iProperties.Value("Project", "Description") = Parameter("ABREV_TIPO_PIEZA") & " " & LO & "xØ" & hn & "x" & "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse) & "mm"
+	End If
+	Else
+		If Parameter("TIPO_PIEZA") = "0_N#A" Then
+			iProperties.Value("Project", "Description") = Parameter("ACABADO_MATERIAL") & " " & LO & "xØ" & hn & "mm"
+			Else 
+				iProperties.Value("Project", "Description") = Parameter("ABREV_TIPO_PIEZA") & " " & LO & "xØ" & hn & "mm"
+		End If
+End If
+
+End Sub
+
+Sub con2(tabla As String, iProp As String, campo As String, BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+	iProperties.Value("Custom", "ABREV_TIPO_PIEZA") = nombre(0)
+	parameter("ABREV_TIPO_PIEZA") = iProperties.Value("Custom", "ABREV_TIPO_PIEZA")
+
+End Sub
+

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>LISTADO ILUMINACION ODOO</Name>
+  <Guid>e3ebd2cf-e9fb-41e3-88ca-6dbb37fd117e</Guid>
+  <SizeConstraints>
+    <MinimumSize>
+      <Width>
+        <Value>86.53125</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>44.53125</Value>
+        <Units>Em</Units>
+      </Height>
+    </MinimumSize>
+    <MaximumSize>
+      <Width>
+        <Value>86.53125</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>44.53125</Value>
+        <Units>Em</Units>
+      </Height>
+    </MaximumSize>
+  </SizeConstraints>
+  <Items>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 2</Name>
+      <Guid>4c3ab3e5-e4c4-42d0-a502-517d4c5255a8</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>DESACTIVAR CONEXIÓN A VAULT</Name>
+          <Guid>42727295-0a87-4625-8fea-b803c389fff2</Guid>
+          <ToolTip>ES NECESARIO DESACTIVAR LA CONEXIÓN A VAULT</ToolTip>
+          <Font>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <ContentsFont>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </ContentsFont>
+          <Items />
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>INSCA ILUMINACION ODOO</Name>
+      <Guid>4362c94c-68e1-4885-8863-f19747a8d5d3</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA ILUMINACION CONEXION</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA ILUMINACION CONEXION.iLogicVb</Path>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 5</Name>
+      <Guid>c36c1ff2-f1fc-4e91-853a-c9714c170ac6</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>Grupo 1</Name>
+          <Guid>a642ae94-e9df-44e9-bda5-c0570080291d</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 3</Name>
+              <Guid>a3fd5733-c1c7-4a27-89b1-80e849f520d1</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>TIPO ILUMINACION</Name>
+                  <Guid>62f1b6f8-3d17-4233-b423-661bbc543ed9</Guid>
+                  <ToolTip />
+                  <ParameterName>TIPO_ILUMINACION</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>CARGAR DESCRIPCIONES</Name>
+                  <Guid>aacdab9f-396b-421a-8478-e2931e15c4d1</Guid>
+                  <Image>
+                    <BitmapByteArray />
+                  </Image>
+                  <TextVisible>true</TextVisible>
+                  <RuleName>INSCA ILUMINACION DESCRIPCION</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA ILUMINACION DESCRIPCION.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 4</Name>
+              <Guid>b35a46d1-606a-4312-bfb8-e5b42b398ba5</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>DESCRIPCION</Name>
+                  <Guid>6d8a4997-7fc8-45ea-860c-5188c68c80b9</Guid>
+                  <ToolTip />
+                  <ParameterName>DESCRIPCION</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>INSCA ILUMINACION BUSCAR</Name>
+                  <Guid>e61e365a-dfbe-4355-af2e-2d99fa2e5465</Guid>
+                  <Image>
+                    <BitmapByteArray />
+                  </Image>
+                  <TextVisible>true</TextVisible>
+                  <RuleName>INSCA ILUMINACION BUSCAR</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA ILUMINACION BUSCAR.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>CODIGO ILUMINACION</Name>
+              <Guid>7e3dc3fc-274e-438a-b8ff-fca44fa1d9dc</Guid>
+              <PropertyName>CODIGO_ILUMINACION</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>CATEGORIA</Name>
+              <Guid>b154d823-83d9-4597-b3e4-15e0bcd8e39d</Guid>
+              <PropertyName>CATEGORIA</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>NOTAS</Name>
+              <Guid>9c9566be-6745-4a94-8ea5-bbde48ae03d1</Guid>
+              <PropertyName>NOTAS</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 1</Name>
+      <Guid>f8ceccf4-82b6-43e0-ae08-b225e01a4a4a</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>VAULT</Name>
+          <Guid>e29e418a-8aec-4af0-8e1a-60913bc29fe2</Guid>
+          <Items>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>VAULT</Name>
+              <Guid>05fcffce-6b50-42da-a467-842134e79dbb</Guid>
+              <PropertyName>BANNER</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="EmptySpaceSpec">
+      <Name>Espacio vacío 1</Name>
+      <Guid>e6c4b347-3629-4ce2-b676-1f24d4dea7ee</Guid>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>GUARDAR DESDE ODOO</Name>
+      <Guid>cdd6b6e8-cf8f-4975-bdaa-d1cff195223d</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA ILUMINACION GUARDAR</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA ILUMINACION GUARDAR.iLogicVb</Path>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>None</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

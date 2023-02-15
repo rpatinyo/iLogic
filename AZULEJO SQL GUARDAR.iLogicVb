@@ -1,0 +1,114 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+Dim odoc As PartDocument
+odoc = ThisDoc.Document
+
+Dim ocomp As PartComponentDefinition
+ocomp = odoc.ComponentDefinition
+
+Dim model_states As ModelStates
+model_states = ocomp.ModelStates
+
+Dim fileSystemObj As Object
+fileSystemObj = CreateObject("Scripting.FileSystemObject")
+
+Dim undo As Transaction
+'undo = ThisApplication.TransactionManager.StartTransaction(odoc, "Versión de pieza")
+
+Select Parameter("Tipo")
+	Case "Azulejo"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			Largo_nombre_archivo = Len(Nombre_archivo)
+			
+			Select Largo_nombre_archivo
+				Case 0
+						iProperties.Value("Custom", "VDS_NumSchm") = "AZULEJO"
+						iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+						ThisDoc.Document.SaveAs("C:\testing.ipt", False)
+						Nombre_archivo = ThisDoc.FileName(False) 'without extension
+						CODIGO = Nombre_archivo
+						'undo.End
+'				Case 9
+'						Prefijo = Left(Nombre_archivo, 4)
+'						Sufijo = Right(Nombre_archivo, 5)
+'						CODIGO = Prefijo & "0" & Sufijo
+						
+'						If Prefijo = "B10." Then
+'							Prefijo = "A10.1"
+'							CODIGO = Prefijo & Sufijo
+'						End If
+																
+				Case 10
+'						CODIGO = Nombre_archivo
+						MessageBox.Show("GUARDAR EL ARCHIVO MANUALMENTE", "GUARDAR")
+
+'											
+			End Select
+			MultiValue.UpdateAfterChange = True
+'			model_states("Principal").Activate
+			
+'			'CONFIG ES MATERIAL + WOODCONFIG
+'			If Parameter("OP_PINTAR") = False And Parameter("OP_PINTAR_CANTOS") = False And Parameter("OP_CHAPAR_CANTOS") = False Then
+'				iProperties.Value("Custom", "CODIGO_WOODCONFIG") = "000"
+'			End If
+							
+'			CONFIG = iProperties.Value("Custom", "CODIGO_MATERIAL_INVENTOR") & iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+'			VALOR = CODIGO & "." & CONFIG
+			
+'			If Parameter("OP_PINTAR") = False Then
+'				iProperties.Value("Custom", "COLOR_MATERIAL") = "CRUDO"
+'				iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") = "I0039Y"
+'				Parameter("N_CARAS_PINTADAS") = "0"
+'			End If
+			
+'			If Parameter("OP_CHAPAR_CANTOS") = False Then
+'				iProperties.Value("Custom", "DESCRIPCION_CANTOS") = "SIN CHAPAR"
+'				iProperties.Value("Custom", "CODIGO_CANTOS") = "000000"
+'				iProperties.Value("Custom", "LONGITUD_CANTOS_CHA") = "0"
+'				Parameter("N_CANTOS_CHA") = "0CL+0CC"
+'			End If
+			
+'			If Parameter("OP_PINTAR_CANTOS") = False Then
+'				iProperties.Value("Custom", "COLOR_CANTOS") = "CRUDO"
+'				iProperties.Value("Custom", "CODIGO_COLOR_CANTOS") = "I0039Y"
+'				iProperties.Value("Custom", "SUPERFICIE_CANTOS_PINTADO") = "0"
+'				Parameter("N_CANTOS_PIN") = "0CL+0CC"
+'				Parameter("SUP_CANTOS_PIN") = "0"
+'			End If
+		
+'			iProperties.Value("Project", "Part Number") = VALOR
+'			iProperties.Value("Custom", "DESCRIPCION_PIEZA") = iProperties.Value("Project", "Description")
+'			DESCRIP = iProperties.Value("Custom", "DESCRIPCION_MATERIAL") & "#" & iProperties.Value("Custom", "COLOR_MATERIAL") & "#" & iProperties.Value("Custom", "DESCRIPCION_CANTOS") & "#" & iProperties.Value("Custom", "COLOR_CANTOS")
+'			iProperties.Value("Custom", "MALLA") = Parameter("MALLA")
+'			iProperties.Value("Custom", "Categoria") = "MADERA"
+'			iProperties.Value("Custom", "MATERIAL") = iProperties.Value("Custom", "DESCRIPCION_MATERIAL")
+'			'iProperties.Value("Custom", "MATERIAL_CODE") = iProperties.Value("Custom", "CODIGO_MATERIAL")
+'			iProperties.Value("Custom", "MATERIAL_CANTOS") = iProperties.Value("Custom", "DESCRIPCION_CANTOS")
+'			iProperties.Value("Custom", "P_CANTOS_CODE") = iProperties.Value("Custom", "CODIGO_CANTOS")
+'			iProperties.Value("Custom", "MATERIAL_COLOR") = iProperties.Value("Custom", "COLOR_MATERIAL")
+'			iProperties.Value("Custom", "LONG_CANTOS") = iProperties.Value("Custom", "LONGITUD_CANTOS_CHA")
+'			surfaceArea = Parameter("L1") / 1000 * Parameter("L2") / 1000
+'			iProperties.Value("Custom", "SUPERFICIE_MADERA") = surfaceArea
+'			iProperties.Value("Custom", "NRO_CARAS_PINTADAS") = Parameter("N_CARAS_PINTADAS")
+'			iProperties.Value("Custom", "SUPERFICIE_CANTOS") = Parameter("SUP_CANTOS_PIN")
+'			S_PINT = Parameter("SUP_CANTOS_PIN") + Parameter("N_CARAS_PINTADAS") * surfaceArea
+'			iProperties.Value("Custom", "SPINT") = S_PINT
+'			iProperties.Value("Custom", "NRO_CANTOS") = Parameter("N_CANTOS_CHA")
+'			iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = parameter("N_CANTOS_PIN")
+						
+'			Try
+'				model_states.Add(DESCRIP)
+'				model_stateS(DESCRIP).Activate
+'				iProperties.Value("Project", "Part Number") = VALOR
+					
+'				iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION_PIEZA")
+				
+'				model_states.Item("Principal").Activate
+'				InventorVb.DocumentUpdate()
+'				MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+
+'			Catch
+'			End Try
+
+End Select
+
+'undo.end

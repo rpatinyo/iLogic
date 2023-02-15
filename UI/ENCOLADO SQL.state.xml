@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormStatePersist xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Size>
+    <Width>0</Width>
+    <Height>0</Height>
+  </Size>
+  <Location>
+    <X>360</X>
+    <Y>62</Y>
+  </Location>
+  <DipToPixelConversionFactors>
+    <WidthFactor>1</WidthFactor>
+    <HeightFactor>1</HeightFactor>
+  </DipToPixelConversionFactors>
+  <SplitterLocations>
+    <SplitterLocation>
+      <Name>Divisor 4</Name>
+      <Location>
+        <X>0</X>
+        <Y>0</Y>
+      </Location>
+    </SplitterLocation>
+    <SplitterLocation>
+      <Name>Divisor 5</Name>
+      <Location>
+        <X>146</X>
+        <Y>2</Y>
+      </Location>
+    </SplitterLocation>
+  </SplitterLocations>
+  <GroupExpansionStateList>
+    <GroupExpansionState>
+      <Name>MEDIDAS</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>MATERIAL</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>DESCRIPCIÓN</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>OPERACIONES</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>PIEZA</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>CANTOS</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>PINTURA</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>CANTOS_1</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>PINTURA CANTOS</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+  </GroupExpansionStateList>
+  <TabGroupSelectedPageList />
+</FormStatePersist>

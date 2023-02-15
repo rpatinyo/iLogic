@@ -1,0 +1,3 @@
+﻿iLogicVb.RunExternalRule("INSCA TEXTIL CODIGO")
+iLogicVb.RunExternalRule("INSCA TEXTIL PROYECTO DESCRIPCION")
+'iLogicVb.RunExternalRule("INSCA A80 DENSIDAD")

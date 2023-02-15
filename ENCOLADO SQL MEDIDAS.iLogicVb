@@ -1,0 +1,42 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+	Dim odoc As AssemblyDocument
+	odoc = ThisApplication.ActiveDocument
+	Dim vX, vXmax, vXmin As Double
+	Dim vy, vYmax, vYmin As Double
+	Dim vz, vZmax, vZmin As Double
+	
+	vXmax = odoc.ComponentDefinition.RangeBox.MaxPoint.X
+	vXmin = odoc.ComponentDefinition.RangeBox.MinPoint.X
+	
+	vX = vXmax - vXmin
+	vX2 = FormatNumber(vX * 10, 1)
+	
+	vYmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Y
+	vYmin = odoc.ComponentDefinition.RangeBox.MinPoint.Y
+	
+	vy = vYmax - vYmin
+	vY2 = FormatNumber(vy*10, 1)
+	
+	vZmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Z
+	vZmin = odoc.ComponentDefinition.RangeBox.MinPoint.Z
+	
+	vz = vZmax - vZmin
+	vZ2 = FormatNumber(vz * 10, 1)
+	
+	LARGO = vX2
+	ANCHO = vY2
+	ESPESOR = vZ2
+	
+	iProperties.Value("Custom", "L1") = FormatNumber(CDbl(LARGO), 1)
+	iProperties.Value("Custom", "L2") = FormatNumber(CDbl(ANCHO), 1)
+	iProperties.Value("Custom", "L3") = FormatNumber(CDbl(ESPESOR),1)
+	
+	Parameter("L1") = CDbl(LARGO)
+	Parameter("L2") = CDbl(ANCHO)
+	Parameter("L3") = CDbl(ESPESOR)

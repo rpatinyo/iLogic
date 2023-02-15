@@ -1,0 +1,41 @@
+﻿Dim array_operaciones As New ArrayList
+iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+If Left(ThisDoc.FileName(False), 3) = "A11" Then
+	array_operaciones.Add("ENC")
+End If
+
+If Parameter("OP_MANUAL") = True Then
+	array_operaciones.Add("MAN")
+End If
+
+If Left(ThisDoc.FileName(False), 3) = "A10" And Parameter("OP_MANUAL") = False Then
+	array_operaciones.Add("SEC")
+End If
+
+If parameter("OP_CHAPAR_CANTOS") = True Then
+	array_operaciones.Add("CHA")
+End If
+
+VOL = FormatNumber(CDbl(Parameter("L1")), 5) * FormatNumber(CDbl(Parameter("L1")), 5) * FormatNumber(CDbl(Parameter("L1")), 5)
+VOL = Round(Parameter("L1") * Parameter("L2") * Parameter("L3"), 6)
+
+VOL_REAL = iProperties.Volume
+resta = (FormatNumber(CDbl(VOL_REAL), 5) - FormatNumber(CDbl(VOL), 5))
+
+If Round(VOL_REAL, 6) < Round(VOL, 6) Then
+		If (FormatNumber(CDbl(VOL_REAL), 5) < FormatNumber(CDbl(VOL), 5)) Then
+			array_operaciones.Add("PTG")
+		End If
+End If
+	
+If Parameter("OP_PINTAR") = True Or Parameter("OP_PINTAR_CANTOS") = True Then
+		array_operaciones.Add("PIN")
+End If
+	
+For i = 0 To array_operaciones.Count - 1
+	If i = array_operaciones.Count - 1 Then
+		iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i)
+		Else
+		iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+	End If
+Next

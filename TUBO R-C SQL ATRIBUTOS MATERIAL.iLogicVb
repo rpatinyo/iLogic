@@ -1,0 +1,259 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+	If Parameter("SECCION_MATERIAL") <> Parameter("SECCION_MATERIAL_ORIG") Then
+		MessageBox.Show("LA SECCIÓN SELECCIONADA ES DIFERENTE DE LA ORIGINAL (" & Parameter("SECCION_MATERIAL_ORIG") & ")", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+	End If
+
+	parameter("TSQL") = "x_bi_sql_view_categoria_metal"
+	parameter("PAR") = "CODIGO_MATERIAL_VIRTUAL"
+	parameter("CSQL") = "x_codigo"
+	parameter("SQL") = " Select x_bi_sql_view_categoria_metal.x_codigo " &
+	"From x_bi_sql_view_categoria_metal " &
+	"Where (((x_bi_sql_view_categoria_metal.x_material)='" & PARAMETER("TIPO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_tipoacabado)='" & PARAMETER("ACABADO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_medidas)='" & PARAMETER("SECCION_MATERIAL") & "'));"
+
+	con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+	parameter("TSQL") = "x_bi_sql_view_categoria_metal"
+	parameter("PAR") = "DESCRIPCION_MATERIAL"
+	parameter("CSQL") = "x_descripcion"
+	parameter("SQL") = " Select x_bi_sql_view_categoria_metal.x_descripcion " &
+	"From x_bi_sql_view_categoria_metal " &
+	"Where (((x_bi_sql_view_categoria_metal.x_material)='" & PARAMETER("TIPO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_tipoacabado)='" & PARAMETER("ACABADO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_medidas)='" & PARAMETER("SECCION_MATERIAL") & "'));"
+
+	con3(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+	parameter("TSQL") = "x_bi_sql_view_categoria_metal"
+	parameter("PAR") = "CODIGO_MATERIAL_INVENTOR"
+	parameter("CSQL") = "x_cod_inventor"
+	parameter("SQL") = " Select x_bi_sql_view_categoria_metal.x_cod_inventor " &
+	"From x_bi_sql_view_categoria_metal " &
+	"Where (((x_bi_sql_view_categoria_metal.x_material)='" & PARAMETER("TIPO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_tipoacabado)='" & PARAMETER("ACABADO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_medidas)='" & PARAMETER("SECCION_MATERIAL") & "'));"
+
+	con4(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+	parameter("TSQL") = "x_bi_sql_view_categoria_metal"
+	parameter("PAR") = "DENSIDAD_MATERIAL"
+	parameter("CSQL") = "x_densidad"
+	parameter("SQL") = " Select x_bi_sql_view_categoria_metal.x_densidad " &
+	"From x_bi_sql_view_categoria_metal " &
+	"Where (((x_bi_sql_view_categoria_metal.x_material)='" & PARAMETER("TIPO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_tipoacabado)='" & PARAMETER("ACABADO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_medidas)='" & PARAMETER("SECCION_MATERIAL") & "'));"
+
+	con5(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+	volume = iProperties.Volume / 1000000000
+	InventorVb.DocumentUpdate()
+	DENSIDAD = FormatNumber(CDbl(PARAMETER("DENSIDAD_MATERIAL")), "1", vbFalse)
+	PESO = DENSIDAD * volume
+	PESO = FormatNumber(CDbl(PESO), "3", vbFalse)
+	iProperties.Value("Custom", "PESO") = PESO
+	RuleParametersOutput()
+	InventorVb.DocumentUpdate()
+	iLogicVb.RunExternalRule("TUBO R-C SQL DESCRIPCION")
+
+End Sub
+
+
+
+
+Sub con2(tabla As String, iProp As String, campo As String, BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+	iProperties.Value("Custom", "CODIGO_MATERIAL_VIRTUAL") = nombre(0)
+	parameter("CODIGO_MATERIAL_VIRTUAL") = iProperties.Value("Custom", "CODIGO_MATERIAL_VIRTUAL")
+
+End Sub
+
+Sub con3(tabla As String, iProp As String, campo As String, BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+	iProperties.Value("Custom", "DESCRIPCION_MATERIAL") = nombre(0)
+	parameter("DESCRIPCION_MATERIAL") = iProperties.Value("Custom", "DESCRIPCION_MATERIAL")
+
+End Sub
+
+Sub con4(tabla As String, iProp As String, campo As String, BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+	iProperties.Value("Custom", "CODIGO_MATERIAL_INVENTOR") = nombre(0)
+	parameter("CODIGO_MATERIAL_INVENTOR") = iProperties.Value("Custom", "CODIGO_MATERIAL_INVENTOR")
+
+End Sub
+
+Sub con5(tabla As String, iProp As String, campo As String, BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+	iProperties.Value("Custom", "DENSIDAD_MATERIAL") = nombre(0)
+	parameter("DENSIDAD_MATERIAL") = iProperties.Value("Custom", "DENSIDAD_MATERIAL")
+	iProperties.Value("Custom", "SECCION_MATERIAL") = Parameter("SECCION_MATERIAL")
+	SECCION_MAT = iProperties.Value("Custom", "SECCION_MATERIAL")
+	ANCHO = Mid(SECCION_MAT, 1, 3)
+	HONDO = Mid(SECCION_MAT, 5, 3)
+
+
+	If Parameter("ACABADO_MATERIAL") = "TR" Or Parameter("ACABADO_MATERIAL") = "TC" Then
+		Try
+			Feature.IsActive("Empalme1") = True
+			Feature.IsActive("Vaciado1") = True
+		Catch
+		End Try
+		ESPESOR = Mid(SECCION_MAT, 9, 4)
+		RADIO = Mid(SECCION_MAT, 16, 4)
+	Else
+		Try
+			Feature.IsActive("Empalme1") = False
+			Feature.IsActive("Vaciado1") = False
+		Catch
+		End Try
+		ESPESOR = 0
+		RADIO = 0
+	End If
+
+	HONDO = FormatNumber(CDbl(HONDO), "1", vbFalse)
+	ANCHO = FormatNumber(CDbl(ANCHO), "1", vbFalse)
+	ESPESOR = FormatNumber(CDbl(ESPESOR), "1", vbFalse)
+	RADIO = FormatNumber(CDbl(RADIO), "1", vbFalse)
+
+	Parameter("ANCHO") = ANCHO
+	iProperties.Value("Custom", "ANCHO") = Parameter("ANCHO")
+	Parameter("HONDO") = HONDO
+	iProperties.Value("Custom", "HONDO") = Parameter("HONDO")
+	Parameter("ESPESOR") = ESPESOR
+	iProperties.Value("Custom", "ESPESOR") = Parameter("ESPESOR")
+	Parameter("RADIO") = RADIO
+	iProperties.Value("Custom", "RADIO") = Parameter("RADIO")
+
+	volume = iProperties.Volume / 1000000000
+	InventorVb.DocumentUpdate()
+	DENSIDAD = FormatNumber(CDbl(PARAMETER("DENSIDAD_MATERIAL")), "1", vbFalse)
+	PESO = DENSIDAD * volume
+	PESO = FormatNumber(CDbl(PESO), "3", vbFalse)
+	iProperties.Value("Custom", "PESO") = PESO
+	RuleParametersOutput()
+	InventorVb.DocumentUpdate()
+	iLogicVb.RunExternalRule("TUBO R-C SQL DESCRIPCION")
+
+
+
+End Sub

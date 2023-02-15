@@ -1,0 +1,52 @@
+﻿
+AddReference "CookComputing.XmlRpcV2.dll"
+AddReference "Odoo.XmlRpcAdapter.dll"
+AddReference "Figlut.Server.Toolkit45.dll"
+Imports CookComputing.XmlRpc
+Imports Odoo.XmlRpcAdapter
+Imports Odoo.XmlRpcAdapter.Domain.Operators.Mappers
+Imports Odoo.XmlRpcAdapter.Domain
+Imports Odoo.XmlRpcAdapter.Results
+Imports Odoo.XmlRpcAdapter.XmlRpcProxy
+Imports Odoo.XmlRpcAdapter.Contants
+
+Sub Main()
+	
+	local_code_concat = iProperties.Value("Custom", "COLOR_CODE") & "-" & iProperties.Value("Custom", "P_CANTOS_CODE") & "-" & iProperties.Value("Custom", "COL_CANTOS_CODE")
+	
+	 Dim Odoo As OdooXmlRpcAdapter = New OdooXmlRpcAdapter(
+	   	"http://odoo3.insca.com:8069/xmlrpc/2/common",
+       	"http://odoo3.insca.com:8069/xmlrpc/2/object",
+    	"base",
+    	"insca",
+    	"insca2021",
+		"",
+    	bypassRemoteSslCertificateValidation := True)
+	Logger.Info("Permisos | {0}", Odoo.CheckAccessRights)
+	
+	Dim ids2 As Integer() = Odoo.Search("wood.config", 0, 10, OdooLogicalOperator.[Or], New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0), New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0))
+	Dim records1 As XmlRpcStruct() = Odoo.Read("wood.config", ids2, New String() {"code_concat", "name" })
+	
+	For i As Integer = 0 To records1.Count - 1
+    
+		oExists = False
+		If records1(i).Values(1) = local_code_concat Then
+			Logger.Info("Este código ya existe {0}", local_code_concat)
+			oExists = True
+			Exit For
+		End If	
+	Next
+	
+	If oExists = False Then
+		Logger.Info("Este código no existe {0}", local_code_concat)
+		Dim ColorMaderaId As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "COLOR_CODE")))
+		Dim CantosId As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "P_CANTOS_CODE")))
+		Dim ColorCantosId As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "COL_CANTOS_CODE")))
+		Dim r1 As XmlRpcStruct = New XmlRpcStruct()
+	    	r1.Add("color_madera_id", ColorMaderaId(0))
+			r1.Add("cantos_id", CantosId(0))
+			r1.Add("color_cantos_id", ColorCantosId(0))
+	    Dim recordId As Integer = Odoo.Create("wood.config", r1)
+	End If	
+	
+End Sub

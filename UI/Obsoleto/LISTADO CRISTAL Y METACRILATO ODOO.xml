@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>LISTADO CRISTAL Y METACRILATO ODOO</Name>
+  <Guid>9c28f416-4dd4-4a1a-8d9e-2fe0fc9cc35e</Guid>
+  <SizeConstraints>
+    <MinimumSize>
+      <Width>
+        <Value>86.53125</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>44.53125</Value>
+        <Units>Em</Units>
+      </Height>
+    </MinimumSize>
+    <MaximumSize>
+      <Width>
+        <Value>86.53125</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>44.53125</Value>
+        <Units>Em</Units>
+      </Height>
+    </MaximumSize>
+  </SizeConstraints>
+  <Items>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 2</Name>
+      <Guid>4c3ab3e5-e4c4-42d0-a502-517d4c5255a8</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>DESACTIVAR CONEXIÓN A VAULT</Name>
+          <Guid>42727295-0a87-4625-8fea-b803c389fff2</Guid>
+          <ToolTip>ES NECESARIO DESACTIVAR LA CONEXIÓN A VAULT</ToolTip>
+          <Font>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <ContentsFont>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </ContentsFont>
+          <Items />
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>CONECTAR A ODOO</Name>
+      <Guid>ea287b86-c609-4e3f-81b3-9773f8e99ddf</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA A80 CONEXION</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA A80 CONEXION.iLogicVb</Path>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 1</Name>
+      <Guid>9a2f2ef8-21b5-4d28-8557-cc3824daa827</Guid>
+      <Items>
+        <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+          <Name>TIPO</Name>
+          <Guid>46d29c24-ce99-4828-a7e7-25b7ff976bf6</Guid>
+          <ToolTip />
+          <ParameterName>TIPO_A80</ParameterName>
+          <EditControlType>ComboBox</EditControlType>
+          <AllowCustomValues>false</AllowCustomValues>
+          <MinimumItemsToShow>2</MinimumItemsToShow>
+          <RadioGroupColumnCount>1</RadioGroupColumnCount>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>CARGAR MODELOS</Name>
+          <Guid>23f233c6-065a-41e7-b218-da457a1876f1</Guid>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>INSCA A80 DESCRIPCION</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>INSCA A80 DESCRIPCION.iLogicVb</Path>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 5</Name>
+          <Guid>bfacc40f-1dae-432e-b5f8-847630a68593</Guid>
+          <Items>
+            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+              <Name>MODELO</Name>
+              <Guid>75f0c349-ef23-4c2f-88ba-ced2fb3a9a09</Guid>
+              <ToolTip />
+              <ParameterName>DESCRIPCION</ParameterName>
+              <EditControlType>ComboBox</EditControlType>
+              <AllowCustomValues>false</AllowCustomValues>
+              <MinimumItemsToShow>2</MinimumItemsToShow>
+              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>CARGAR ESPESOR</Name>
+              <Guid>5b67b527-dee5-4300-b940-04d7b60266a9</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA A80 ESPESOR</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA A80 ESPESOR.iLogicVb</Path>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 6</Name>
+      <Guid>0ccf027b-e043-4d85-9ee1-199c88fedf6d</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>DIMENSIONES</Name>
+          <Guid>5d7bf60f-3d33-4ce6-8eeb-a93fe2b5800f</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 7</Name>
+              <Guid>ebded58d-bf59-4292-82b3-21e4cd6f7044</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueNumericParameterControlSpec">
+                  <Name>ESPESOR</Name>
+                  <Guid>e5e1431c-910e-4b87-8fd0-a8db1e203d9f</Guid>
+                  <ToolTip />
+                  <ParameterName>L3</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="NumericParameterControlSpec">
+                  <Name>LARGO</Name>
+                  <Guid>d9b87873-9b6d-4da6-a18f-9748797d5ee3</Guid>
+                  <ToolTip />
+                  <ParameterName>L1</ParameterName>
+                  <EditControlType>TextBox</EditControlType>
+                  <TrackBarProperties>
+                    <MinimumValue>1</MinimumValue>
+                    <MaximumValue>10</MaximumValue>
+                    <ValueIncrement>1</ValueIncrement>
+                  </TrackBarProperties>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="NumericParameterControlSpec">
+                  <Name>ANCHO</Name>
+                  <Guid>73998617-377e-43dd-9026-93065c3edac0</Guid>
+                  <ToolTip />
+                  <ParameterName>L2</ParameterName>
+                  <EditControlType>TextBox</EditControlType>
+                  <TrackBarProperties>
+                    <MinimumValue>1</MinimumValue>
+                    <MaximumValue>10</MaximumValue>
+                    <ValueIncrement>1</ValueIncrement>
+                  </TrackBarProperties>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>CONFIRMAR DIMENSIONES</Name>
+                  <Guid>6dbf35a5-f5ed-498f-bed3-f11a84f431ca</Guid>
+                  <Image>
+                    <BitmapByteArray />
+                  </Image>
+                  <TextVisible>true</TextVisible>
+                  <RuleName>INSCA A80 BUSCAR</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA A80 BUSCAR.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 8</Name>
+              <Guid>7d7a5b27-a64f-400a-8c0c-c3e8832b226d</Guid>
+              <Items />
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 4</Name>
+      <Guid>e857b6f1-c645-41ba-ba7d-89229931c823</Guid>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>CONFIGURACIÓN</Name>
+          <Guid>f8378d56-f46a-49ce-9c54-718a391768f3</Guid>
+          <PropertyName>CODIGO_A80</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 2</Name>
+          <Guid>4509d1d1-067e-408f-b9d7-fcec11b218b0</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 3</Name>
+          <Guid>ffd0d587-06d8-43b1-b03a-2478ed9b8db9</Guid>
+          <Items>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>DESCRIPCIÓN</Name>
+              <Guid>53b08949-9015-410c-9881-fcf565ed267a</Guid>
+              <PropertyName>Description</PropertyName>
+              <PropertySetName>Project</PropertySetName>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 9</Name>
+      <Guid>14079690-b0be-45ac-9dfd-4fa3f7f2c2fb</Guid>
+      <Items>
+        <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+          <Name>DENSIDAD_A80</Name>
+          <Guid>fbcad99d-b965-4cd1-bd65-19dbc9f382f8</Guid>
+          <ToolTip />
+          <ParameterName>DENSIDAD_A80</ParameterName>
+          <EditControlType>ComboBox</EditControlType>
+          <AllowCustomValues>false</AllowCustomValues>
+          <MinimumItemsToShow>2</MinimumItemsToShow>
+          <RadioGroupColumnCount>1</RadioGroupColumnCount>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 10</Name>
+          <Guid>d29c2b92-439f-481a-9ef7-ecf374cab615</Guid>
+          <Items>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 1</Name>
+              <Guid>e6c4b347-3629-4ce2-b676-1f24d4dea7ee</Guid>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>INSCA A80 GUARDAR</Name>
+      <Guid>07f8ada3-bf57-4da6-b0fd-e135f62f5fff</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA A80 GUARDAR</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA A80 GUARDAR.iLogicVb</Path>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>None</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

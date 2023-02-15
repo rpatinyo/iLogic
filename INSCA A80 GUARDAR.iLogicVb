@@ -1,0 +1,70 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+Dim odoc As PartDocument
+odoc = ThisDoc.Document
+
+Dim ocomp As PartComponentDefinition
+ocomp = odoc.ComponentDefinition
+
+Dim model_states As ModelStates
+model_states = ocomp.ModelStates
+
+Dim fileSystemObj As Object
+fileSystemObj = CreateObject("Scripting.FileSystemObject")
+
+Dim undo As Transaction
+'undo = ThisApplication.TransactionManager.StartTransaction(odoc, "Versión de pieza")
+
+Select Parameter("Tipo")
+	Case "Cristal/Metacrilato"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			Largo_nombre_archivo = Len(Nombre_archivo)
+			
+			Select Largo_nombre_archivo
+				Case 0
+						iProperties.Value("Custom", "VDS_NumSchm") = "A80"
+						iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+						ThisDoc.Document.SaveAs("C:\testing.ipt", False)
+						Nombre_archivo = ThisDoc.FileName(False) 'without extension
+						CODIGO = Nombre_archivo
+						'MultiValue.UpdateAfterChange = True
+				
+				Case 9
+						Prefijo = Left(Nombre_archivo, 4)
+						Sufijo = Right(Nombre_archivo, 5)
+						CODIGO = Prefijo & "0" & Sufijo
+						
+				Case 10
+						CODIGO = Nombre_archivo
+					End Select
+					
+												
+						MultiValue.UpdateAfterChange = True
+						model_states("Principal").Activate
+						CONFIG = Right(iProperties.Value("Custom", "CODIGO_A80"), 6)
+						VALOR = CODIGO & "." & CONFIG
+						iProperties.Value("Project", "Part Number") = CODIGO
+						PESO = iProperties.Value("Custom", "PESO")
+						DESCRIP = iProperties.Value("Project", "Description")
+						S_PIEZA = (Parameter("L1") / 1000) * (Parameter("L2") / 1000)
+						iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+						
+						Try
+							model_states.Add(DESCRIP)
+							model_stateS(DESCRIP).Activate
+							iProperties.Value("Project", "Part Number") = VALOR
+							iProperties.Value("Project", "Description") = DESCRIP
+							iProperties.Value("Custom", "PESO") = PESO
+							iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+							model_states.Item("Principal").Activate
+							InventorVb.DocumentUpdate()
+							MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")	
+						Catch
+						End Try
+						
+					'undo.End
+						
+End Select
+		
+'undo.end
+
+

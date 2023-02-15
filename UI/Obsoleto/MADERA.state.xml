@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormStatePersist xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Size>
+    <Width>649</Width>
+    <Height>626</Height>
+  </Size>
+  <Location>
+    <X>254</X>
+    <Y>155</Y>
+  </Location>
+  <DipToPixelConversionFactors>
+    <WidthFactor>1</WidthFactor>
+    <HeightFactor>1</HeightFactor>
+  </DipToPixelConversionFactors>
+  <SplitterLocations>
+    <SplitterLocation>
+      <Name>Divisor 2</Name>
+      <Location>
+        <X>0</X>
+        <Y>119</Y>
+      </Location>
+    </SplitterLocation>
+  </SplitterLocations>
+  <GroupExpansionStateList>
+    <GroupExpansionState>
+      <Name>MEDIDAS</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>Operaciones</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+  </GroupExpansionStateList>
+  <TabGroupSelectedPageList />
+</FormStatePersist>

@@ -1,0 +1,42 @@
+﻿Dim odoc As PartDocument
+odoc = ThisDoc.Document
+Dim ocom As PartComponentDefinition
+ocom = odoc.ComponentDefinition
+Dim ofeas As PartFeatures
+Dim ofea As SweepFeature
+For Each ofea In ocom.Features.SweepFeatures
+	Dim OSW As SweepDefinition
+	OSW = ofea.Definition
+	Dim total As Double
+	total = 0
+	Dim oo As PathEntity
+	For Each oo In OSW.Path
+		Dim kk As Object
+		kk = oo.Curve
+		Dim cc As CurveEvaluator
+		cc = kk.evaluator
+		Dim min As Double
+		Dim max As Double
+		Dim largo As Double
+		cc.GetParamExtents(min, max)
+		cc.GetLengthAtParam(nim, max, largo)
+		total += largo * 10
+	Next
+	'parameter(INS_LARGO) = (FormatNumber(total, 2)/1000)
+	iProperties.Value("Custom", "LARGO_PRODUCTO_COMPRA") = (FormatNumber(total, 2) / 1000)
+	'parameter(INS_LARGO) = iProperties.Value("Custom", "LARGO_PRODUCTO_COMPRA")
+	'Logger.Info(FormatNumber(total,2))
+Next
+
+Dim oDef As PartComponentDefinition = odoc.ComponentDefinition
+
+Dim oParam As Parameters = oDef.Parameters
+CONDICION = Round(SheetMetal.FlatExtentsLength, 1)
+'MessageBox.Show(CONDICION, "VALOR CONDICIÓN")
+
+If CONDICION > 0 Then
+	'MsgBox("This is a sheet metal part.")
+
+	iProperties.Value("Custom", "LARGO_PRODUCTO_COMPRA") = (FormatNumber(Round(SheetMetal.FlatExtentsLength, 1), 2) / 1000)
+End If
+

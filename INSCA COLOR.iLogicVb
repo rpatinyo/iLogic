@@ -1,0 +1,29 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+Sub main
+	
+Valor("COL1", "COL_CODE1")
+Valor("COL2", "COL_CODE2")
+Valor("COL3", "COL_CODE3")
+
+iProperties.Value("Custom", "ACABADO_1") = Parameter("COL1")
+iProperties.Value("Custom", "ACABADO_2") = Parameter("COL2")
+iProperties.Value("Custom", "ACABADO_3") = Parameter("COL3")
+
+
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+iLogicVb.RunExternalRule("INSCA MEDIDAS")
+End Sub
+
+
+
+Sub Valor(color As String, codigo As String)
+
+VALOR1 = MultiValue.List(color)
+INDICE1 = VALOR1.IndexOf(Parameter(color))
+
+VALOR2 = MultiValue.List("COL_CODE")
+
+iProperties.Value("Custom", codigo) = VALOR2(INDICE1)
+
+End Sub

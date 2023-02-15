@@ -1,0 +1,103 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+'iProperties.Value("Custom", "ABREV_TIPO_PIEZA") = ""
+parameter("TSQL") = "tipo_pieza"
+parameter("PAR") = "ABREV_TIPO_PIEZA"
+parameter("CSQL") = "abreviatura"
+parameter("SQL") = "Select tipo_pieza.abreviatura " &
+		"From tipo_pieza " &
+		"Where (((tipo_pieza.name)='" & parameter("TIPO_PIEZA") & "'));"
+		
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+If parameter("L1_DES_CHAPA")>1 And parameter("L1_DES_CHAPA")<100 Then
+	LL = "00" & FormatNumber(CDbl(PARAMETER("L1_DES_CHAPA")), "1", vbFalse)
+	ElseIf parameter("L1_DES_CHAPA") >= 100 And parameter("L1_DES_CHAPA") <1000 Then
+		LL = "0" & FormatNumber(CDbl(PARAMETER("L1_DES_CHAPA")), "1", vbFalse)
+		ElseIf parameter("L1_DES_CHAPA") >= 1000 Then
+			LL = FormatNumber(CDbl(PARAMETER("L1_DES_CHAPA")), "1", vbFalse)
+End If
+
+If parameter("L2_DES_CHAPA")>1 And parameter("L2_DES_CHAPA")<100 Then
+	LA = "00" & FormatNumber(CDbl(PARAMETER("L2_DES_CHAPA")), "1", vbFalse)
+		ElseIf parameter("L2_DES_CHAPA")>=100 And parameter("L2_DES_CHAPA")<1000 Then
+			LA = "0" & FormatNumber(CDbl(PARAMETER("L2_DES_CHAPA")), "1", vbFalse)
+				ElseIf parameter("L2_DES_CHAPA") >= 1000 Then
+					LA = FormatNumber(CDbl(PARAMETER("L2_DES_CHAPA")), "1", vbFalse)
+End If
+
+If parameter("L3")>1 And parameter("L3")<100 Then
+	LE = "0" & FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+	Else
+		LE = FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+End If
+
+Dim odoc As PartDocument
+odoc = ThisDoc.Document
+
+ocomp = odoc.ComponentDefinition
+
+operaciones = ocomp.Features
+Dim operacion As PartFeature
+
+If Parameter("TIPO_PIEZA") = "0_N#A" Then
+	For Each operacion In operaciones
+		If operacion.Type = 151001344 Then
+			desc = "CPF " & LL & "x" & LA & "x" & LE & "mm"
+			parameter("OP_PLEGAR") = True
+			Exit For
+			Else
+				desc = "CPC " & LL & "x" & LA & "x" & LE & "mm"
+		End If
+	Next
+	Else
+		desc = Parameter("ABREV_TIPO_PIEZA") & " " & LL & "x" & LA & "x" & LE & "mm"
+	End If
+	
+iProperties.Value("Project", "Description") = desc
+End Sub
+
+Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	
+	iProperties.Value("Custom", "ABREV_TIPO_PIEZA") = nombre(0)
+	parameter("ABREV_TIPO_PIEZA") = iProperties.Value("Custom", "ABREV_TIPO_PIEZA")
+		
+End Sub
+

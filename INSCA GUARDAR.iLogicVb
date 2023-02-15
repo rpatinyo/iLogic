@@ -1,0 +1,28 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+ Dim fileSystemObj As Object
+  fileSystemObj = CreateObject("Scripting.FileSystemObject")
+  'Nombre_archivo = iProperties.Value("Custom", "CÓDIGO") & ".iam"
+  If Parameter("Tipo") = "A00" Then
+	  iLogicVb.RunExternalRule("INSCA MODEL STATE A00")
+	  iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+	  iLogicVb.RunExternalRule("INSCA CADENA BUSQUEDA")
+	  iLogicVb.RunExternalRule("INSCA EMBALAJE")
+	  Else
+		  	Nombre_archivo = ThisDoc.FileName(False) & ".iam"
+  			Guardado = ThisDoc.WorkspacePath & "\" & Nombre_archivo
+  			Logger.Info(Guardado)
+  			PARAMETER("CONFIG") = Right(ThisDoc.FileName(False),6)
+  			iProperties.Value("Custom", "DESCRIPCION") = Parameter("DESCRIPCION")
+  			iProperties.Value("Custom", "CONFIG") = Parameter("CONFIG")
+  			iProperties.Value("Inventor Summary Information", "Title") = iProperties.Value("Custom", "CÓDIGO")
+  			iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "CÓDIGO")
+  			iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION")
+  			iProperties.Value("Custom", "Technical Office") = "0"
+  
+  			If fileSystemObj.fileexists(Guardado) Then
+    			MessageBox.Show("El archivo ya existe. Para guardarlo, utilice el comando 'GUARDAR' de Inventor.", "Archivo existente")
+				Else
+    				ThisDoc.Document.SaveAs(Guardado, False)
+			End If
+	End If
+		

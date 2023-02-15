@@ -1,0 +1,385 @@
+﻿Dim ODOC As PartDocument
+ODOC = ThisDoc.Document
+OCOMP = ODOC.ComponentDefinition
+MODEL_STATES = OCOMP.ModelStates
+
+Dim undo As Transaction
+'undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de pieza")
+
+par = Parameter("Tipo")
+
+If par = "Tubo redondo" OR par = "Macizo redondo" Then
+	undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de pieza")
+	MODEL_STATES.Item("Principal").Activate
+	CODIGO = iProperties.Value("Custom", "N_PIEZA")
+
+If iProperties.Value("Custom", "PR_PINTURA") = True Then
+iLogicVb.RunExternalRule("INSCA PINTURA")
+Try
+VALOR = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE") & PARAMETER("COL_CODE")
+MessageBox.Show(VALOR, "Title")
+
+MODEL_STATES.Add(VALOR)
+
+
+MODEL_STATES.Item(VALOR).Activate
+
+'iProperties.Value("Custom", "SPINT") = (Round(Math.PI * PARAMETER("DIAMETRO") * PARAMETER("L1"), 2) / 1000000) & " m²"
+iProperties.Value("Project", "Part Number") = VALOR
+
+iProperties.Value("Custom", "CRUDO") = ""
+iProperties.Value("Custom", "MATERIAL_COLOR") = PARAMETER("COL")
+iProperties.Value("Custom", "COLOR_CODE") = PARAMETER("COL_CODE")
+'iProperties.Value("Custom", "COLOR_CODIGO") = PARAMETER("COL_CODIGO")
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL")
+
+If iProperties.Value("Custom", "PR_PINTURA") = True Then
+	iProperties.Value("Custom", "RUTA_PRODUCCION") = "PIN"
+	Else
+		iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+		iLogicVb.RunExternalRule("INSCA PINTURA")
+End If
+
+MODEL_STATES.Item("Principal").Activate
+VALOR2= CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+MODEL_STATES.Add(VALOR2)
+MODEL_STATES.Item(VALOR2).Activate
+iProperties.Value("Custom", "PR_PINTURA") = False
+iProperties.Value("Custom", "SPINT") = 0
+iProperties.Value("Project", "Part Number") = VALOR2
+
+iProperties.Value("Custom", "CRUDO") = VALOR2
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODE") = ""
+'iProperties.Value("Custom", "COLOR_CODIGO") = ""
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+
+prod = iProperties.Value("Custom", "RUTA_PRODUCCION")
+iLogicVb.RunExternalRule("INSCA PINTURA")
+prod = Replace(prod, "-PIN", "")
+
+If prod = "" Then
+iProperties.Value("Custom", "RUTA_PRODUCCION") = "MAN"	
+Else
+iProperties.Value("Custom", "RUTA_PRODUCCION") = prod
+End If
+
+Catch
+'i = MessageBox.Show(VALOR2 & "Ya estaba generado", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+
+End Try
+
+Else
+	
+Try
+	
+MODEL_STATES.Item("Principal").Activate
+VALOR3 = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+MODEL_STATES.Add(VALOR3)
+MODEL_STATES.Item(VALOR3).Activate
+iProperties.Value("Custom", "PR_PINTURA") = False
+iProperties.Value("Custom", "SPINT") = 0
+
+iProperties.Value("Project", "Part Number") = VALOR3
+
+iProperties.Value("Custom", "CRUDO") = VALOR3
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODE") = ""
+'iProperties.Value("Custom", "COLOR_CODIGO") = ""
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+
+prod = iProperties.Value("Custom", "RUTA_PRODUCCION")
+iLogicVb.RunExternalRule("INSCA PINTURA")
+'Logger.Info(prod)
+prod = Replace(prod, "-PIN", "")
+'Logger.Info(prod)
+
+If prod = "" Then
+iProperties.Value("Custom", "RUTA_PRODUCCION") = "MAN"	
+Else
+iProperties.Value("Custom", "RUTA_PRODUCCION") = prod
+End If
+
+Catch
+'i = MessageBox.Show(VALOR3 & "Ya estaba generado", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+End Try
+
+End If
+undo.End
+
+ElseIf par = "Tubo rectangular/cuadrado" Then
+	
+	undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de pieza")
+	MultiValue.UpdateAfterChange = True
+
+	MODEL_STATES.Item("Principal").Activate
+	CODIGO = iProperties.Value("Custom", "N_PIEZA")
+
+	If iProperties.Value("Custom", "PR_PINTURA") = True Then
+
+		Try
+			VALOR = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE") & parameter("COL_CODE")
+			DESCRIP = iProperties.Value("Custom", "MATERIAL") & "-" & parameter("COL")
+			MODEL_STATES.Add(DESCRIP)
+			MODEL_STATES.Item(DESCRIP).Activate
+			'iProperties.Value("Custom", "SPINT") = ((2 * Int(L1) * Int(HONDO)) + (2 * Int(L1) * Int(ANCHO))) / 1000000
+			iProperties.Value("Project", "Part Number") = VALOR
+			iProperties.Value("Custom", "CRUDO") = ""
+			iProperties.Value("Custom", "MATERIAL_COLOR") = parameter("COL")
+			iProperties.Value("Custom", "COLOR_CODE") = parameter("COL_CODE")
+			'iProperties.Value("Custom", "COLOR_CODIGO") = parameter("COL_CODIGO")
+			iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+				If iProperties.Value("Custom", "PR_PINTURA") = True Then
+					iProperties.Value("Custom", "RUTA_PRODUCCION") = "PIN"
+					Else
+						iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+				End If
+			iLogicVb.RunExternalRule("INSCA PINTURA")	
+
+			MODEL_STATES.Item("Principal").Activate
+			VALOR2= CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+			DESCRIP2 = iProperties.Value("Custom", "MATERIAL") & "-CRUDO"
+			MODEL_STATES.Add(DESCRIP2)
+			MODEL_STATES.Item(DESCRIP2).Activate
+iLogicVb.RunexternalRule("INSCA RUTA FABRICACION")
+
+iProperties.Value("Custom", "PR_PINTURA") = False
+iProperties.Value("Custom", "SPINT") = 0
+iProperties.Value("Project", "Part Number") = VALOR2
+
+'iProperties.Value("Custom", "CRUDO") = VALOR2
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODE") = ""
+'iProperties.Value("Custom", "COLOR_CODIGO") = ""
+
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+
+prod = iProperties.Value("Custom", "RUTA_PRODUCCION")
+'Logger.Info(prod)
+prod = Replace(prod, "-PIN", "")
+'Logger.Info(prod)
+iProperties.Value("Custom", "RUTA_PRODUCCION") = prod
+
+iLogicVb.RunExternalRule("INSCA PINTURA")
+
+Catch
+'Logger.Info(VALOR3 & " - Ya estaba generado")
+End Try
+
+Else
+	
+Try
+	
+MODEL_STATES.Item("Principal").Activate
+			VALOR3= CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+			DESCRIP3 = iProperties.Value("Custom", "MATERIAL") & "-CRUDO"
+			MODEL_STATES.Add(DESCRIP3)
+			MODEL_STATES.Item(DESCRIP3).Activate
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+
+iProperties.Value("Custom", "PR_PINTURA") = False
+iProperties.Value("Custom", "SPINT") = 0
+iProperties.Value("Project", "Part Number") = VALOR3
+
+'iProperties.Value("Custom", "CRUDO") = VALOR2
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODE") = ""
+'iProperties.Value("Custom", "COLOR_CODIGO") = ""
+
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+
+prod = iProperties.Value("Custom", "RUTA_PRODUCCION")
+'Logger.Info(prod)
+prod = Replace(prod, "-PIN", "")
+'Logger.Info(prod)
+iProperties.Value("Custom", "RUTA_PRODUCCION") = prod
+
+iLogicVb.RunExternalRule("INSCA PINTURA")
+
+
+
+Catch
+
+End Try
+
+End If
+undo.End
+
+ElseIf par = "Chapa" Then
+undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de pieza")	
+MultiValue.UpdateAfterChange = True
+sharedvariable("prod2") = ""
+
+MODEL_STATES.Item("Principal").Activate
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+iLogicVb.RunExternalRule("INSCA SUPERFICIE")
+
+CODIGO = iProperties.Value("Custom", "N_PIEZA")
+
+If iProperties.Value("Custom", "PR_PINTURA") = True Then
+
+
+Try
+VALOR = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE") & PARAMETER("COL_CODE")
+MODEL_STATES.Add(VALOR)
+
+
+MODEL_STATES.Item(VALOR).Activate
+
+iProperties.Value("Custom", "PR_PINTURA") = True
+iProperties.Value("Project", "Part Number") = VALOR
+
+iProperties.Value("Custom", "CRUDO") = ""
+iProperties.Value("Custom", "MATERIAL_COLOR") = parameter("COL")
+iProperties.Value("Custom", "COLOR_CODE") = parameter("COL_CODE")
+iProperties.Value("Custom", "COLOR_CODIGO") = parameter("COL_CODIGO")
+
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+iLogicVb.RunExternalRule("INSCA SUPERFICIE")
+
+
+
+MODEL_STATES.Item("Principal").Activate
+VALOR2= CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+MODEL_STATES.Add(VALOR2)
+MODEL_STATES.Item(VALOR2).Activate
+iProperties.Value("Custom", "PR_PINTURA")=False
+iProperties.Value("Project", "Part Number") = VALOR2
+
+iProperties.Value("Custom", "CRUDO") = VALOR2
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODE") = ""
+iProperties.Value("Custom", "COLOR_CODIGO") = ""
+
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+iLogicVb.RunExternalRule("INSCA SUPERFICIE")
+
+
+
+prod = iProperties.Value("Custom", "RUTA_PRODUCCION")
+'Logger.Info(prod)
+prod = Replace(prod, "-PIN", "")
+'Logger.Info(prod)
+iProperties.Value("Custom", "RUTA_PRODUCCION") = prod
+
+Catch
+
+End Try
+
+Else
+	
+Try
+	
+MODEL_STATES.Item("Principal").Activate
+VALOR3 = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+MODEL_STATES.Add(VALOR3)
+MODEL_STATES.Item(VALOR3).Activate
+iProperties.Value("Custom", "PR_PINTURA") = False
+
+iProperties.Value("Project", "Part Number") = VALOR3
+
+iProperties.Value("Custom", "CRUDO") = VALOR3
+iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+iProperties.Value("Custom", "COLOR_CODE") = ""
+
+iProperties.Value("Custom", "CATEGORIA") = "METAL " & iProperties.Value("Custom", "MATERIAL") 
+
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+iLogicVb.RunExternalRule("INSCA SUPERFICIE")
+
+prod = iProperties.Value("Custom", "RUTA_PRODUCCION")
+'Logger.Info(prod)
+prod = Replace(prod, "-PIN", "")
+'Logger.Info(prod)
+iProperties.Value("Custom", "RUTA_PRODUCCION") = prod
+Catch
+
+End Try
+
+End If
+undo.End
+ElseIf par = "Madera" Then
+	undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de pieza")
+	iLogicVb.RunExternalRule("INSCA PINTURA")
+	
+	If iProperties.Value("Custom", "ERROR_MECANIZADO") = False Then	
+		MultiValue.UpdateAfterChange = True
+		iLogicVb.RunExternalRule("INSCA MADERA WOOD CONFIG")
+		If iProperties.Value("Custom", "VS") = True Then
+			MODEL_STATES.Item("Principal").Activate
+			CODIGO = iProperties.Value("Custom", "N_PIEZA")
+			'If iProperties.Value("Custom", "Pintar") = True And iProperties.Value("Custom", "VS") = True Then
+			CC = iProperties.Value("Custom", "COLOR_CODE")
+			PCC = iProperties.Value("Custom", "P_CANTOS_CODE")
+			CCC = iProperties.Value("Custom", "COL_CANTOS_CODE")
+			VALOR = CC & "-" & PCC & "-" & CCC
+			CONFIG = MultiValue.List("WOOD_CONFIG")
+			CODES = MultiValue.List("WOOD_CONFIG_CODE")
+			For j = 0 To CONFIG.Count - 1
+				If CONFIG(j) = VALOR Then
+					iProperties.Value("Custom", "WOOD_CONFIG_CODE") = CODES(j)
+				End If
+			Next
+			Try
+				VALOR = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE") & iProperties.Value("Custom", "WOOD_CONFIG_CODE")
+				MODEL_STATES.Add(VALOR)
+				MODEL_STATES.Item(VALOR).Activate
+				iLogicVb.RunExternalRule("INSCA PINTURA")
+				iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+				iProperties.Value("Project", "Part Number") = VALOR
+				iProperties.Value("Custom", "CRUDO") = ""
+				If iProperties.Value("Custom", "Pintar") = False Then
+					iProperties.Value("Custom", "MATERIAL_COLOR") = "CRUDO"
+					iProperties.Value("Custom", "COLOR_CODE") ="I0039Y"
+					Else
+						iProperties.Value("Custom", "MATERIAL_COLOR") = parameter("COL")
+						iProperties.Value("Custom", "COLOR_CODE") = parameter("COL_CODE")
+				End If
+				If iProperties.Value("Custom", "Pintar_cantos") = False Then
+					'iProperties.Value("Custom", "MATERIAL_COLOR") = "CRUDO"
+					iProperties.Value("Custom", "COL_CANTOS_CODE") ="I0039Y"
+					Else		
+						'iProperties.Value("Custom", "MATERIAL_COLOR") = parameter("COL_")
+						iProperties.Value("Custom", "COL_CANTOS_CODE") = parameter("COL_CANTOS_CODE")
+				End If
+				'iProperties.Value("Custom", "COLOR_CODIGO") = parameter("COL_CODE")
+				iProperties.Value("Custom", "CATEGORIA") = "MADERA " & iProperties.Value("Custom", "MATERIAL") 
+				iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+				'ACTIVO MODIFICACIÓN HASTA EL CATCH
+				MODEL_STATES.Item("Principal").Activate
+				VALOR2= CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+				MODEL_STATES.Add(VALOR2)
+				MODEL_STATES.Item(VALOR2).Activate
+				iProperties.Value("Custom", "Pintar") = False
+				iProperties.Value("Custom", "Pintar_cantos") = False
+				iProperties.Value("Custom", "PR_PINTURA") = False
+				iProperties.Value("Custom", "Chapar_cantos") = False
+				iProperties.Value("Project", "Part Number") = VALOR2
+				iProperties.Value("Custom", "CRUDO") = VALOR2
+				iProperties.Value("Custom", "MATERIAL_COLOR") = "CRUDO"
+				iProperties.Value("Custom", "COLOR_CODE") = "I0039Y"
+				'iProperties.Value("Custom", "COLOR_CODIGO") = "I0039Y"
+				iProperties.Value("Custom", "COL_CANTOS_CODE") = "I0039Y"
+				iProperties.Value("Custom", "MATERIAL_CANTOS") = "SIN CHAPAR"
+				iProperties.Value("Custom", "P_CANTOS_CODE") = "000000"
+				iProperties.Value("Custom", "NRO_CANTOS") = ""
+				iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = ""
+				iProperties.Value("Custom", "NRO_CARAS_PINTADAS") = "0"
+				iProperties.Value("Custom", "CATEGORIA") = "MADERA " & iProperties.Value("Custom", "MATERIAL")
+				iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+			Catch
+		End Try
+		End If
+	End If
+undo.End
+End If
+MODEL_STATES.Item("Principal").Activate
+
+

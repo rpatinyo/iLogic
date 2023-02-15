@@ -1,0 +1,50 @@
+﻿
+MultiValue.SetList("F_ACABADO_CANTOS", "")
+MultiValue.SetList("F_MEDIDAS_CANTOS","")
+MultiValue.SetList("F_DESCRIPCION_CANTOS", "")
+MultiValue.SetList("F_P_CANTOS_CODE","")
+
+
+
+MM = MultiValue.List("MAT_CANTOS")
+ACA = MultiValue.List("ACABADO_CANTOS")
+MED =  MultiValue.List("MEDIDAS_CANTOS")
+DE = MultiValue.List("DESC_CANTOS")
+PC = MultiValue.List("P_CANTOS_CODE")
+
+
+Dim ACA_TEMP1 As New ArrayList
+Dim MED_TEMP As New ArrayList
+Dim DESC_TEMP As New ArrayList
+Dim CANTOS_TEMP As New ArrayList
+
+
+For i = 0 To MM.Count -1
+	
+	If MM(i) = parameter("F_MAT_CANTOS") Then
+		ACA_TEMP1.Add(ACA(i))
+		MED_TEMP.Add(MED(i))
+		DESC_TEMP.Add(DE(i))
+		CANTOS_TEMP.Add(PC(i))
+
+		
+	End If
+Next
+
+MultiValue.List("ACABADO_TEMPORAL_CANTOS") = ACA_TEMP1
+
+
+Dim ACA1 As New ArrayList
+
+For Each valor In ACA_TEMP1
+	If Not ACA1.Contains(valor) Then
+		ACA1.Add(valor)
+	End If
+Next
+
+MultiValue.List("F_ACABADO_CANTOS") = ACA1
+MultiValue.List("F_MEDIDAS_CANTOS") = MED_TEMP
+MultiValue.List("F_DESCRIPCION_CANTOS") = DESC_TEMP
+MultiValue.List("F_P_CANTOS_CODE") = CANTOS_TEMP
+
+

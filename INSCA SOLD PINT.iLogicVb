@@ -1,0 +1,34 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+
+Dim oDoc As AssemblyDocument = ThisDoc.Document
+Dim oDef As AssemblyComponentDefinition = oDoc.ComponentDefinition
+Dim oCs As ComponentOccurrences = oDef.Occurrences
+Dim pintura As Double = 0
+
+If parameter("PINTURA") = False Then
+	iProperties.Value("Custom", "SPINT") = 0
+	Else
+
+		iProperties.Value("Custom", "SPINT") = pintura
+		For Each oC As ComponentOccurrence In oCs
+			Try    
+
+				If iProperties.Expression(oC.Name, "Custom", "SPINT") = 0 Then
+				
+					pieza = CDbl(iProperties.Expression(oC.Name, "Custom", "S_PIEZA"))
+					'Logger.Info(pieza)
+        			pintura += CDbl(pieza)
+				Else 
+					pieza = CDbl(iProperties.Expression(oC.Name, "Custom", "SPINT"))
+					'Logger.Info(pieza)
+        			pintura += CDbl(pieza)
+				End If
+										
+			Catch
+			End Try
+		Next
+       'Logger.Info(pintura)
+iProperties.Value("Custom", "SPINT") = pintura
+End If
+
+ 

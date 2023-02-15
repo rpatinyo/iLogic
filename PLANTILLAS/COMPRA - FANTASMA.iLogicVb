@@ -1,0 +1,57 @@
+﻿
+AddReference "CookComputing.XmlRpcV2.dll"
+AddReference "Odoo.XmlRpcAdapter.dll"
+AddReference "Figlut.Server.Toolkit45.dll"
+Imports CookComputing.XmlRpc
+Imports Odoo.XmlRpcAdapter
+Imports Odoo.XmlRpcAdapter.Domain.Operators.Mappers
+Imports Odoo.XmlRpcAdapter.Domain
+Imports Odoo.XmlRpcAdapter.Results
+Imports Odoo.XmlRpcAdapter.XmlRpcProxy
+Imports Odoo.XmlRpcAdapter.Contants
+
+oMaterial = iProperties.Material
+
+Select Case oMaterial
+	Case "Steel"
+	ThisDoc.Document.ComponentDefinition.BOMStructure = BOMStructureEnum.kNormalBOMStructure
+	
+	Case "Wood"
+	ThisDoc.Document.ComponentDefinition.BOMStructure = BOMStructureEnum.kPurchasedBOMStructure
+End Select
+
+
+
+
+
+
+
+
+
+'Sub Main()	
+'	Logger.Info(iProperties.Value("Custom", "CODIGO_CONFIG"))
+'	vCodigoConfig = iProperties.Value("Custom", "CODIGO_CONFIG")
+	
+'	 Dim Odoo As OdooXmlRpcAdapter = New OdooXmlRpcAdapter(
+'	   	"http://odoo3.insca.com:8069/xmlrpc/2/common",
+'       	"http://odoo3.insca.com:8069/xmlrpc/2/object",
+'    	"base",
+'    	"insca",
+'    	"insca2021",
+'		"",
+'    	bypassRemoteSslCertificateValidation := True)
+'	Logger.Info("Permisos | {0}", Odoo.CheckAccessRights)
+	
+'	Dim ids2 As Integer() = Odoo.Search("product.template", 0, 10, OdooLogicalOperator.[And], _
+'	New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, vCodigoConfig), _
+'	New OdooDomainExpression("active", OdooComparisonOperator.Equals, 1), _
+'	New OdooDomainExpression("technical_office", OdooComparisonOperator.Equals, 1))
+'	Logger.Info("Nº registros | {0}", ids2.Count)
+'	For i As Integer = 0 To ids2.Count - 1
+'    	Logger.Info("Odoo id | {0}", ids2.GetValue(i))
+'		If ids2.Count = 1 Then
+'	 		Dim r2 As XmlRpcStruct = New XmlRpcStruct From {{"technical_office", 0 }}
+'	    	Dim writeResult As Boolean = Odoo.Write("product.template", ids2.GetValue(i), r2)
+'	 	End If
+'	Next	
+'End Sub

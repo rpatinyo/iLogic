@@ -1,0 +1,33 @@
+﻿Parameter("OP_CHAPAR_CANTOS") = iProperties.Value("Custom", "Chapar_cantos")
+iProperties.Value("Custom", "P_CANTOS_CODE") = ""
+
+
+If iProperties.Value("Custom", "Chapar_cantos") = True Then
+
+Parameter("LONG_CANTOS") = (Parameter("CANTOS_LARGO") * MAXIMO) + (Parameter("CANTOS_CORTO") * MINIMO)
+iProperties.Value("Custom", "NRO_CANTOS") = Parameter("CANTOS_LARGO") & "CL+" & Parameter("CANTOS_CORTO") & "CC"
+iProperties.Value("Custom", "LONG_CANTOS") = Parameter("LONG_CANTOS")
+
+Try
+
+iLogicVb.RunExternalRule("INSCA ENCOLADO FILTRO MEDIDAS CANTOS")
+
+Catch
+	
+End Try
+
+
+Else
+	
+Parameter("CANTOS_LARGO") = 0
+Parameter("CANTOS_CORTO") = 0
+Parameter("LONG_CANTOS") = 0
+
+iProperties.Value("Custom", "NRO_CANTOS") = "0" & "CL+" & "0" & "CC"
+iProperties.Value("Custom", "LONG_CANTOS") = "0"
+
+iProperties.Value("Custom", "P_CANTOS_CODE") = "000000"
+
+
+End If
+

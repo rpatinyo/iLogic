@@ -1,0 +1,121 @@
+﻿MultiValue.UpdateAfterChange = True
+
+Dim ODOC As AssemblyDocument
+ODOC = ThisDoc.Document
+OCOMP = ODOC.ComponentDefinition
+MODEL_STATES = OCOMP.ModelStates
+
+Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de ensamblaje")
+
+iLogicVb.RunEXTERNALRule("INSCA ENCOLADO BUSCAR WOOD CONFIG")
+
+If iProperties.Value("Custom", "VS") = True Then
+
+MODEL_STATES.Item("Principal").Activate
+
+	CODIGO = Left(ThisDoc.FileName(False), 9)
+	Prefijo = Left(CODIGO, 4)
+	Sufijo = Right(CODIGO, 5)
+	iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+	iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+
+'If iProperties.Value("Custom", "Pintar") = True And iProperties.Value("Custom", "VS") = True Then
+
+	CC = iProperties.Value("Custom", "COLOR_CODE")
+	PCC = iProperties.Value("Custom", "P_CANTOS_CODE")
+	CCC = iProperties.Value("Custom", "COL_CANTOS_CODE")
+	
+	VALOR = CC & "-" & PCC & "-" & CCC
+	
+	CONFIG = MultiValue.List("WOOD_CONFIG")
+	CODES = MultiValue.List("WOOD_CONFIG_CODE")
+	
+
+	
+	For j = 0 To CONFIG.Count - 1
+		If CONFIG(j) = VALOR Then
+			iProperties.Value("Custom", "WOOD_CONFIG_CODE") = CODES(j)
+'			Logger.Info(CONFIG(j) & "-" & CODES(j))
+		End If
+	Next
+
+	Try
+		VALOR = Prefijo & "0" & Sufijo & "." & iProperties.Value("Custom", "MATERIAL_CODE") & iProperties.Value("Custom", "WOOD_CONFIG_CODE")
+		
+		MODEL_STATES.Add(VALOR)
+				
+		MODEL_STATES.Item(VALOR).Activate
+		iProperties.Value("Custom","Pintar") = True
+		iLogicVb.RunRule("INSCA RUTA FABRICACION")
+		iProperties.Value("Project", "Part Number") = VALOR
+'		MODIFICACIÓN
+	iProperties.Value("Custom", "CODIGO_VIRTUAL") = ""
+	iProperties.Value("Custom", "MATERIAL") = "MATERIAL ENCOLADO"
+	iProperties.Value("Custom", "MATERIAL_CODE") = "000"
+		'HASTA AQUÍ
+		
+		iProperties.Value("Custom", "CRUDO") = ""
+		iProperties.Value("Custom", "MATERIAL_COLOR") = COL
+		iProperties.Value("Custom", "COLOR_CODE") = COL_CODE
+		iProperties.Value("Custom", "COLOR_CODIGO") = COL_CODE
+		iProperties.Value("Custom", "CATEGORIA") = "MADERA " & iProperties.Value("Custom", "MATERIAL") 
+		
+		iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+		iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+		
+		
+		MODEL_STATES.Item("Principal").Activate
+		
+'		VALOR2= CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+'		MODEL_STATES.Add(VALOR2)
+'		MODEL_STATES.Item(VALOR2).Activate
+'		iProperties.Value("Custom","Pintar") = False
+		
+'		iProperties.Value("Project", "Part Number") = VALOR2
+		
+'		iProperties.Value("Custom", "CRUDO") = VALOR2
+'		iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+'		iProperties.Value("Custom", "COLOR_CODE") = ""
+'		iProperties.Value("Custom", "CATEGORIA") = "MADERA " & iProperties.Value("Custom", "MATERIAL")
+'		iLogicVb.RunRule("RUTA FABRICACION")
+	
+	Catch
+'	i = MessageBox.Show(VALOR2 & "Ya estaba generado", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+	
+	End Try
+
+'ElseIf iProperties.Value("Custom", "Pintar") = True and iProperties.Value("Custom", "VS") = True Then
+		
+'	Try
+		
+'	MODEL_STATES.Item("Principal").Activate
+'	VALOR3 = CODIGO & "." & iProperties.Value("Custom", "MATERIAL_CODE")  & "000"
+'	MODEL_STATES.Add(VALOR3)
+'	MODEL_STATES.Item(VALOR3).Activate
+	
+'	iProperties.Value("Custom","Pintar") = False
+'	iProperties.Value("Project", "Part Number") = VALOR3
+	
+'	iProperties.Value("Custom", "CRUDO") = VALOR3
+'	iProperties.Value("Custom", "MATERIAL_COLOR") = ""
+'	iProperties.Value("Custom", "COLOR_CODE") = ""
+	
+'	iProperties.Value("Custom", "CATEGORIA") = "MADERA " & iProperties.Value("Custom", "MATERIAL") 
+	
+'	iLogicVb.RunRule("RUTA FABRICACION")
+	
+'	Catch
+''	i = MessageBox.Show(VALOR3 & "Ya estaba generado", "Estado", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1)
+'	End Try
+	
+
+'End If
+
+End If
+'MODEL_STATES.Item("Principal").Activate
+
+THISDOC.Document.Rebuild
+
+undo.End
+

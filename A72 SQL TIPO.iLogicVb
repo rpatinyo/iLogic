@@ -1,0 +1,27 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+If Parameter("Tipo_A72") = "0_N#A" Then
+	parameter("OP_COMPRA") = False
+	parameter("OP_FANTASMA") = False
+	ThisDoc.Document.ComponentDefinition.BOMStructure = BOMStructureEnum.kNormalBOMStructure
+End If
+
+If Parameter("Tipo_A72") = "COMPRA" Then
+	parameter("OP_COMPRA") = True
+	parameter("OP_FANTASMA") = False
+	ThisDoc.Document.ComponentDefinition.BOMStructure = BOMStructureEnum.kPurchasedBOMStructure
+End If
+
+If Parameter("Tipo_A72") = "FANTASMA" Then
+	parameter("OP_COMPRA") = False
+	parameter("OP_FANTASMA") = True
+	DESCRIPCIÓN = InputBox("INTRODUCIR DESCRIPCIÓN DEL ENSAMBLAJE", "DESCRIPCIÓN ENSAMBLAJE", "SIN DESCRIPCIÓN")
+	iProperties.Value("Project", "Description") = DESCRIPCIÓN
+	ThisDoc.Document.ComponentDefinition.BOMStructure = BOMStructureEnum.kPhantomBOMStructure
+End If
+

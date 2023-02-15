@@ -1,0 +1,161 @@
+﻿If parameter("Tipo") = "Tubo redondo" Then
+		If PARAMETER("F_ACABADO") = "TO" Then
+			
+		TXT = Parameter("F_MEDIDAS_ACA")
+		'Logger.Info(TXT)
+		Dim VALORES() As String
+		VALORES = TXT.Split("x")
+		
+		T_DIAMETRO = VALORES(0).Count
+		PARAMETER("DIAMETRO") = Right(VALORES(0), T_DIAMETRO - 1)
+		
+		T_ESPESOR = VALORES(1).Count
+		
+		Parameter("ESPESOR") = Left(VALORES(1),T_ESPESOR-2)
+		
+		Else
+			
+		MED = Parameter("F_MEDIDAS_ACA")
+		Logger.Info(MED)
+		TXT = MED.LENGTH
+		DIA_1 = Right(MED, TXT - 1)
+		
+		Parameter("DIAMETRO") = Left(DIA_1,DIA_1.Length-2)
+		
+		End If
+		RuleParametersOutput()
+		InventorVb.DocumentUpdate()
+		
+	Else If parameter("Tipo") = "Macizo redondo" Then
+		If PARAMETER("F_ACABADO") = "MZO" Then
+			
+		TXT = Parameter("F_MEDIDAS_ACA")
+		'Logger.Info(TXT)
+		Dim VALORES() As String
+		VALORES = TXT.Split("x")
+		
+		T_DIAMETRO = VALORES(0).Count
+		PARAMETER("DIAMETRO") = Right(VALORES(0), T_DIAMETRO - 1)
+		
+		'T_ESPESOR = VALORES(1).Count
+		
+		'Parameter("ESPESOR") = Left(VALORES(1),T_ESPESOR-2)
+		
+		Else
+			
+		MED = Parameter("F_MEDIDAS_ACA")
+		Logger.Info(MED)
+		TXT = MED.LENGTH
+		DIA_1 = Right(MED, TXT - 1)
+		
+		Parameter("DIAMETRO") = Left(DIA_1,DIA_1.Length-2)
+		
+		End If
+		RuleParametersOutput()
+		InventorVb.DocumentUpdate()
+
+Else If parameter("Tipo") = "Chapa" Then
+	
+		VALOR = Len(parameter("F_MEDIDAS_ACA"))
+		ESP = (Left(parameter("F_MEDIDAS_ACA"), VALOR - 2))
+		
+		parameter("ESPESOR") = ESP
+			
+Else If Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+	
+		TXT=Parameter.Param("F_MEDIDAS_ACA").Value
+		Dim VALORES() As String
+		
+		If parameter("F_ACABADO") = "TC" Or parameter("F_ACABADO") = "TR" Then
+
+		VALORES = TXT.Split("x")
+		
+		
+		parameter("ANCHO") = VALORES(0)
+		parameter("HONDO") = VALORES(1)
+		parameter("ESPESOR") = Left(VALORES(2), 4)
+		
+		parameter("RADIO") = 2
+		parameter("RADIO") = Left(Right(iProperties.Value("Custom", "MATERIAL"), 6), 4)
+		
+		
+		Else
+
+		parameter("RADIO") = 0
+		VALORES = TXT.Split("x")
+			
+		parameter("ANCHO") = VALORES(0)
+		CONT_HONDO = VALORES(1).COUNT
+		parameter("HONDO") = Left(VALORES(1),CONT_HONDO-2)
+		
+		End If
+
+	
+Else If Parameter("Tipo") = "Madera" Then
+
+	Try
+	
+	If parameter("L3") <> Left(parameter("F_MEDIDAS_ACA"), 3) Then
+	
+	PARAMETER("L3") = Left(parameter("F_MEDIDAS_ACA"), 3)
+	
+	End If
+	Catch
+		
+	End Try
+	
+	Else 
+		
+	Dim odoc As AssemblyDocument
+	odoc = ThisApplication.ActiveDocument
+	Dim vX, vXmax, vXmin As Double
+	Dim vy, vYmax, vYmin As Double
+	Dim vz, vZmax, vZmin As Double
+	
+	vXmax = odoc.ComponentDefinition.RangeBox.MaxPoint.X
+	vXmin = odoc.ComponentDefinition.RangeBox.MinPoint.X
+	
+	vX = vXmax - vXmin
+	vX2 = FormatNumber(vX * 10, 1)
+	
+	vYmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Y
+	vYmin = odoc.ComponentDefinition.RangeBox.MinPoint.Y
+	
+	vy = vYmax - vYmin
+	vY2 = FormatNumber( vy*10, 1)
+	
+	vZmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Z
+	vZmin = odoc.ComponentDefinition.RangeBox.MinPoint.Z
+	
+	vz = vZmax - vZmin
+	vZ2 = FormatNumber(vz * 10, 1)
+	
+	LARGO = vX2
+	ANCHO = vY2
+	HONDO = vZ2
+	
+	
+	VLARGO = LARGO.Split(",")
+	VANCHO = ANCHO.Split(",")
+	VHONDO = HONDO.Split(",")
+	
+	If LARGO >= 1000 Then
+	iProperties.Value("Custom", "LARGO") = VLARGO(0) & VLARGO(1) 
+	Else
+	iProperties.Value("Custom", "LARGO") = "0" & LARGO
+	End If
+	
+	If ANCHO >= 1000 Then
+	iProperties.Value("Custom", "ANCHO") = VANCHO(0) & VANCHO(1)
+	Else
+	iProperties.Value("Custom", "ANCHO") = "0" & ANCHO
+	End If
+	
+	If HONDO >= 1000 Then
+	iProperties.Value("Custom", "HONDO") = VHONDO(0) & VHONDO(1)
+	Else
+	iProperties.Value("Custom", "HONDO") = "0" & HONDO
+	End If
+	iProperties.Value("Project", "Description") = "ENS " & iProperties.Value("Custom", "LARGO") & "x" & iProperties.Value("Custom", "ANCHO") & "x" & iProperties.Value("Custom", "HONDO") & "mm"
+
+End If

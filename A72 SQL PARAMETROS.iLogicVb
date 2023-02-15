@@ -1,0 +1,98 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+Sub MAIN()
+
+iprop_ens("VDS_Category")
+iprop_ens("CATEGORIA")
+iprop_ens("CODIGO_HERRAJE")
+iprop_ens("DESCRIPCION_HERRAJE")
+iprop_ens("MODELO")
+iprop_ens("CONFIG")
+iprop_ens("TIPO_HERRAJE")
+iprop_ens("BANNER")
+iprop_ens("VAULT_ID")
+iprop_ens("NOTAS")
+iprop_ens("DESC_VAULT_NET")
+iprop_ens("SUJECION GUIA IZQUIERDA")
+iprop_ens("SUJECION GUIA DERECHA")
+
+parametro_ens("TSQL")
+parametro_ens("PAR")
+parametro_ens("CSQL")
+parametro_ens("SQL")
+parametro_ens("TIPO_HERRAJE")
+parametro_ens("MODELO")
+parametro_ens("DESCRIPCION")
+parametro_ens("CODIGO_HERRAJE")
+parametro_ens("CATEGORIA")
+parametro_ens("VAULT_ID")
+parametro_ens("NOTAS")
+parametro_ens("SUJECION_GUIA_IZQUIERDA")
+parametro_ens("SUJECION_GUIA_DERECHA")
+parametro_ens("Tipo")
+parametro_ens("Tipo_A72")
+
+parametro_bool_ens("OP_COMPRA")
+parametro_bool_ens("OP_FANTASMA")
+
+Dim array_tipo_A72 As New ArrayList
+
+array_tipo_A72.Add("COMPRA")
+array_tipo_A72.Add("FANTASMA")
+array_tipo_A72.Add("0_N#A")
+
+array_tipo_A72.Sort
+For i = 0 To array_tipo_A72.Count - 1
+
+	MultiValue.List("Tipo_A72") = array_tipo_A72
+Next
+PARAMETER("Tipo") = "A72 SQL"
+PARAMETER("Tipo_A72") = "0_N#A"
+iLogicVb.RunExternalRule("A72 SQL TIPO")
+
+End Sub
+
+
+Sub iprop_ens(nombre As String)
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+	Dim oDef As AssemblyComponentDefinition
+	oDef = oDoc.ComponentDefinition
+	oCustom = oDoc.PropertySets("Inventor User Defined Properties")
+	Try
+		valor = oCustom.Item(nombre).PropId
+	Catch
+		oCustom.Add("", nombre)
+	End Try
+	iProperties.Value("Custom", nombre) = ""
+End Sub
+Sub parametro_ens(nombre As String, Optional multi As Boolean = True)
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, "", kTextUnits)
+	If multi = True Then
+		MultiValue.SetList(nombre, "")
+	End If
+End Sub
+Sub parametro_bool(nombre As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, False, kBooleanUnits)
+End Sub
+
+Sub parametro_bool_ens(nombre As String)
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, False, kBooleanUnits)
+End Sub

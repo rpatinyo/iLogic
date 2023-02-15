@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>APARIENCIA T. RECTANGULAR</Name>
+  <Guid>18b18f27-722d-4901-b607-a4ded48128c9</Guid>
+  <SizeConstraints>
+    <MinimumSize>
+      <Width>
+        <Value>630</Value>
+        <Units>Pixel</Units>
+      </Width>
+      <Height>
+        <Value>397</Value>
+        <Units>Pixel</Units>
+      </Height>
+    </MinimumSize>
+    <MaximumSize>
+      <Width>
+        <Value>630</Value>
+        <Units>Pixel</Units>
+      </Width>
+      <Height>
+        <Value>397</Value>
+        <Units>Pixel</Units>
+      </Height>
+    </MaximumSize>
+  </SizeConstraints>
+  <Items>
+    <UiElementSpec xsi:type="EmptySpaceSpec">
+      <Name>Espacio vacío 1</Name>
+      <Guid>17054b5f-2d56-4a81-b087-2e608055f8fd</Guid>
+      <SizeConstraints>
+        <MinimumSize>
+          <Width>
+            <Value>20</Value>
+            <Units>Pixel</Units>
+          </Width>
+          <Height>
+            <Value>0</Value>
+            <Units>Em</Units>
+          </Height>
+        </MinimumSize>
+        <MaximumSize>
+          <Width>
+            <Value>20</Value>
+            <Units>Pixel</Units>
+          </Width>
+          <Height>
+            <Value>0</Value>
+            <Units>Em</Units>
+          </Height>
+        </MaximumSize>
+      </SizeConstraints>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 4</Name>
+      <Guid>a576871a-0931-419e-8319-7f2e3e3ed223</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>Grupo 1</Name>
+          <Guid>a115027f-1375-400b-9f21-a677c7f3279c</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 1</Name>
+              <Guid>2aa7c008-d70e-45ea-8ddc-09110a37a0a3</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>MATERIAL</Name>
+                  <Guid>e3d61d61-da84-4ee5-88d1-f90e98e90061</Guid>
+                  <ToolTip />
+                  <ParameterName>F_MAT</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>FILTRO MATERIAL</Name>
+                  <Guid>acd457d5-8b53-4e66-a449-f979753318e7</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvwAADr8BOAVTJAAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA FILTRO MATERIAL</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA FILTRO MATERIAL.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 2</Name>
+              <Guid>1fffec1d-7974-4f06-b5bd-ba9fb6ad6b8f</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>TIPO</Name>
+                  <Guid>7cfac972-c1dd-41b0-91e6-63b9daf6cbff</Guid>
+                  <ToolTip />
+                  <ParameterName>F_ACABADO</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>FILTRO ACABADO</Name>
+                  <Guid>921b784a-bb1c-4283-a5ce-1157c42707bf</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvwAADr8BOAVTJAAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA FILTRO ACABADO</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA FILTRO ACABADO.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 3</Name>
+              <Guid>15876f60-1c40-461f-964a-3c0072adf5b2</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>SECCION</Name>
+                  <Guid>3194c092-7a96-4ec0-a6c7-84230f71f2cf</Guid>
+                  <ToolTip />
+                  <ParameterName>F_MEDIDAS_ACA</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>FILTRO MEDIDAS</Name>
+                  <Guid>876be2d8-fd2b-42d6-9f1f-114cdc5cc793</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvwAADr8BOAVTJAAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA FILTRO MEDIDAS</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA FILTRO MEDIDAS.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>DESCRIPCION</Name>
+              <Guid>3e999035-1a48-4613-bb0b-85d26d95fbf6</Guid>
+              <PropertyName>MATERIAL</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>CODIGO MATERIAL</Name>
+              <Guid>96e8b7ea-bf87-4958-8cd3-ae2e8594e8dd</Guid>
+              <ReadOnly>true</ReadOnly>
+              <PropertyName>MATERIAL_CODE</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="EmptySpaceSpec">
+      <Name>Espacio vacío 4</Name>
+      <Guid>1fedff9c-1236-4ea3-ad1f-15ba7ca83e8b</Guid>
+      <SizeConstraints>
+        <MinimumSize>
+          <Width>
+            <Value>20</Value>
+            <Units>Pixel</Units>
+          </Width>
+          <Height>
+            <Value>0</Value>
+            <Units>Pixel</Units>
+          </Height>
+        </MinimumSize>
+        <MaximumSize>
+          <Width>
+            <Value>20</Value>
+            <Units>Pixel</Units>
+          </Width>
+          <Height>
+            <Value>0</Value>
+            <Units>Pixel</Units>
+          </Height>
+        </MaximumSize>
+      </SizeConstraints>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlGroupSpec">
+      <Name>Grupo 2</Name>
+      <Guid>2a4b7533-a034-491b-971c-fefd30d90d84</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 5</Name>
+          <Guid>0636120b-1fc5-47af-96a2-606e9f75f73f</Guid>
+          <Items>
+            <UiElementSpec xsi:type="BooleanPropertyControlSpec">
+              <Name>PINTURA</Name>
+              <Guid>3e42b594-5be5-442c-989f-8e8cf864b617</Guid>
+              <PropertyName>PR_PINTURA</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 2</Name>
+              <Guid>b92c6ed0-8e6b-40a5-bdda-66442934ecaa</Guid>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 6</Name>
+          <Guid>84530a18-f31a-4f39-bd27-61d48a752c3f</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlGroupSpec">
+              <Name>Grupo 3</Name>
+              <Guid>53f63987-bf72-43db-b572-c0a059c28234</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>COLOR</Name>
+                  <Guid>f186cf1f-9666-4a8e-ad85-a7b5c53ef301</Guid>
+                  <ToolTip />
+                  <ParameterName>COL</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 8</Name>
+                  <Guid>b6e2e5cb-5c15-4771-8f95-aec15e5c66cf</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                      <Name>CODIGO COLOR</Name>
+                      <Guid>00d1612a-203e-49e4-bd08-856191e03c2e</Guid>
+                      <ToolTip />
+                      <ReadOnly>true</ReadOnly>
+                      <ParameterName>COL_CODE</ParameterName>
+                      <EditControlType>ComboBox</EditControlType>
+                      <AllowCustomValues>false</AllowCustomValues>
+                      <MinimumItemsToShow>2</MinimumItemsToShow>
+                      <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                      <Name>CODIGO COLOR</Name>
+                      <Guid>aed7f618-98c0-4bcf-82ef-9361b487424c</Guid>
+                      <SizeConstraints>
+                        <MinimumSize>
+                          <Width>
+                            <Value>30</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>20</Value>
+                            <Units>Pixel</Units>
+                          </Height>
+                        </MinimumSize>
+                        <MaximumSize>
+                          <Width>
+                            <Value>30</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>20</Value>
+                            <Units>Pixel</Units>
+                          </Height>
+                        </MaximumSize>
+                      </SizeConstraints>
+                      <Image>
+                        <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                        <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwAAADsABataJCQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                      </Image>
+                      <TextVisible>true</TextVisible>
+                      <RuleName>INSCA FILTRO COLOR</RuleName>
+                      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                      <Path>INSCA FILTRO COLOR.iLogicVb</Path>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+              </Items>
+              <CaptionImage>
+                <BitmapByteArray />
+              </CaptionImage>
+              <BordersVisible>false</BordersVisible>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 3</Name>
+              <Guid>70046292-5fdc-4b9e-9d8d-7338fcca2eb8</Guid>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>CALCULAR SUPERFICIE</Name>
+          <Guid>d5d18a14-4a3b-4e5c-8831-cef0e43c4e7a</Guid>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>INSCA PINTURA</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>INSCA PINTURA.iLogicVb</Path>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+      <BordersVisible>false</BordersVisible>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>Done</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

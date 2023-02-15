@@ -1,0 +1,177 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+AddReference "CookComputing.XmlRpcV2.dll"
+AddReference "Odoo.XmlRpcAdapter.dll"
+AddReference "Figlut.Server.Toolkit45.dll"
+Imports CookComputing.XmlRpc
+Imports Odoo.XmlRpcAdapter
+Imports Odoo.XmlRpcAdapter.Domain.Operators.Mappers
+Imports Odoo.XmlRpcAdapter.Domain
+Imports Odoo.XmlRpcAdapter.Results
+Imports Odoo.XmlRpcAdapter.XmlRpcProxy
+Imports Odoo.XmlRpcAdapter.Contants
+
+Sub main
+If Parameter("OP_PINTAR") = False Then
+	iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") = "I0039Y"
+	PARAMETER("CODIGO_COLOR_MATERIAL") = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL")
+End If
+
+If Parameter("OP_CHAPAR_CANTOS") = False Then
+	iProperties.Value("Custom", "CODIGO_CANTOS") = "000000"
+	Parameter("CODIGO_CANTOS") = iProperties.Value("Custom", "CODIGO_CANTOS")
+End If
+
+If Parameter("OP_PINTAR_CANTOS") = False Then
+	iProperties.Value("Custom", "CODIGO_COLOR_CANTOS") = "I0039Y"
+	PARAMETER("CODIGO_COLOR_CANTOS") = iProperties.Value("Custom", "CODIGO_COLOR_CANTOS")
+End If
+
+'CONCAT = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") & "-" & iProperties.Value("Custom", "CODIGO_CANTOS") & "-" & iProperties.Value("Custom", "CODIGO_COLOR_CANTOS")
+local_code_concat = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") & "-" & iProperties.Value("Custom", "CODIGO_CANTOS") & "-" & iProperties.Value("Custom", "CODIGO_COLOR_CANTOS")
+
+iProperties.Value("Custom", "CODIGO_WOODCONFIG") = ""
+
+	 Dim Odoo As OdooXmlRpcAdapter = New OdooXmlRpcAdapter(
+	   	"http://odoo3.insca.com:8069/xmlrpc/2/common",
+       	"http://odoo3.insca.com:8069/xmlrpc/2/object",
+    	"base",
+    	"insca",
+    	"insca2021",
+		"",
+    	bypassRemoteSslCertificateValidation := True)
+	Logger.Info("Permisos | {0}", Odoo.CheckAccessRights)
+	
+	Dim ids2 As Integer() = Odoo.Search("wood.config", 0, 18000, OdooLogicalOperator.[Or], New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0), New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0))
+	Dim records1 As XmlRpcStruct() = Odoo.Read("wood.config", ids2, New String() {"code_concat", "name" })
+	Dim Wood As New ArrayList
+	For i As Integer = 0 To records1.Count - 1
+    	oExists = False
+		Logger.Info(records1(i).Values(1))
+		If records1(i).Values(1) = local_code_concat Then
+			Logger.Info("Este código ya existe {0}", local_code_concat)
+			Wood.Add(records1(i).Values(2))
+			iProperties.Value("Custom", "CODIGO_WOODCONFIG") = Wood(0)
+			parameter("CODIGO_WOODCONFIG") = iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+			oExists = True
+			Exit For
+		End If	
+	Next
+	
+	If oExists = False Then
+		Logger.Info("Este código no existe {0}", local_code_concat)
+		Dim ColorMaderaId As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL")))
+		Dim CantosId As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "CODIGO_CANTOS")))
+		Dim ColorCantosId As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "CODIGO_COLOR_CANTOS")))
+		Dim r1 As XmlRpcStruct = New XmlRpcStruct()
+	    	r1.Add("color_madera_id", ColorMaderaId(0))
+			r1.Add("cantos_id", CantosId(0))
+			r1.Add("color_cantos_id", ColorCantosId(0))
+	    Dim recordId As Integer = Odoo.Create("wood.config", r1)
+	End If
+	
+	Dim ids3 As Integer() = Odoo.Search("wood.config", 0, 18000, OdooLogicalOperator.[Or], New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0), New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0))
+	Dim records2 As XmlRpcStruct() = Odoo.Read("wood.config", ids3, New String() {"code_concat", "name" })
+	Dim Registros As New ArrayList
+	For j As Integer = 0 To records2.Count - 1
+		oExists = False
+		If records2(j).Values(1) = local_code_concat Then
+			Logger.Info("Este código ya existe {0}", local_code_concat)
+			Registros.Add(records2(j).Values(2))
+			iProperties.Value("Custom", "CODIGO_WOODCONFIG") = Registros(0)
+			parameter("CODIGO_WOODCONFIG") = iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+			oExists = True
+			Exit For
+		End If	
+	Next
+
+	
+	
+'****************************************
+	
+' SUPERFICIE DE CANTOS PINTADOS
+Parameter("SUP_CANTOS_PIN") = (Parameter("CANTOS_LARGOS_PIN") * Parameter("L1")/1000 * Parameter("L3")/1000) + (Parameter("CANTOS_CORTOS_PIN") * Parameter("L2")/1000 * Parameter("L3")/1000) 
+iProperties.Value("Custom", "SUP_CANTOS_PIN") = FormatNumber(CDbl(PARAMETER("SUP_CANTOS_PIN")), "3", vbFalse)
+Parameter("SUP_CANTOS_PIN") = iProperties.Value("Custom", "SUP_CANTOS_PIN")
+
+CL = Parameter("CANTOS_LARGOS_PIN") & "CL+"
+CC = Parameter("CANTOS_CORTOS_PIN") & "CC"
+Parameter("N_CANTOS_PIN") = CL & CC
+iProperties.Value("Custom", "N_CANTOS_PIN") = Parameter("N_CANTOS_PIN")
+
+
+
+
+
+'parameter("TSQL") = "wood_config"
+'parameter("PAR") = "CODIGO_WOODCONFIG"
+'parameter("CSQL") = "name"
+'parameter("SQL") = "Select wood_config.name " &
+'		"From wood_config " &
+'		"Where (((wood_config.code_concat)='" & CONCAT & "'));"
+		
+'con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+'' SUPERFICIE DE CANTOS PINTADOS
+'Parameter("SUP_CANTOS_PIN") = (Parameter("CANTOS_LARGOS_PIN") * Parameter("L1")/1000 * Parameter("L3")/1000) + (Parameter("CANTOS_CORTOS_PIN") * Parameter("L2")/1000 * Parameter("L3")/1000) 
+'iProperties.Value("Custom", "SUP_CANTOS_PIN") = FormatNumber(CDbl(PARAMETER("SUP_CANTOS_PIN")), "3", vbFalse)
+'Parameter("SUP_CANTOS_PIN") = iProperties.Value("Custom", "SUP_CANTOS_PIN")
+
+'CL = Parameter("CANTOS_LARGOS_PIN") & "CL+"
+'CC = Parameter("CANTOS_CORTOS_PIN") & "CC"
+'Parameter("N_CANTOS_PIN") = CL & CC
+'iProperties.Value("Custom", "N_CANTOS_PIN") = Parameter("N_CANTOS_PIN")
+
+
+ 
+End Sub
+
+
+'Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+'	Dim Table_ As String = tabla
+'	Dim query As String = CType(BUSQUEDA, String)
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+''	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim ds As New DataSet
+	
+	
+''	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+'	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+'	cnn.Open()
+'    Dim cmd As New OdbcCommand(query, cnn)
+'	Dim da As New OdbcDataAdapter(cmd)
+'	da.Fill(ds,tabla)
+
+'	cnn.Close()
+'	Dim t1 As DataTable = ds.Tables(tabla)
+'	Dim row As DataRow
+	
+'	Dim nombre As New ArrayList
+
+'	For Each row In t1.Rows
+		
+'     nombre.Add(row(campo))
+
+'	Next
+	
+'	ELEMENTOS_VECTOR = nombre.Count
+'		If ELEMENTOS_VECTOR = 0 Then
+'			MessageBox.Show("LA CONFIGURACIÓN NO EXISTE. DAR DE ALTA EN ODOO", "ERROR",MessageBoxButtons.OK)
+'			nombre.Add("ERROR")
+'		End If
+		
+'	MultiValue.List(iProp) = nombre
+	
+'	iProperties.Value("Custom", "CODIGO_WOODCONFIG") = nombre(0)
+'	parameter("CODIGO_WOODCONFIG") = iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+		
+'End Sub
+

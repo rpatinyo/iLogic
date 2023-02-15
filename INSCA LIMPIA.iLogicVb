@@ -1,0 +1,4 @@
+﻿RuleParametersOutput()
+
+System.GC.WaitForPendingFinalizers()
+System.GC.Collect()

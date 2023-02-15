@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>TIPO DE DOCUMENTO</Name>
+  <Guid>d071b735-835a-4419-a90f-4a3a77ef17d9</Guid>
+  <SizeConstraints>
+    <MinimumSize>
+      <Width>
+        <Value>23.625</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>35</Value>
+        <Units>Em</Units>
+      </Height>
+    </MinimumSize>
+    <MaximumSize>
+      <Width>
+        <Value>23.625</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>35</Value>
+        <Units>Em</Units>
+      </Height>
+    </MaximumSize>
+  </SizeConstraints>
+  <Items>
+    <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+      <Name>Tipo</Name>
+      <Guid>cda5cf31-6720-43d7-aeed-ac935676619c</Guid>
+      <ToolTip />
+      <ParameterName>Tipo</ParameterName>
+      <EditControlType>RadioGroup</EditControlType>
+      <AllowCustomValues>false</AllowCustomValues>
+      <MinimumItemsToShow>2</MinimumItemsToShow>
+      <RadioGroupColumnCount>1</RadioGroupColumnCount>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>Done</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

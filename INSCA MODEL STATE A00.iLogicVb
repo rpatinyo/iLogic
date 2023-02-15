@@ -1,0 +1,67 @@
+﻿Dim ODOC As AssemblyDocument
+ODOC = ThisDoc.Document
+OCOMP = ODOC.ComponentDefinition
+MODEL_STATES = OCOMP.ModelStates
+
+Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de ensamblaje")
+
+MultiValue.UpdateAfterChange = True
+
+nombre = ThisDoc.FileName(False)
+
+
+
+If Left(nombre, 3) = "A00" Then
+
+
+MODEL_STATES.Item("Principal").Activate
+
+codigo = Left(ThisDoc.FileName(False), 10)
+Prefijo = Left(codigo, 4)
+Sufijo = Right(codigo, 6)
+
+PARAMETER("CONFIG") = iProperties.Value("Custom", "CONFIG")	
+
+If Len(PARAMETER("CONFIG")) = 6 Then
+	Valor = Prefijo & Sufijo & "." & parameter("CONFIG")
+	iProperties.Value("Project", "Part Number") = Valor
+	Try
+		MODEL_STATES.Add(Valor)
+		'Valor = Prefijo & "0" & Sufijo & "." & parameter("CONFIG")
+		Valor = Prefijo & Sufijo & "." & parameter("CONFIG")
+		iProperties.Value("Project", "Part Number") = Valor
+		MODEL_STATES.Item("Principal").Activate
+		ODOC.Rebuild2
+	Catch
+		i = MessageBox.Show("Esta configuración ya está dada de alta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+	End Try
+Else
+	i = MessageBox.Show("La configuración debe de tener 6 dígitos", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+End If
+
+Else If Left(nombre, 3) = "A15" Then
+
+MODEL_STATES.Item("Principal").Activate
+
+cod = Parameter("CODIGO_CONFIG")
+iProperties.Value("Custom", "CONFIG") = Right(cod,6)
+'PARAMETER("CONFIG") = iProperties.Value("Custom", "CONFIG")	
+
+	iProperties.Value("Project", "Part Number") = ThisDoc.FileName(False)
+	Try
+		MODEL_STATES.Add(cod)
+		
+		iProperties.Value("Project", "Part Number") = cod
+		MODEL_STATES.Item("Principal").Activate
+		ODOC.Rebuild2
+	Catch
+		i = MessageBox.Show("Esta configuración ya está dada de alta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+	End Try
+Else
+	i = MessageBox.Show("Lac configuración debe de tener 6 dígitos", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+End If
+
+undo.End

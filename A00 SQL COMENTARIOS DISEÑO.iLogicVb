@@ -1,0 +1,3 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+COMENTARIOS = InputBox("INTRODUCIR COMENTARIOS DE DISEÑO", "COMENTARIOS DE DISEÑO", "SIN COMENTARIOS")
+iProperties.Value("Summary", "COMMENTS") = COMENTARIOS

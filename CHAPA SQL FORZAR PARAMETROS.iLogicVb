@@ -1,0 +1,186 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+Sub main()
+	
+	Prop_chapa_sql()
+	conectar_chapa_sql()
+End Sub
+
+
+Sub Prop_chapa_sql()
+'Borrar_todo()
+parametro("N_CARAS_PINTADAS")
+MultiValue.SetList("N_CARAS_PINTADAS", "1", "2")
+parametro("Tipo")
+MultiValue.SetList("Tipo", "Chapa_SQL")
+parametro("L1_DES_CHAPA")
+parametro("L2_DES_CHAPA")
+parametro("CODIGO_COLOR_MATERIAL_INVENTOR")
+parametro_bool("OP_PINTAR")
+parametro_bool("OP_PLEGAR")
+parametro_bool("OP_MANUAL")
+
+'parametro("TIPO_PIEZA", False)
+'parametro("TSQL", False)
+'parametro("CSQL", False)
+'parametro("SQL", False)
+'parametro("PAR", False)
+
+'ipropbool("Cortar")
+'ipropbool("Mecanizar")
+'ipropbool("Chapar_cantos")
+'ipropbool("Cara_buena")
+'ipropbool("Pintar")
+'ipropbool("Pintar_cantos")
+'ipropbool("CORTE_MANUAL")
+
+
+'iprop("DESC_DEFECTO")
+'iprop("RUTA_PRODUCCION")
+'iprop("MATERIAL")
+'iprop("MATERIAL_CODE")
+'iprop("CODIGO_VIRTUAL")
+'iprop("DENSIDAD_ODOO")
+'iprop("COLOR_CODE")
+'iprop("COL_CANTOS_CODE")
+'iprop("NRO_CANTOS")
+'iprop("P_CANTOS_CODE")
+'iprop("LARGO_CORTE")
+'iprop("ANCHO_CORTE")
+'iprop("CATEGORIA")
+
+'parametro_bool("DESC_DEFECTO")
+'parametro_bool("OP_PINTAR")
+'parametro_bool("OP_PINTAR_CANTOS")
+'parametro_bool("OP_CHAPAR_CANTOS")
+
+'parametro_bool("Pintar_cantos")
+'parametro("SUPERFICIE_CANTOS_PINTADO", False)
+'parametro("SUPERFICIE_MADERA", False)
+'parametro("PINTAR_CANTOS_LARGO", False)
+'parametro("PINTAR_CANTOS_CORTO", False)
+
+
+'parametro("COLOR_CODE")
+
+'parametro_unidad("CANTOS_LARGO","su")
+'parametro_unidad("CANTOS_CORTO","su")
+'parametro_unidad("LONG_CANTOS", "mm")
+
+''exp_param("CANTOS_LARGO")
+''exp_param("CANTOS_CORTO")
+'exp_param("LONG_CANTOS")
+
+
+
+'iprop("N_PIEZA")
+'iProperties.Value("Custom", "N_PIEZA") = divide()
+'iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "N_PIEZA")
+
+'iProperties.Value("Custom", "LARGO_CORTE") = FormatNumber(PARAMETER("L1") + 10,1)
+'iProperties.Value("Custom", "ANCHO_CORTE") = FormatNumber(PARAMETER("L2") + 10, 1)
+'iProperties.Value("Custom", "CATEGORIA") = "MADERA"
+'iProperties.Value("Custom", "SUPERFICIE_MADERA") = (Parameter("L1") * Parameter ("L2")) /1000000
+
+End Sub
+Sub conectar_chapa_sql()
+
+Renombra_parametro("INS_LARGO", "L1")
+Renombra_parametro("INS_ANCHO", "L2")
+Renombra_parametro("INS_HONDO", "L3")
+'comprobar("INS_HONDO")
+'comprobar("INS_RADIO")
+
+exp_param("L1")
+exp_param("L2")
+exp_param("L3")
+
+'Borrar_todo()
+
+MultiValue.SetValueOptions(True, DefaultIndex := 0)
+Dim propiedades() As String = {"TIPO_PIEZA", "ABREV_TIPO_PIEZA", "TSQL", "CSQL", "SQL", "PAR", "TIPO_MATERIAL", "ACABADO_MATERIAL", "ESPESOR_MATERIAL", "CODIGO_MATERIAL_INVENTOR", _
+"DESCRIPCION_MATERIAL", "CODIGO_MATERIAL_VIRTUAL", "DENSIDAD_MATERIAL", "COLOR_MATERIAL", "CODIGO_COLOR_MATERIAL", "N_PLEGADOS"}
+
+For Each prop In propiedades
+	comprobar(prop)
+Next
+
+For Each prop In propiedades
+	parametro(prop)
+Next	
+
+End Sub
+Sub Borrar_todo()
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	Dim att As PropertySet
+	iProperties.Value("Summary", "Subject") = Parameter("INS_LARGO")
+	att = oDoc.PropertySets.Item("Inventor User Defined Properties")
+	Dim prop As Inventor.Property
+	For Each prop In att
+		prop.Delete
+	Next
+End Sub
+Sub parametro(nombre As String, Optional multi As Boolean = True)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre,"", kTextUnits)
+	If multi = True Then
+		MultiValue.SetList(nombre, "")
+	End If
+End Sub
+Sub parametro_bool(nombre As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre,False, kBooleanUnits)
+End Sub
+Sub comprobar(nombre As String)
+	MessageBox.Show(nombre, "Title")
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	Dim parametro As Parameter
+	Dim Existe As Boolean
+	Existe=False
+	For Each Parametro In parametros
+		If parametro.name = nombre Then
+			Existe=True
+		End If	
+	Next
+'	If Existe = True Then
+'		parametros.Item(nombre).Delete
+'	End If
+End Sub
+Sub Renombra_parametro(antiguo As String, nuevo As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros(antiguo).Name = nuevo
+End Sub
+Sub exp_param(nombre As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	Dim parametros As UserParameters
+	parametros = ocompdef.Parameters.UserParameters
+	par = parametros(nombre)
+	par.ExposedAsProperty() = True
+	par.CustomPropertyFormat.PropertyType = CustomPropertyTypeEnum.kTextPropertyType
+	par.CustomPropertyFormat.Units = "mm"
+	par.CustomPropertyFormat.ShowTrailingZeros = True
+	par.CustomPropertyFormat.ShowLeadingZeros = True
+	par.CustomPropertyFormat.Precision = CustomPropertyPrecisionEnum.kOneDecimalPlacePrecision
+	par.CustomPropertyFormat.ShowUnitsString = False
+End Sub

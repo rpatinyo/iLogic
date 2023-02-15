@@ -1,0 +1,26 @@
+﻿If Parameter("Tipo") = "Chapa" Then
+
+Dim oDoc As PartDocument = ThisDoc.Document
+Dim oDef As PartComponentDefinition = oDoc.ComponentDefinition
+
+Dim oParam As Parameters = oDef.Parameters
+
+Try
+
+PARAMETER("LARGO_CHAPA") = Round(SheetMetal.FlatExtentsLength,1)
+Parameter("ANCHO_CHAPA") = Round(SheetMetal.FlatExtentsWidth, 1)
+
+Catch
+
+oParam.UserParameters.AddByValue("LARGO_CHAPA", 0, "mm")
+oParam.UserParameters.AddByValue("ANCHO_CHAPA", 0, "mm")
+
+PARAMETER("LARGO_CHAPA") = Round(SheetMetal.FlatExtentsLength,1)
+Parameter("ANCHO_CHAPA") = Round(SheetMetal.FlatExtentsWidth, 1)
+
+
+End Try
+	
+end if	
+
+iLogicVb.RunExternalRule("INSCA DESCRIPCION")

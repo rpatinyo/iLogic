@@ -1,0 +1,93 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+Sub MAIN()
+Renombra_parametro("INS_LARGO", "L1")
+Renombra_parametro("INS_ANCHO", "L2")
+Renombra_parametro("INS_HONDO", "L3")
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "CODIGO_DES")
+Borrar_todo()
+
+parametro("TSQL")
+parametro("PAR")
+parametro("CSQL")
+parametro("SQL")
+parametro("TIPO_ROT")
+MultiValue.SetList("TIPO_ROT", "", "VINILO", "SERIGRAFÍA")
+parametro("TYPE")
+parametro("CODE_CONCAT")
+parametro("NAME")
+parametro("CODE")
+parametro("DIMENSIONS")
+parametro("COLOR")
+parametro("CUSTOMER")
+parametro("CODIGO")
+parametro("CONFIG")
+parametro("DESCRIPCION")
+
+parametro("Tipo")
+PARAMETER("Tipo") = "A60"
+
+
+iprop("TIPO MATRIZ PARAMETRIZACIÓN")
+iprop("CODIGO_ROTULACIÓN")
+
+iprop("CONFIG")
+iprop("RUTA_PRODUCCION")
+
+End Sub
+
+
+Sub parametro_bool(nombre As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, False, kBooleanUnits)
+End Sub
+
+Sub Renombra_parametro(antiguo As String, nuevo As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros(antiguo).Name = nuevo
+End Sub
+Sub Borrar_todo()
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	Dim att As PropertySet
+	'iProperties.Value("Summary", "Subject") = Parameter("INS_LARGO")
+	att = oDoc.PropertySets.Item("Inventor User Defined Properties")
+	Dim prop As Inventor.Property
+	For Each prop In att
+		prop.Delete
+	Next
+End Sub
+Sub iprop(nombre As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	Dim oDef As PartComponentDefinition
+	oDef = oDoc.ComponentDefinition
+	oCustom = oDoc.PropertySets("Inventor User Defined Properties")
+	Try
+		valor = oCustom.Item(nombre).PropId
+	Catch
+		oCustom.Add("", nombre)
+	End Try
+	iProperties.Value("Custom", nombre) = ""
+End Sub
+Sub parametro(nombre As String, Optional multi As Boolean = True)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, "", kTextUnits)
+	If multi = True Then
+		MultiValue.SetList(nombre, "")
+	End If
+End Sub

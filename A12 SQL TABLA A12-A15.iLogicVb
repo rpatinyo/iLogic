@@ -1,0 +1,83 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+AddReference "CookComputing.XmlRpcV2.dll"
+AddReference "Odoo.XmlRpcAdapter.dll"
+AddReference "Figlut.Server.Toolkit45.dll"
+Imports CookComputing.XmlRpc
+Imports Odoo.XmlRpcAdapter
+Imports Odoo.XmlRpcAdapter.Domain.Operators.Mappers
+Imports Odoo.XmlRpcAdapter.Domain
+Imports Odoo.XmlRpcAdapter.Results
+Imports Odoo.XmlRpcAdapter.XmlRpcProxy
+Imports Odoo.XmlRpcAdapter.Contants
+
+Sub main
+
+local_code_concat = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") & "-" & iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_2") & "-" & iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_3")
+
+iProperties.Value("Custom", "CODIGO_WOODCONFIG") = ""
+	
+	 Dim Odoo As OdooXmlRpcAdapter = New OdooXmlRpcAdapter(
+	   	"http://odoo3.insca.com:8069/xmlrpc/2/common",
+       	"http://odoo3.insca.com:8069/xmlrpc/2/object",
+    	"base",
+    	"insca",
+    	"insca2021",
+		"",
+    	bypassRemoteSslCertificateValidation := True)
+	Logger.Info("Permisos | {0}", Odoo.CheckAccessRights)
+	
+	Dim ids2 As Integer() = Odoo.Search("a12.a15", 0, 18000, OdooLogicalOperator.[Or], New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0), New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0))
+	Dim records1 As XmlRpcStruct() = Odoo.Read("a12.a15", ids2, New String() {"code_concat", "name" })
+	Dim Wood As New ArrayList
+	For i As Integer = 0 To records1.Count - 1
+    	oExists = False
+		If records1(i).Values(1) = local_code_concat Then
+			Logger.Info("Este código ya existe {0}", local_code_concat)
+			Wood.Add(records1(i).Values(2))
+			iProperties.Value("Custom", "CODIGO_WOODCONFIG") = Wood(0)
+			parameter("CODIGO_WOODCONFIG") = iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+			oExists = True
+			Exit For
+		End If	
+	Next
+	
+	If oExists = False Then
+		Logger.Info("Este código no existe {0}", local_code_concat)
+		Dim ColorMaderaId As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL")))
+		Dim ColorMaderaId2 As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_2")))
+		Dim ColorMaderaId3 As Integer() = Odoo.Search("product.template", 0, 10, New OdooDomainExpression("default_code", OdooComparisonOperator.Equals, iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_3")))
+	
+		Dim r1 As XmlRpcStruct = New XmlRpcStruct()
+	    	r1.Add("color_madera1_id", ColorMaderaId(0))
+			r1.Add("color_madera2_id", ColorMaderaId2(0))
+			r1.Add("color_madera3_id", ColorMaderaId3(0))
+	    Dim recordId As Integer = Odoo.Create("a12.a15", r1)
+		
+		'EJECUTAR CONSULTA CODIGO WOODCONFIG PARA LOCAL_CODE_CONCAT
+Dim ids3 As Integer() = Odoo.Search("a12.a15", 0, 18000, OdooLogicalOperator.[Or], New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0), New OdooDomainExpression("id", OdooComparisonOperator.GreaterThan, 0))
+	Dim records2 As XmlRpcStruct() = Odoo.Read("a12.a15", ids3, New String() {"code_concat", "name" })
+	Dim Registros As New ArrayList
+	For j As Integer = 0 To records2.Count - 1
+		oExists = False
+		If records2(j).Values(1) = local_code_concat Then
+			Logger.Info("Este código ya existe {0}", local_code_concat)
+			Registros.Add(records2(j).Values(2))
+			iProperties.Value("Custom", "CODIGO_WOODCONFIG") = Registros(0)
+			parameter("CODIGO_WOODCONFIG") = iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+			oExists = True
+			Exit For
+		End If	
+	Next
+
+
+		'***************************
+	End If	
+	
+ 
+End Sub

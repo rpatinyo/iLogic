@@ -1,0 +1,24 @@
+﻿Dim array_operaciones As New ArrayList
+iProperties.Value("Custom", "RUTA_PRODUCCION") = ""
+If Parameter("OP_PINTAR") = True Then
+	array_operaciones.Add("PIN")
+	iProperties.Value("Custom", "RUTA_PRODUCCION") = array_operaciones(0)
+	Else
+		array_operaciones.Add("SOL")
+		
+		If Parameter("OP_MANUAL") = True Then
+			array_operaciones.Add("MAN")
+		End If
+
+		If Parameter("OP_SERIGRAFIAR") = True Then
+			array_operaciones.Add("ROT")
+		End If
+	
+		For i = 0 To array_operaciones.Count - 1
+			If i = array_operaciones.Count - 1 Then
+				iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i)
+			Else
+				iProperties.Value("Custom", "RUTA_PRODUCCION") = iProperties.Value("Custom", "RUTA_PRODUCCION") & array_operaciones(i) & "-"
+			End If
+		Next
+End If

@@ -1,0 +1,69 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+
+parameter("TSQL") = "a80_a80"
+parameter("PAR") = "CODIGO_A80"
+parameter("CSQL") = "code"
+parameter("SQL") = "Select a80_a80.code " &
+					"From a80_a80 INNER Join a80_thickness On a80_a80.thickness = a80_thickness.id " &
+					"Where (((a80_a80.name) = '" & parameter("DESCRIPCION") & "') AND ((a80_thickness.name) = '" & Parameter("L3") & "'));"
+					
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+End Sub
+
+
+
+
+Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+	
+	nombre.Clear()
+	MultiValue.List(iProp) = nombre
+	
+	For Each row In t1.Rows
+		nombre.Add(row(campo))
+		'Logger.Debug("notas = {0}", nombre(0).ToString)
+	Next
+	
+'	If nombre(0).ToString = "" Then
+'		iProperties.Value("Custom", "NOTAS") = "N/A"
+'	ElseIf nombre(0).ToString <> "" Then
+'		iProperties.Value("Custom", "NOTAS") = nombre(0).ToString
+'	End If
+	
+	MultiValue.List(iProp) = nombre
+		
+	iProperties.Value("Custom", "CODIGO_A80") = nombre(0)
+	parameter("CODIGO_A80") = iProperties.Value("Custom", "CODIGO_A80")
+	iProperties.Value("Custom", "CODIGO_COMPRA") = iProperties.Value("Custom", "CODIGO_A80")
+	
+End Sub

@@ -1,0 +1,178 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+MultiValue.UpdateAfterChange = True
+
+Dim odoc As AssemblyDocument
+odoc = ThisDoc.Document
+ocomp = odoc.ComponentDefinition
+Dim model_states As ModelStates
+model_states = ocomp.ModelStates
+
+Dim fileSystemObj As Object
+fileSystemObj = CreateObject("Scripting.FileSystemObject")
+
+Dim undo As Transaction
+'undo = ThisApplication.TransactionManager.StartTransaction(odoc, "Versión de pieza")
+
+	Select Parameter("Tipo")
+		Case "A32 SQL"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			Largo_nombre_archivo = Len(Nombre_archivo)
+
+			Select Largo_nombre_archivo
+				Case 0
+					iProperties.Value("Custom", "VDS_NumSchm") = "A32"
+					iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+					ThisDoc.Document.SaveAs("C:\testing.iam", False)
+					Nombre_archivo = ThisDoc.FileName(False) 'without extension
+					CODIGO = Nombre_archivo
+					'undo.End
+				Case 9
+					Prefijo = Left(Nombre_archivo, 4)
+					Sufijo = Right(Nombre_archivo, 5)
+					CODIGO = Prefijo & "0" & Sufijo
+
+					If Prefijo = "B32." Then
+						Prefijo = "A32.1"
+						CODIGO = Prefijo & Sufijo
+					End If
+
+				Case 10
+					CODIGO = Nombre_archivo
+
+			End Select
+			MultiValue.UpdateAfterChange = True
+			
+				model_states("Principal").Activate
+				CONFIG = "000" & iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+				VALOR = CODIGO & "." & CONFIG
+				iProperties.Value("Project", "Part Number") = CODIGO
+				iProperties.Value("Custom", "DESCRIPCION_PIEZA") = iProperties.Value("Project", "Description")
+				DESCRIP = parameter("COLOR_MATERIAL") & " # " & parameter("COLOR_MATERIAL_2") & " # " & parameter("COLOR_MATERIAL_3")
+				
+			Try
+				model_states.Add(DESCRIP)
+				model_stateS(DESCRIP).Activate
+				iProperties.Value("Project", "Part Number") = VALOR
+				iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION_PIEZA")
+
+				iProperties.Value("Custom", "Categoria") = "METAL"
+				iProperties.Value("Custom", "MATERIAL_COLOR_1") = parameter("COLOR_MATERIAL")
+				iProperties.Value("Custom", "MATERIAL_COLOR_2") = parameter("COLOR_MATERIAL_2")
+				iProperties.Value("Custom", "MATERIAL_COLOR_3") = parameter("COLOR_MATERIAL_3")
+				
+				model_states.Item("Principal").Activate
+				MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+				InventorVb.DocumentUpdate()
+				
+
+			Catch
+			End Try
+			
+		Case "A12 SQL"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			Largo_nombre_archivo = Len(Nombre_archivo)
+
+			Select Largo_nombre_archivo
+				Case 0
+					iProperties.Value("Custom", "VDS_NumSchm") = "A12"
+					iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+					ThisDoc.Document.SaveAs("C:\testing.iam", False)
+					Nombre_archivo = ThisDoc.FileName(False) 'without extension
+					CODIGO = Nombre_archivo
+					'undo.End
+				Case 9
+					Prefijo = Left(Nombre_archivo, 4)
+					Sufijo = Right(Nombre_archivo, 5)
+					CODIGO = Prefijo & "0" & Sufijo
+
+					If Prefijo = "B12." Then
+						Prefijo = "A12.1"
+						CODIGO = Prefijo & Sufijo
+					End If
+
+				Case 10
+					CODIGO = Nombre_archivo
+
+			End Select
+			MultiValue.UpdateAfterChange = True
+			
+				model_states("Principal").Activate
+				CONFIG = "000" & iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+				VALOR = CODIGO & "." & CONFIG
+				iProperties.Value("Project", "Part Number") = CODIGO
+				iProperties.Value("Custom", "DESCRIPCION_PIEZA") = iProperties.Value("Project", "Description")
+				DESCRIP = parameter("COLOR_MATERIAL") & " # " & parameter("COLOR_MATERIAL_2") & " # " & parameter("COLOR_MATERIAL_3")
+				
+			Try
+				model_states.Add(DESCRIP)
+				model_stateS(DESCRIP).Activate
+				iProperties.Value("Project", "Part Number") = VALOR
+				iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION_PIEZA")
+
+				iProperties.Value("Custom", "Categoria") = "METAL"
+				iProperties.Value("Custom", "MATERIAL_COLOR_1") = parameter("COLOR_MATERIAL")
+				iProperties.Value("Custom", "MATERIAL_COLOR_2") = parameter("COLOR_MATERIAL_2")
+				iProperties.Value("Custom", "MATERIAL_COLOR_3") = parameter("COLOR_MATERIAL_3")
+				
+				model_states.Item("Principal").Activate
+				MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+				InventorVb.DocumentUpdate()
+				
+
+			Catch
+			End Try
+		
+		Case "A15 SQL"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			Largo_nombre_archivo = Len(Nombre_archivo)
+
+			Select Largo_nombre_archivo
+				Case 0
+					iProperties.Value("Custom", "VDS_NumSchm") = "A15"
+					iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+					ThisDoc.Document.SaveAs("C:\testing.iam", False)
+					Nombre_archivo = ThisDoc.FileName(False) 'without extension
+					CODIGO = Nombre_archivo
+					'undo.End
+				Case 9
+					Prefijo = Left(Nombre_archivo, 4)
+					Sufijo = Right(Nombre_archivo, 5)
+					CODIGO = Prefijo & "0" & Sufijo
+
+					If Prefijo = "B15." Then
+						Prefijo = "A15.1"
+						CODIGO = Prefijo & Sufijo
+					End If
+
+				Case 10
+					CODIGO = Nombre_archivo
+
+			End Select
+			MultiValue.UpdateAfterChange = True
+			
+				model_states("Principal").Activate
+				CONFIG = "000" & iProperties.Value("Custom", "CODIGO_WOODCONFIG")
+				VALOR = CODIGO & "." & CONFIG
+				iProperties.Value("Project", "Part Number") = CODIGO
+				iProperties.Value("Custom", "DESCRIPCION_PIEZA") = iProperties.Value("Project", "Description")
+				DESCRIP = parameter("COLOR_MATERIAL") & " # " & parameter("COLOR_MATERIAL_2") & " # " & parameter("COLOR_MATERIAL_3")
+				
+			Try
+				model_states.Add(DESCRIP)
+				model_stateS(DESCRIP).Activate
+				iProperties.Value("Project", "Part Number") = VALOR
+				iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION_PIEZA")
+
+				iProperties.Value("Custom", "Categoria") = "METAL"
+				iProperties.Value("Custom", "MATERIAL_COLOR_1") = parameter("COLOR_MATERIAL")
+				iProperties.Value("Custom", "MATERIAL_COLOR_2") = parameter("COLOR_MATERIAL_2")
+				iProperties.Value("Custom", "MATERIAL_COLOR_3") = parameter("COLOR_MATERIAL_3")
+				
+				model_states.Item("Principal").Activate
+				MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+				InventorVb.DocumentUpdate()
+				
+
+			Catch
+			End Try
+	End Select

@@ -1,0 +1,15 @@
+﻿Dim oDoc As PartDocument
+oDoc = ThisDoc.Document
+
+Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(oDoc,"2ª Cara buena")
+
+oComp = oDoc.ComponentDefinition
+
+Dim oObject As Face
+oObject = ThisApplication.CommandManager.Pick(kPartFaceFilter, "Seleccionar segunda cara buena")
+
+entidades = ThisDoc.NamedEntities
+entidades.SetName(oObject,"Buena 2")
+
+undo.End

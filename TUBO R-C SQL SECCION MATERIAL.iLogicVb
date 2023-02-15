@@ -1,0 +1,134 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+	If (Parameter("ACABADO_MATERIAL") = "TR" Or Parameter("ACABADO_MATERIAL") = "TC") And parameter("SECCION_MATERIAL_ORIG") = "1mm" Then
+		If Parameter("HONDO") < 100 Then
+			hn = "0" & FormatNumber(CDbl(PARAMETER("HONDO")), "0", vbFalse)
+		Else
+			hn = FormatNumber(CDbl(PARAMETER("HONDO")), "0", vbFalse)
+		End If
+
+		If Parameter("ANCHO") < 100 Then
+			an = "0" & FormatNumber(CDbl(PARAMETER("ANCHO")), "0", vbFalse)
+		Else
+			an = FormatNumber(CDbl(PARAMETER("ANCHO")), "0", vbFalse)
+		End If
+
+		If Parameter("RADIO") < 10 Then
+			ra = "0" & FormatNumber(CDbl(PARAMETER("RADIO")), "1", vbFalse)
+		Else
+			ra = FormatNumber(CDbl(PARAMETER("RADIO")), "1", vbFalse)
+		End If
+		parameter("SECCION_MATERIAL_ORIG") = an & "x" & hn & "x" & "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse) & "mmR" & ra & "mm"
+	End If
+
+	If (Parameter("ACABADO_MATERIAL") = "MZC" Or Parameter("ACABADO_MATERIAL") = "MZR") And parameter("SECCION_MATERIAL_ORIG") = "1mm" Then
+		If Parameter("HONDO") < 100 Then
+			hn = "0" & FormatNumber(CDbl(PARAMETER("HONDO")), "0", vbFalse)
+		Else
+			hn = FormatNumber(CDbl(PARAMETER("HONDO")), "0", vbFalse)
+		End If
+
+		If Parameter("ANCHO") < 100 Then
+			an = "0" & FormatNumber(CDbl(PARAMETER("ANCHO")), "0", vbFalse)
+		Else
+			an = FormatNumber(CDbl(PARAMETER("ANCHO")), "0", vbFalse)
+		End If
+
+		If Parameter("RADIO") < 10 Then
+			ra = "0" & FormatNumber(CDbl(PARAMETER("RADIO")), "1", vbFalse)
+		Else
+			ra = FormatNumber(CDbl(PARAMETER("RADIO")), "1", vbFalse)
+		End If
+		parameter("SECCION_MATERIAL_ORIG") = an & "x" & hn & "mmR" & ra & "mm"
+	End If
+	
+	If Parameter("ACABADO_MATERIAL") = "TO" And parameter("SECCION_MATERIAL_ORIG") = "1mm" Then
+		If Parameter("DIAMETRO") < 10 Then
+			dia = "00" & FormatNumber(CDbl(PARAMETER("DIAMETRO")), "1", vbFalse)
+		Else If Parameter("DIAMETRO") < 100 And Parameter("DIAMETRO") >= 10
+		dia = "0" & FormatNumber(CDbl(PARAMETER("DIAMETRO")), "1", vbFalse)
+		End If
+
+		If Parameter("ESPESOR") < 10 Then
+			es = "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+		Else
+			es = FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+		End If
+		parameter("SECCION_MATERIAL_ORIG") = "Ø" & dia & "x" & es & "mm"
+	End If
+
+	If Parameter("ACABADO_MATERIAL") = "MZO" And parameter("SECCION_MATERIAL_ORIG") = "1mm" Then
+		If Parameter("DIAMETRO") < 10 Then
+			dia = "00" & FormatNumber(CDbl(PARAMETER("DIAMETRO")), "1", vbFalse)
+		Else If Parameter("DIAMETRO") < 100 And Parameter("DIAMETRO") >= 10
+		dia = "0" & FormatNumber(CDbl(PARAMETER("DIAMTERO")), "1", vbFalse)
+		End If
+
+		If Parameter("ESPESOR") < 10 Then
+			es = "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+		Else
+			es = FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+		End If
+		parameter("SECCION_MATERIAL_ORIG") = "Ø" & dia & "mm"
+	End If
+
+	parameter("TSQL") = "x_bi_sql_view_categoria_metal"
+	parameter("PAR") = "SECCION_MATERIAL"
+	parameter("CSQL") = "x_medidas"
+	parameter("SQL") = "Select x_bi_sql_view_categoria_metal.x_medidas " &
+	"From x_bi_sql_view_categoria_metal " &
+	"Where (((x_bi_sql_view_categoria_metal.x_material)='" & PARAMETER("TIPO_MATERIAL") & "') AND ((x_bi_sql_view_categoria_metal.x_tipoacabado)='" & PARAMETER("ACABADO_MATERIAL") & "')) " &
+	"Order By x_bi_sql_view_categoria_metal.x_medidas ASC;"
+
+	con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+
+End Sub
+
+
+
+
+Sub con2(tabla As String, iProp As String, campo As String, BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+	'	iProperties.Value("Custom", "ESPESOR_MATERIAL") = nombre(0)
+	'	parameter("L3") = CDbl(LEFT(iProperties.Value("Custom", "ESPESOR_MATERIAL"),3))
+
+End Sub
+

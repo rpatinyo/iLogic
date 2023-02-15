@@ -1,0 +1,21 @@
+﻿Dim oFileDlg As Inventor.FileDialog = Nothing
+ThisApplication.CreateFileDialog(oFileDlg)
+oFileDlg.Filter = "Archivo de pieza (*.ipt)|*.ipt"
+'oFileDlg.Filter = "Inventor Files (*.iam;*.ipt)|*.iam;*.ipt|All Files (*.*)|*.*"
+'oFileDlg.Filter = "XML Files (*.xml)|*.xml"
+'oFileDlg.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx"
+'oFileDlg.Filter = "Text Files (*.txt;*.csv)|*.txt;*.csv"
+'oFileDlg.Filter = "SAT Files (*.sat)|*.sat"
+'oFileDlg.Filter = "IGES Files (*.igs)|*.igs"
+'oFileDlg.Filter = "Step Files (*.stp)|*.stp"
+'oFileDlg.DialogTitle = "Select a File"
+oFileDlg.InitialDirectory = ThisDoc.Path
+oFileDlg.CancelError = True
+On Error Resume Next
+oFileDlg.ShowOpen()
+If Err.Number <> 0 Then
+MessageBox.Show("File not chosen.", "Dialog Cancellation")
+ElseIf oFileDlg.FileName <> "" Then
+selectedfile = oFileDlg.FileName
+MessageBox.Show("File " & selectedfile & " was selected.", "Dialog Selection Made")
+End If

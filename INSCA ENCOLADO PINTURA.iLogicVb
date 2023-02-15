@@ -1,0 +1,96 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+Dim odoc As AssemblyDocument
+odoc = ThisApplication.ActiveDocument
+odef = odoc.ComponentDefinition
+Dim vX, vy, vz As Double
+
+vX = Math.Abs(oDef.RangeBox.MaxPoint.X - oDef.RangeBox.MinPoint.X) * 10
+vy= Math.Abs(oDef.RangeBox.MaxPoint.Y - oDef.RangeBox.MinPoint.Y) * 10
+vz = Math.Abs(oDef.RangeBox.MaxPoint.Z - oDef.RangeBox.MinPoint.Z) * 10
+
+parameter("L1") = vX
+parameter("L2") = vy
+parameter("L3") = vz
+
+parameter("OP_PINTAR") = iProperties.Value("Custom", "Pintar")
+
+parameter("OP_PINTAR_CANTOS") = iProperties.Value("Custom", "Pintar_cantos")
+
+parameter("OP_CHAPAR_CANTOS") = iProperties.Value("Custom", "Chapar_cantos")
+
+MAXIMO = MaxOfMany(parameter("L1") ,parameter("L2") )
+MINIMO = MinOfMany(parameter("L1") , parameter("L2") )
+
+
+If iProperties.Value("Custom", "Pintar_cantos") = True Then
+
+	parameter("SUPERFICIE_CANTOS_PINTADO") = (parameter("PINTAR_CANTOS_LARGO") * (MAXIMO / 1000) * (L3 / 1000)) + (parameter("PINTAR_CANTOS_CORTO") * (MINIMO / 1000) * (L3 / 1000))
+	iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = parameter("PINTAR_CANTOS_LARGO") & "CL+" & parameter("PINTAR_CANTOS_CORTO") & "CC"
+	Else
+	
+	parameter("PINTAR_CANTOS_LARGO") = 0
+	parameter("PINTAR_CANTOS_CORTO") = 0
+	parameter("SUPERFICIE_CANTOS_PINTADO") = 0
+	
+	iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = 0 & "CL+" & 0 & "CC"
+
+End If
+
+
+
+
+If iProperties.Value("Custom", "Chapar_cantos") = True Then
+
+parameter("LONG_CANTOS") = (parameter("CANTOS_LARGO") * MAXIMO + (parameter("CANTOS_CORTO") * MINIMO))
+iProperties.Value("Custom", "NRO_CANTOS") = parameter("CANTOS_LARGO") & "CL+" & parameter("CANTOS_CORTO") & "CC"
+
+Else
+	
+parameter("CANTOS_LARGO") = 0
+parameter("CANTOS_CORTO") = 0
+parameter("LONG_CANTOS") = 0
+
+iProperties.Value("Custom", "NRO_CANTOS") = "0" & "CL+" & "0" & "CC"
+
+
+End If
+
+
+
+If iProperties.Value("Custom", "Chapar_cantos") = True then
+
+parameter("LONG_CANTOS") = (parameter("CANTOS_LARGO") * MAXIMO) + (parameter("CANTOS_CORTO") * MINIMO)
+iProperties.Value("Custom", "NRO_CANTOS") = parameter("CANTOS_LARGO") & "CL+" & parameter("CANTOS_CORTO") & "CC"
+
+Else
+	
+parameter("CANTOS_LARGO") = 0
+parameter("CANTOS_CORTO") = 0
+parameter("LONG_CANTOS") = 0
+
+iProperties.Value("Custom", "NRO_CANTOS") = "0" & "CL+" & "0" & "CC"
+
+End If
+
+If iProperties.Value("Custom", "Pintar") = True Then
+
+iProperties.Value("Custom", "SPINT") = Round(((parameter("N_CARAS_PINTADAS") * parameter("L1") * parameter("L2")) / 1000000), 3)
+
+
+NRO_CARAS_PINT = parameter("N_CARAS_PINTADAS")
+iProperties.Value("Custom", "NRO_CARAS_PINTADAS") = NRO_CARAS_PINT
+
+
+Else
+
+iProperties.Value("Custom", "SPINT") = 0
+NRO_CARAS_PINT = 0
+iProperties.Value("Custom", "NRO_CARAS_PINTADAS") = NRO_CARAS_PINT
+
+End If
+
+iLogicVb.RunRule("INSCA ENCOLADO DESCRIPCION")
+
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+

@@ -1,0 +1,38 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+Dim pieza As PartDocument
+pieza = ThisDoc.Document
+
+comp = pieza.ComponentDefinition
+operaciones = comp.Features
+
+
+Dim plegados As Integer
+plegados = 0
+
+
+
+For Each operacion In comp.Features
+
+If operacion.Type = 151001344 And operacion.Suppressed = False Then
+	
+	plegados = comp.Features.flangefeatures.count
+	
+End If
+
+	Next
+		
+
+iProperties.Value("Custom", "N_PLEGADOS") = plegados
+
+If iProperties.Value("Custom", "N_PLEGADOS") > 0 Then
+iProperties.Value("Custom", "PR_PLEGADORA") = True
+Else
+iProperties.Value("Custom", "PR_PLEGADORA") = False
+End If
+

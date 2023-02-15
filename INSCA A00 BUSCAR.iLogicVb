@@ -1,0 +1,4 @@
+﻿iLogicVb.RunExternalRule("INSCA A00 CONEXION DESCRIPCION")
+iLogicVb.RunExternalRule("INSCA A00 CONEXION NOTAS")
+iLogicVb.RunExternalRule("INSCA A00 CONEXION CATEGORIA")
+iLogicVb.RunExternalRule("INSCA A00 CONEXION VAULT_ID")

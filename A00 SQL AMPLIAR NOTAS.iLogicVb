@@ -1,0 +1,13 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+
+MessageBox.Show(iProperties.Value("Custom", "NOTAS"), "NOTAS",MessageBoxButtons.OK)
+			
+End Sub

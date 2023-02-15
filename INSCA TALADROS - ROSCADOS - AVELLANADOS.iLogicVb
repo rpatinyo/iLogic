@@ -1,0 +1,56 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+
+Dim pieza As PartDocument
+pieza = ThisDoc.Document
+
+Dim agujeros As Integer
+Dim op_agujeros As Integer 
+
+op_agujeros = 1
+taladros = 0
+avellanados = 0
+roscados = 0
+
+
+comp = pieza.ComponentDefinition
+
+For Each operacion In comp.Features
+
+If operacion.Type = 83912192 And operacion.Suppressed = False Then
+	
+	taladros = taladros + (comp.Features.HoleFeatures.Item(op_agujeros).HoleCenterPoints.Count)
+	
+	If comp.Features.HoleFeatures.Item(op_agujeros).CSinkAngle IsNot Nothing Then
+		
+		avellanados = avellanados + (comp.Features.HoleFeatures.Item(op_agujeros).HoleCenterPoints.Count)
+	End If
+	
+	If comp.Features.HoleFeatures.Item(op_agujeros).Tapped = True Then
+		
+		roscados = roscados + (comp.Features.HoleFeatures.Item(op_agujeros).HoleCenterPoints.Count)
+		
+	End If
+	
+		
+	op_agujeros = op_agujeros + 1
+
+End If
+
+
+Next
+
+iProperties.Value("Custom", "N_TALADROS") = taladros
+iProperties.Value("Custom", "N_AVELLANADOS") = avellanados
+iProperties.Value("Custom", "N_ROSCAS") = roscados
+
+If avellanados > 0 Or roscados > 0 Then
+	iProperties.Value("Custom", "PR_OPERACIONES_MANUALES") = True
+	Else
+		iProperties.Value("Custom", "PR_OPERACIONES_MANUALES") = False
+End If

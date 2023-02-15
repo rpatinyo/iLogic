@@ -1,0 +1,29 @@
+﻿If Parameter("Tipo") = "Chapa_SQL" Then
+
+Dim oDoc As PartDocument = ThisDoc.Document
+Dim oDef As PartComponentDefinition = oDoc.ComponentDefinition
+
+Dim oParam As Parameters = oDef.Parameters
+
+Try
+
+Parameter("L1_DES_CHAPA") = Round(SheetMetal.FlatExtentsLength,1)
+Parameter("L2_DES_CHAPA") = Round(SheetMetal.FlatExtentsWidth, 1)
+
+Catch
+
+oParam.UserParameters.AddByValue("L1_DES_CHAPA", 0, "mm")
+oParam.UserParameters.AddByValue("L2_DES_CHAPA", 0, "mm")
+
+PARAMETER("L1_DES_CHAPA") = Round(SheetMetal.FlatExtentsLength,1)
+Parameter("L2_DES_CHAPA") = Round(SheetMetal.FlatExtentsWidth, 1)
+
+
+End Try
+	
+end if	
+iProperties.Value("Custom", "L1_DES_CHAPA") = PARAMETER("L1_DES_CHAPA") & "mm"
+iProperties.Value("Custom", "L2_DES_CHAPA") = PARAMETER("L2_DES_CHAPA") & "mm"
+S_PIEZA = PARAMETER("L1_DES_CHAPA") / 1000 * PARAMETER("L2_DES_CHAPA") / 1000
+iProperties.Value("Custom", "S_PIEZA") = FormatNumber(CDbl(S_PIEZA), "3", vbFalse)
+iLogicVb.RunExternalRule("CHAPA SQL DESCRIPCION")

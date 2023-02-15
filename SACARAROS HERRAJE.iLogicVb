@@ -1,0 +1,39 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+Sub main()
+CADENA = iProperties.Value("Project", "Description")
+CADENA1= SacaRaros(CADENA)
+
+iProperties.Value("Project", "Description") = Trim(CADENA1)
+'MessageBox.Show("FANTÁSTICO. O SEA, DE VERDAD, PERO QUE MUY BIEN, TE LO JURO", "¡PERFECTO!")
+
+End Sub
+
+Function SacaRaros(x)
+	largo = Len(x)
+	For i = 1 To largo
+		letra = Mid(x, i, 1)
+		'codigo = Asc(letra)
+		'	If codigo < 32 Or codigo > 126 Then
+		'		Mid(x, i, 1) = “*”
+		'	End If
+		If letra = "/" Then
+			Mid(x, i, 1) = "#"
+		End If
+		If letra = "|" Then
+			Mid(x, i, 1) = "-"
+		End If
+		If letra = ":" Then
+			Mid(x, i, 1) = "+"
+		End If
+				
+	Next
+	SacaRaros = Replace(x, "#", "#")
+	SacaRaros = Replace(x, "-", "#")
+	SacaRaros = Replace(x, "+", "#")
+End Function 

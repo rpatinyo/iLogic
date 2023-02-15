@@ -1,0 +1,83 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+
+parameter("TSQL") = "x_bi_sql_view_herraje"
+parameter("PAR") = "DESCRIPCION"
+parameter("CSQL") = "x_descripcion"
+'A partir de aquí modifico hasta con2
+If parameter("MODELO") = "0_N/A" Then
+	parameter("SQL") = "Select x_bi_sql_view_herraje.x_descripcion, x_bi_sql_view_herraje.x_codigo, x_bi_sql_view_herraje.x_categoriaproducto " &
+		"From x_bi_sql_view_herraje " &
+		"Where (((x_bi_sql_view_herraje.x_material)='" & parameter("TIPO_HERRAJE") & "')) " &
+		"Order By x_bi_sql_view_herraje.x_descripcion ASC;"
+	
+	Else
+		parameter("SQL") = "Select x_bi_sql_view_herraje.x_descripcion, x_bi_sql_view_herraje.x_codigo, x_bi_sql_view_herraje.x_categoriaproducto " &
+		"From x_bi_sql_view_herraje " &
+		"Where (x_bi_sql_view_herraje.x_tipoacabado = '" & parameter("MODELO") & "')" &
+		"ORDER BY (x_bi_sql_view_herraje.x_descripcion) ASC;"
+End If
+'Fin de código agregado
+
+
+
+
+'parameter("SQL") = "Select x_bi_sql_view_herraje.x_descripcion " &
+'"From x_bi_sql_view_herraje " &
+'"Where (x_bi_sql_view_herraje.x_tipoacabado = '" & parameter("MODELO") & "')" &
+'"ORDER BY (x_bi_sql_view_herraje.x_descripcion) ASC;"
+
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+End Sub
+
+
+
+
+Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+		
+	iProperties.Value("Custom", "DESCRIPCION_HERRAJE") = nombre(0)
+	parameter("DESCRIPCION") = iProperties.Value("Custom", "DESCRIPCION_HERRAJE")
+	
+	
+'	iProperties.Value("Project", "Description") = nombre(0)
+'	iProperties.Value("Custom", "DESCRIPCION_HERRAJE") = iProperties.Value("Project", "Description")
+	'iLogicVb.RunRule("CONEXION_CÓDIGO")
+End Sub

@@ -1,0 +1,34 @@
+﻿Parameter("OP_PINTAR_CANTOS") = iProperties.Value("Custom", "Pintar_cantos")
+
+If iProperties.Value("Custom", "Pintar_cantos") = True Then
+
+Try
+COLOR_LIST = MultiValue.List("COL_CANTOS")
+COLOR_CODE = MultiValue.List("COL_CANTOS_CODE")
+
+Dim array_filtro As New ArrayList
+
+	
+'MultiValue.List("Desc_filtrado") = array_filtro
+
+COL_IND = COLOR_LIST.IndexOf(parameter("COL_CANTOS"))
+'Logger.Info (MAT_IND)
+parameter("COL_CANTOS_CODE") = COLOR_CODE.Item(COL_IND)
+
+iProperties.Value("Custom", "COL_CANTOS_CODE") = parameter("COL_CANTOS_CODE")
+iProperties.Value("Custom", "COL_CANTOS") = parameter("COL_CANTOS")
+
+Catch
+End Try
+
+Else
+
+iProperties.Value("Custom", "COL_CANTOS") = "CRUDO"
+iProperties.Value("Custom", "COL_CANTOS_CODE") = "I0039Y"	
+
+End If
+
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+
+iLogicVb.RunExternalRule("INSCA ENCOLADO MEDIDAS")

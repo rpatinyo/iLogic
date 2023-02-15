@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>A00</Name>
+  <Guid>1337192b-e360-4077-b9f2-524e14211e0e</Guid>
+  <Items>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>APARIENCIA</Name>
+      <Guid>dbd6b281-081e-4d40-9fc8-7c6323dede83</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>A00 FORM APARIENCIA</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>A00 FORM APARIENCIA.iLogicVb</Path>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>LISTADO</Name>
+      <Guid>2d285d1b-87fd-4507-916e-50f699d50674</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>A00 FORM LISTADO</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>A00 FORM LISTADO.iLogicVb</Path>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>Done</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

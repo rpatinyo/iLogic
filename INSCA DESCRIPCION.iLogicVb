@@ -1,0 +1,246 @@
+﻿If Parameter("Tipo") = "Tubo redondo" Then
+	
+If parameter("DIAMETRO")<100 Then
+	dia = "0" & Format(PARAMETER("DIAMETRO"),"#,0")
+Else 
+	dia = Format(PARAMETER("DIAMETRO"),"#,0")
+End If
+
+If parameter("L1")<1000 Then
+	la = "0" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+Else
+	la = FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+End If
+	
+	
+If parameter("ESPESOR")<10 Then
+	esp = "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+Else
+	esp = FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+End If
+
+
+If Parameter("F_ACABADO") = "TO" Then
+	
+	iProperties.Value("Custom", "DESC_DEFECTO") = "TO " & dia & "x" & la & "x" & esp & "mm"
+		
+'ElseIf TIPO = "TUBO REDONDO MACIZO" Then
+	
+'	iProperties.Value("Custom", "DESC_DEFECTO") = "MZO " & dia & "x" & la & "mm"	
+End If
+
+If parameter("DESC_DEFECTO") = True Then
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESC_DEFECTO")
+Else
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESC_DEFECTO")
+End If
+
+	
+
+Else If Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+
+If parameter("HONDO") < 100 Then
+	hn = "0" & FormatNumber(CDbl(PARAMETER("HONDO")), "1", vbFalse)
+	'hn = "0" & Format(PARAMETER("HONDO"),"#,0")
+	
+Else
+	hn = FormatNumber(CDbl(PARAMETER("HONDO")), "1", vbFalse)
+	'hn = Format(PARAMETER("HONDO"),"#,0")
+End If
+
+If parameter("ANCHO") < 100 Then
+	an = "0" & FormatNumber(CDbl(PARAMETER("ANCHO")), "1", vbFalse)
+Else
+	an = FormatNumber(CDbl(PARAMETER("ANCHO")), "1", vbFalse)
+End If
+
+If parameter("L1") < 1000 Then
+	LO = "0" &  FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+Else
+	LO = FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+End If
+
+If Parameter("F_ACABADO") = "TC" Or Parameter("F_ACABADO") = "TR" Then
+	
+	If parameter("ANCHO") = parameter("HONDO") Then
+	iProperties.Value("Custom", "DESC_DEFECTO") = "TC " &  LO & "x" & an & "x" & hn & "x" & "0" & PARAMETER("ESPESOR") & "mm"
+	Else
+	iProperties.Value("Custom", "DESC_DEFECTO") = "TR " & LO & "x" & an & "x" & hn & "x" & "0" & PARAMETER("ESPESOR") & "mm"
+	End If
+	
+	
+ElseIf Parameter("F_ACABADO") = "MZC" Or Parameter("F_ACABADO") = "MZR" Then 
+	
+	If parameter("ANCHO")= parameter("HONDO") Then
+	iProperties.Value("Custom", "DESC_DEFECTO") = "MZC " &  LO & "x" & an & "x" & hn & "mm"
+	Else
+	iProperties.Value("Custom", "DESC_DEFECTO") = "MZR " &  LO & "x" & an & "x" & hn & "mm"
+	End If
+End If
+
+If parameter("DESC_DEFECTO") = True Then
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESC_DEFECTO")
+Else
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESC_DEFECTO")
+End If
+
+
+
+
+Else If Parameter("Tipo") = "Chapa" Then
+
+If parameter("LARGO") >= 10 And parameter("LARGO") < 100 Then
+	la = "00" & FormatNumber(CDbl(PARAMETER("LARGO")), "1", vbFalse)
+ElseIf parameter("LARGO") >= 100 And parameter("LARGO") < 1000 Then 
+	la = "0" & FormatNumber(CDbl(PARAMETER("LARGO")), "1", vbFalse)
+	Else
+	la = FormatNumber(CDbl(PARAMETER("LARGO")), "1", vbFalse)
+End If
+
+If parameter("ANCHO") >= 10 And parameter("ANCHO") < 100 Then
+	an = "00" & FormatNumber(CDbl(PARAMETER("ANCHO")), "1", vbFalse)
+ElseIf parameter("ANCHO") >= 100 And parameter("ANCHO") < 1000 Then 
+	an = "0" & FormatNumber(CDbl(PARAMETER("ANCHO")), "1", vbFalse)
+Else
+	an = FormatNumber(CDbl(PARAMETER("ANCHO")), "1", vbFalse)
+End If
+
+If parameter("ESPESOR") < 10 Then
+	es = "0" & FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+Else
+	es = FormatNumber(CDbl(PARAMETER("ESPESOR")), "1", vbFalse)
+End If
+
+'PARAMETER("ESPESOR") = parameter("Grosor")
+
+Dim odoc As PartDocument
+odoc = ThisDoc.Document
+
+ocomp = odoc.ComponentDefinition
+
+operaciones = ocomp.Features
+Dim operacion As PartFeature
+
+
+For Each operacion In operaciones
+	If operacion.Type = 151001344 Then
+		iProperties.Value("Custom", "DESC_DEFECTO") = "CPF " & la & "x" & an & "x" & es & "mm"
+		Exit For
+	Else
+		iProperties.Value("Custom", "DESC_DEFECTO") = "CPC " & la & "x" & an & "x" & es & "mm"
+	End If
+Next
+	
+
+If parameter("DESC_DEFECTO") = True Then
+iProperties.Value("Project", "Description") =  iProperties.Value("Custom", "DESC_DEFECTO")
+Else
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESC_DEFECTO")
+End If
+
+Else If Parameter("Tipo") = "Madera" Then
+	
+If parameter("L1")>1 And parameter("L1")<100 Then
+	LL = "00" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+ElseIf parameter("L1") >= 100 And parameter("L1") <1000 Then
+	LL = "0" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+ElseIf parameter("L1") >= 1000 Then
+	LL = FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+
+End If
+
+If parameter("L2")>1 And parameter("L2")<100 Then
+	LA = "00" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+ElseIf parameter("L2")>=100 And parameter("L2")<1000 Then
+	LA = "0" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+ElseIf parameter("L2") >= 1000 Then
+	LA = FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+End If
+
+If parameter("L3")>1 And parameter("L3")<100 Then
+	LE = "0" & FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+	
+Else
+	LE = FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+End If
+	
+If parameter("MALLA") = 0 Or parameter("MALLA") = 1 Then
+	desc = LL & "x" & LA & "x" & LE
+Else
+	desc = LA & "x" & LL & "x" & LE
+End If
+
+TOTAL = MultiValue.List("DETIPO_DESC")
+TIPO = parameter("DETIPO_DESC")
+VALOR = TOTAL.IndexOf(parameter("DETIPO_DESC"))
+
+CODIGOS = MultiValue.List("DETIPO_CODE")
+
+
+iProperties.Value("Custom", "PIEZA_ID_ORIGINAL") = CODIGOS(VALOR)
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "PIEZA_ID_ORIGINAL") & " " & desc & "mm"
+
+
+Else If Parameter("Tipo") = "Macizo redondo" Then
+		If parameter("DIAMETRO")<100 Then
+			'dia = "0" & Format(PARAMETER("DIAMETRO"),"#,0")
+			dia = "0" & FormatNumber(CDbl(PARAMETER("DIAMETRO")), "1", vbFalse)	
+		Else 
+				'diam = Format(PARAMETER("DIAMETRO"),"#,0")
+				dia = FormatNumber(CDbl(PARAMETER("DIAMETRO")), "1", vbFalse)
+		End If
+
+		If parameter("L1")<1000 Then
+			la = "0" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+			Else
+				la = FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+		End If
+		
+		iProperties.Value("Custom", "DESC_DEFECTO") = "MZO Ø" & dia & "x" & la & "mm"	
+		iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESC_DEFECTO")
+		
+
+Else If Parameter("Tipo") = "Encolado" Then
+	
+	If parameter("L1")>1 And parameter("L1")<100 Then
+		LL = "00" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+		ElseIf parameter("L1") >= 100 And parameter("L1") <1000 Then
+			LL = "0" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+			ElseIf parameter("L1") >= 1000 Then
+				LL = FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+	End If
+iProperties.Value("Custom", "L1") = LL
+
+	If parameter("L2")>1 And parameter("L2")<100 Then
+		LA = "00" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+		ElseIf parameter("L2")>=100 And parameter("L2")<1000 Then
+			LA = "0" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+				ElseIf parameter("L2") >= 1000 Then
+					LA = FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+	End If
+iProperties.Value("Custom", "L2") = LA
+
+	If parameter("L3")>1 And parameter("L3")<100 Then
+		LE = "0" & FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+		Else
+			LE = FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+	End If
+iProperties.Value("Custom", "L3") = LE
+'	If parameter("MALLA") = 0 Or parameter("MALLA") = 1 Then
+'		desc = LL & "x" & LA & "x" & LE
+'		Else
+'			desc = LA & "x" & LL & "x" & LE
+'	End If
+
+vX = iProperties.Value("Custom", "L1")
+vY = iProperties.Value("Custom", "L2")
+vZ = iProperties.Value("Custom", "L3")
+
+iProperties.Value("Project", "Description") = iProperties.Value("Custom", "ADD_DESC") & " " & vX & "x" & vY & "x" & vZ & "mm"
+
+End If
+
+
+
+
+

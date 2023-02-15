@@ -1,0 +1,14 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+
+COMENTARIOS = InputBox("INTRODUCIR CÓDIGOS ANTIGUOS", "CÓDIGOS ANTIGUOS", "SIN DATOS")
+iProperties.Value("Summary", "KEYWORDS") = COMENTARIOS
+
+End Sub

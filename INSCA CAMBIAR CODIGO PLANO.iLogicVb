@@ -1,0 +1,6 @@
+﻿Try
+Dim odoc As DrawingDocument
+odoc = ThisDoc.Document
+
+Catch
+End Try

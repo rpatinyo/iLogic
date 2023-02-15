@@ -1,0 +1,83 @@
+﻿
+'    Dim sFileName As String
+'    sFileName = "C:\$_INSCA\DTECNIC\B10.23826.ipt"
+
+
+
+'PARA IPT
+'    Dim oDoc As PartDocument
+'    oDoc = ThisApplication.ActiveDocument
+
+'    Dim oPartCompDef As PartComponentDefinition
+'    oPartCompDef = oDoc.ComponentDefinition
+
+'    ' Get ModelStates collection object.
+'    Dim oModelStates As ModelStates
+'    oModelStates = oPartCompDef.ModelStates
+	
+'    ' Get all model state names from ModelStsates object.
+'	Dim sortedModelState As New ArrayList()
+'    Dim oModelState As ModelState
+'    For Each oModelState In oModelStates
+'		' Logger.Info(iProperties.Value("Project", "Part Number"))
+'		oModelState.Activate
+'		sortedModelState.Add(iProperties.Value("Project", "Part Number"))
+'    Next
+	
+'	For Each item As String In sortedModelState
+'		Logger.Info("Model State Ordenados : {0}", item)
+'	Next
+	
+
+	
+'PARA IAM
+Dim oDoc As AssemblyDocument
+oDoc = ThisDoc.Document
+oPartCompDef = oDoc.ComponentDefinition
+ Dim oModelStates As ModelStates
+    oModelStates = oPartCompDef.ModelStates
+	
+    ' Get all model state names from ModelStsates object.
+	Dim numeracion As New ArrayList()
+	Dim sortedModelState As New ArrayList()
+	Dim oModelState As ModelState
+    For Each oModelState In oModelStates
+		' Logger.Info(iProperties.Value("Project", "Part Number"))
+		oModelState.Activate
+		sortedModelState.Add(iProperties.Value("Project", "Part Number"))
+		DERECHA_3 = Right(iProperties.Value("Project", "Part Number"), 3)
+		DERECHA_6 = Right(iProperties.Value("Project", "Part Number"), 6)
+		IZQUIERDA_3 = Left(DERECHA_6, 3)
+		
+		If IZQUIERDA_3 <> "HRJ" Then
+			DERECHA_3 = "000"
+		End If
+		numeracion.Add(DERECHA_3)
+		
+    Next
+	
+	For Each item As String In sortedModelState
+		Logger.Info("Model State Ordenados : {0}", item)
+	Next
+	numeracion.Sort
+	
+	For Each item As String In numeracion
+		Logger.Info("Numeración : {0}", item)
+	Next
+	a = numeracion.Count
+	MessageBox.Show(a, "Title")
+
+	Logger.Info(numeracion(a - 1))
+	Logger.Info(numeracion(a - 1) + 1)
+	
+
+
+''FORMATO DE NÚMEROS	
+'	If parameter("L2")>1 And parameter("L2")<100 Then
+'	LA = "00" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+'		ElseIf parameter("L2")>=100 And parameter("L2")<1000 Then
+'			LA = "0" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+'				ElseIf parameter("L2") >= 1000 Then
+'					LA = FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+'End If
+	

@@ -1,0 +1,979 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>ENCOLADO</Name>
+  <Guid>54e6859a-7676-4a5f-a076-06bed638d80f</Guid>
+  <Items>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 7</Name>
+      <Guid>2f07fdaa-5a23-4b30-9efa-75fb81ed873b</Guid>
+      <Items>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 4</Name>
+          <Guid>d6dd6fe9-6a38-419c-af2e-f28800ef0f72</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="PictureControlSpec">
+          <Name>Imagen 1</Name>
+          <Guid>5705886f-1078-4a61-8e37-7100a227659d</Guid>
+          <SizeConstraints>
+            <MinimumSize>
+              <Width>
+                <Value>100</Value>
+                <Units>Pixel</Units>
+              </Width>
+              <Height>
+                <Value>50</Value>
+                <Units>Pixel</Units>
+              </Height>
+            </MinimumSize>
+            <MaximumSize>
+              <Width>
+                <Value>100</Value>
+                <Units>Pixel</Units>
+              </Width>
+              <Height>
+                <Value>50</Value>
+                <Units>Pixel</Units>
+              </Height>
+            </MaximumSize>
+          </SizeConstraints>
+          <Image>
+            <FileName>C:\Users\Paco\Desktop\Insca\Images\logo insca.png</FileName>
+            <BitmapByteArray>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</BitmapByteArray>
+          </Image>
+          <LabelVisible>false</LabelVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 19</Name>
+      <Guid>a6dece60-0014-4222-9e86-708021317530</Guid>
+      <Items>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 12</Name>
+          <Guid>56660209-895c-4f36-9da5-031fd1541378</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 11</Name>
+          <Guid>97effc9f-db22-4d98-bea0-99ed7824c99a</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>OPERACIONES</Name>
+          <Guid>b57225c6-1026-409d-83f5-7fec9e89c9c9</Guid>
+          <Items>
+            <UiElementSpec xsi:type="BooleanParameterControlSpec">
+              <Name>MECANIZADO</Name>
+              <Guid>6c13707c-45ee-4b78-af70-4be013f1da1c</Guid>
+              <ToolTip />
+              <ParameterName>MECANIZADO</ParameterName>
+              <EditControlType>TrueOrFalse</EditControlType>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="BooleanParameterControlSpec">
+              <Name>PINTAR</Name>
+              <Guid>20de806f-43e0-4185-a4e7-86b2ab170b6b</Guid>
+              <ToolTip />
+              <ParameterName>OP_PINTAR</ParameterName>
+              <EditControlType>TrueOrFalse</EditControlType>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="BooleanParameterControlSpec">
+              <Name>CHAPAR CANTOS</Name>
+              <Guid>64797a71-b529-4dad-8cfd-be813f70a73b</Guid>
+              <ToolTip />
+              <ParameterName>OP_CHAPAR_CANTOS</ParameterName>
+              <EditControlType>TrueOrFalse</EditControlType>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlTabGroupSpec">
+      <Name>MATERIAL</Name>
+      <Guid>3d105ec1-afcb-49a1-a220-9d18ddbc0341</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>MATERIAL</Name>
+          <Guid>f3cb8799-2157-467c-9b43-7905e9256f79</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 8</Name>
+              <Guid>ce04cafc-9fc9-4f10-812d-26db5c7e9998</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>MATERIAL</Name>
+                  <Guid>501333b1-8cd5-43e5-bb5a-32351df75ed5</Guid>
+                  <ToolTip />
+                  <ReadOnly>true</ReadOnly>
+                  <ParameterName>F_MAT</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>INSCA ENCOLADO FILTRO MATERIAL</Name>
+                  <Guid>13574322-5243-4f8d-8308-a04666d28b64</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA ENCOLADO FILTRO MATERIAL</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA ENCOLADO FILTRO MATERIAL.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 9</Name>
+              <Guid>e26b4173-1c3d-48b0-91a2-0326c2ede20a</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>ACABADO</Name>
+                  <Guid>55c8f728-fdf5-452a-9f58-c9a455e89afb</Guid>
+                  <ToolTip />
+                  <ReadOnly>true</ReadOnly>
+                  <ParameterName>F_ACABADO</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>INSCA ENCOLADO FILTRO ACABADO</Name>
+                  <Guid>5a15a155-e018-4e49-82ef-95c1809f6460</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA ENCOLADO FILTRO ACABADO</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA ENCOLADO FILTRO ACABADO.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 10</Name>
+              <Guid>65407d66-3847-4bf0-a3b1-67c163940956</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>ESPESOR</Name>
+                  <Guid>a6f70708-f461-4e47-9255-ff22e5b5eb09</Guid>
+                  <ToolTip />
+                  <ReadOnly>true</ReadOnly>
+                  <ParameterName>F_MEDIDAS_ACA</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>INSCA ENCOLADO FILTRO MEDIDAS</Name>
+                  <Guid>70bfe149-1053-45df-a51a-1c6ae430022c</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA ENCOLADO FILTRO MEDIDAS</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA ENCOLADO FILTRO MEDIDAS.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 11</Name>
+              <Guid>8da9e9c8-8e66-468c-9952-a61f3861bba3</Guid>
+              <Items>
+                <UiElementSpec xsi:type="TextPropertyControlSpec">
+                  <Name>CODIGO MATERIAL</Name>
+                  <Guid>113bf235-71ff-42c3-a28a-6dc36ae4e191</Guid>
+                  <ReadOnly>true</ReadOnly>
+                  <PropertyName>MATERIAL_CODE</PropertyName>
+                  <PropertySetName>Custom</PropertySetName>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>COLOR MATERIAL</Name>
+          <Guid>8b892a4f-cb3c-404c-b83a-a377545ba9b1</Guid>
+          <Items>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 5</Name>
+              <Guid>e8ab78e1-0fa4-45a0-8372-e9c7abc93312</Guid>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 13</Name>
+              <Guid>63c15878-093a-4100-a711-58a9cb7e1798</Guid>
+              <Items>
+                <UiElementSpec xsi:type="BooleanPropertyControlSpec">
+                  <Name>PINTAR</Name>
+                  <Guid>3224e3ed-f219-41a4-8ab7-89b68e3dfc46</Guid>
+                  <PropertyName>Pintar</PropertyName>
+                  <PropertySetName>Custom</PropertySetName>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="MultiValueNumericParameterControlSpec">
+                  <Name>N_CARAS_PINTADAS</Name>
+                  <Guid>5a62be51-3695-4754-b80b-77c9436fb7bb</Guid>
+                  <ToolTip />
+                  <EnablingParameterName>OP_PINTAR</EnablingParameterName>
+                  <ParameterName>N_CARAS_PINTADAS</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>ACTUALIZAR</Name>
+                  <Guid>cdf96652-2d80-4d1c-81f8-c3053467a554</Guid>
+                  <Image>
+                    <BitmapByteArray />
+                  </Image>
+                  <TextVisible>true</TextVisible>
+                  <RuleName>INSCA ENCOLADO COLOR</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA ENCOLADO COLOR.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 14</Name>
+              <Guid>06f00806-20a3-4991-9e9a-4d3249e568dd</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>COL</Name>
+                  <Guid>370461e4-a783-4d5b-b2dc-f9629f58a710</Guid>
+                  <ToolTip />
+                  <EnablingParameterName>OP_PINTAR</EnablingParameterName>
+                  <ParameterName>COL</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlTabGroupSpec">
+      <Name>CANTOS</Name>
+      <Guid>b395a9f9-8eb3-496e-9553-5ea51ced7495</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 15</Name>
+          <Guid>4e47120a-1a5e-45cf-8482-8fdc4bb238ce</Guid>
+          <Items>
+            <UiElementSpec xsi:type="BooleanPropertyControlSpec">
+              <Name>CHAPAR CANTOS</Name>
+              <Guid>29372a6e-b853-4b7e-98ee-f1b37180d90a</Guid>
+              <PropertyName>Chapar_cantos</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>ACTUALIZAR</Name>
+              <Guid>cdda94a7-561e-4a0c-a71d-ff0af5014d2e</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA ENCOLADO CHAPADO</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA ENCOLADO CHAPADO.iLogicVb</Path>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>MATERIAL CANTOS</Name>
+          <Guid>360c068e-ded2-4c97-8348-771d952db22a</Guid>
+          <EnablingParameterName>OP_CHAPAR_CANTOS</EnablingParameterName>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 5</Name>
+              <Guid>8f23d19d-203b-4949-adcb-d7aaa5f5c74c</Guid>
+              <Items>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 6</Name>
+                  <Guid>57a7ff24-7a06-4f18-b7bc-2fb853d56a8b</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>CANTOS LARGO</Name>
+                      <Guid>2a646983-bf89-47e2-b48d-59a0472c652b</Guid>
+                      <ToolTip />
+                      <EnablingParameterName>OP_CHAPAR_CANTOS</EnablingParameterName>
+                      <SizeConstraints>
+                        <MinimumSize>
+                          <Width>
+                            <Value>300</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MinimumSize>
+                        <MaximumSize>
+                          <Width>
+                            <Value>300</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MaximumSize>
+                      </SizeConstraints>
+                      <ParameterName>CANTOS_LARGO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>CANTOS CORTO</Name>
+                      <Guid>7850f3e0-4ea3-4e85-b91c-e5fc18c703a9</Guid>
+                      <ToolTip />
+                      <EnablingParameterName>OP_CHAPAR_CANTOS</EnablingParameterName>
+                      <SizeConstraints>
+                        <MinimumSize>
+                          <Width>
+                            <Value>295</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MinimumSize>
+                        <MaximumSize>
+                          <Width>
+                            <Value>295</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MaximumSize>
+                      </SizeConstraints>
+                      <ParameterName>CANTOS_CORTO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 18</Name>
+                  <Guid>5dccde9d-aeba-4676-800d-eeaf57392dcd</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="TextPropertyControlSpec">
+                      <Name>LONG_CANTOS</Name>
+                      <Guid>bafc25b7-2b72-4ee7-9070-367a7befcd6b</Guid>
+                      <PropertyName>LONG_CANTOS</PropertyName>
+                      <PropertySetName>Custom</PropertySetName>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="TextPropertyControlSpec">
+                      <Name>CANTOS</Name>
+                      <Guid>877cc3ba-1e55-49b7-9bc1-e67f12f3dd42</Guid>
+                      <ReadOnly>true</ReadOnly>
+                      <PropertyName>NRO_CANTOS</PropertyName>
+                      <PropertySetName>Custom</PropertySetName>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="EmptySpaceSpec">
+                  <Name>Espacio vacío 1</Name>
+                  <Guid>17054b5f-2d56-4a81-b087-2e608055f8fd</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 4</Name>
+                  <Guid>a576871a-0931-419e-8319-7f2e3e3ed223</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="ControlGroupSpec">
+                      <Name>Grupo 1</Name>
+                      <Guid>a115027f-1375-400b-9f21-a677c7f3279c</Guid>
+                      <Items>
+                        <UiElementSpec xsi:type="ControlRowSpec">
+                          <Name>Fila 1</Name>
+                          <Guid>2aa7c008-d70e-45ea-8ddc-09110a37a0a3</Guid>
+                          <Items>
+                            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                              <Name>MATERIAL CANTOS</Name>
+                              <Guid>4db503ea-59ac-41fc-ac86-4bc1d9796b6b</Guid>
+                              <ToolTip />
+                              <ParameterName>F_MAT_CANTOS</ParameterName>
+                              <EditControlType>ComboBox</EditControlType>
+                              <AllowCustomValues>false</AllowCustomValues>
+                              <MinimumItemsToShow>2</MinimumItemsToShow>
+                              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                            </UiElementSpec>
+                            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                              <Name>INSCA ENCOLADO FILTRO MATERIAL CANTOS</Name>
+                              <Guid>98bd66b9-c880-4190-a2ce-eb4c3a768e96</Guid>
+                              <SizeConstraints>
+                                <MinimumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MinimumSize>
+                                <MaximumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MaximumSize>
+                              </SizeConstraints>
+                              <Image>
+                                <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                                <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                              </Image>
+                              <TextVisible>false</TextVisible>
+                              <RuleName>INSCA ENCOLADO FILTRO MATERIAL CANTOS</RuleName>
+                              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                              <Path>INSCA ENCOLADO FILTRO MATERIAL CANTOS.iLogicVb</Path>
+                            </UiElementSpec>
+                          </Items>
+                        </UiElementSpec>
+                        <UiElementSpec xsi:type="ControlRowSpec">
+                          <Name>Fila 2</Name>
+                          <Guid>1fffec1d-7974-4f06-b5bd-ba9fb6ad6b8f</Guid>
+                          <Items>
+                            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                              <Name>ACABADO CANTOS</Name>
+                              <Guid>3ee3f0e2-f88a-462d-bead-ab7c1447e164</Guid>
+                              <ToolTip />
+                              <ParameterName>F_ACABADO_CANTOS</ParameterName>
+                              <EditControlType>ComboBox</EditControlType>
+                              <AllowCustomValues>false</AllowCustomValues>
+                              <MinimumItemsToShow>2</MinimumItemsToShow>
+                              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                            </UiElementSpec>
+                            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                              <Name>INSCA ENCOLADO FILTRO ACABADO CANTOS</Name>
+                              <Guid>d1c36fff-62b3-4873-bdb6-aeebc134eb55</Guid>
+                              <SizeConstraints>
+                                <MinimumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MinimumSize>
+                                <MaximumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MaximumSize>
+                              </SizeConstraints>
+                              <Image>
+                                <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                                <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                              </Image>
+                              <TextVisible>false</TextVisible>
+                              <RuleName>INSCA ENCOLADO FILTRO ACABADO CANTOS</RuleName>
+                              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                              <Path>INSCA ENCOLADO FILTRO ACABADO CANTOS.iLogicVb</Path>
+                            </UiElementSpec>
+                          </Items>
+                        </UiElementSpec>
+                        <UiElementSpec xsi:type="ControlRowSpec">
+                          <Name>Fila 3</Name>
+                          <Guid>15876f60-1c40-461f-964a-3c0072adf5b2</Guid>
+                          <Items>
+                            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                              <Name>MEDIDAS CANTOS</Name>
+                              <Guid>64158899-59b9-4e67-8cfa-00e55c63dae0</Guid>
+                              <ToolTip />
+                              <ParameterName>F_MEDIDAS_ACA_CANTOS</ParameterName>
+                              <EditControlType>ComboBox</EditControlType>
+                              <AllowCustomValues>false</AllowCustomValues>
+                              <MinimumItemsToShow>2</MinimumItemsToShow>
+                              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                            </UiElementSpec>
+                            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                              <Name>INSCA ENCOLADO FILTRO MEDIDAS CANTOS</Name>
+                              <Guid>cdfd0fcd-d485-43a2-9601-2d6afafa0087</Guid>
+                              <SizeConstraints>
+                                <MinimumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MinimumSize>
+                                <MaximumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MaximumSize>
+                              </SizeConstraints>
+                              <Image>
+                                <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                                <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                              </Image>
+                              <TextVisible>false</TextVisible>
+                              <RuleName>INSCA ENCOLADO FILTRO MEDIDAS CANTOS</RuleName>
+                              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                              <Path>INSCA ENCOLADO FILTRO MEDIDAS CANTOS.iLogicVb</Path>
+                            </UiElementSpec>
+                          </Items>
+                        </UiElementSpec>
+                        <UiElementSpec xsi:type="TextPropertyControlSpec">
+                          <Name>MATERIAL_CANTOS</Name>
+                          <Guid>e16f0847-885b-4a68-9492-8e394b2b8547</Guid>
+                          <ReadOnly>true</ReadOnly>
+                          <PropertyName>MATERIAL_CANTOS</PropertyName>
+                          <PropertySetName>Custom</PropertySetName>
+                        </UiElementSpec>
+                      </Items>
+                      <CaptionImage>
+                        <BitmapByteArray />
+                      </CaptionImage>
+                      <BordersVisible>false</BordersVisible>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="SplitterSpec">
+          <Name>Divisor 1</Name>
+          <Guid>21cf794c-ab09-4f67-8fc1-49b5c478e4b1</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 6</Name>
+          <Guid>90048bee-94d0-4d7a-bb89-aa02062ab594</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 17</Name>
+          <Guid>dfa20b78-3c29-4187-b0a1-b716fb506fc2</Guid>
+          <Items>
+            <UiElementSpec xsi:type="BooleanPropertyControlSpec">
+              <Name>PINTAR CANTOS</Name>
+              <Guid>bf1bbb20-c4b5-4bcc-b6ce-2404664da51a</Guid>
+              <PropertyName>Pintar_cantos</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>ACTUALIZAR</Name>
+              <Guid>1af59afc-d19e-40a6-aa17-2fcd1095dbdd</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA ENCOLADO COLOR CANTOS</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA ENCOLADO COLOR CANTOS.iLogicVb</Path>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>COLOR CANTOS</Name>
+          <Guid>bf4cea44-a0cb-4c69-ac43-1baf878018fe</Guid>
+          <EnablingParameterName>OP_PINTAR_CANTOS</EnablingParameterName>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 16</Name>
+              <Guid>81e64c2b-0358-4aa9-9328-a14d3aecc34e</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>COLOR CANTOS</Name>
+                  <Guid>a2520752-9cf1-45cb-8ef0-bee045e16fe8</Guid>
+                  <ToolTip />
+                  <ParameterName>COL_CANTOS</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 22</Name>
+                  <Guid>04168757-8db9-4ac4-9ab6-70f82af8c195</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>CANTOS LARGO</Name>
+                      <Guid>a86db75a-9615-422c-ba81-64671db92705</Guid>
+                      <ToolTip />
+                      <ParameterName>PINTAR_CANTOS_LARGO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>CANTOS CORTO</Name>
+                      <Guid>f44c4e59-3e43-4283-a98e-06a802549ef7</Guid>
+                      <ToolTip />
+                      <ParameterName>PINTAR_CANTOS_CORTO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 23</Name>
+                  <Guid>f9fae531-dade-474b-bb29-49564d917a58</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>SUPERFICIE CANTOS PINTADO</Name>
+                      <Guid>9b394050-56a9-49b5-a625-c8b33c0921b3</Guid>
+                      <ToolTip />
+                      <ParameterName>SUPERFICIE_CANTOS_PINTADO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="TextPropertyControlSpec">
+                      <Name>CANTOS PINTADO</Name>
+                      <Guid>47e70521-6a9f-495e-8569-4bd84ae3ea8f</Guid>
+                      <PropertyName>NRO_CANTOS_PINTADO</PropertyName>
+                      <PropertySetName>Custom</PropertySetName>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="SplitterSpec">
+      <Name>Divisor 2</Name>
+      <Guid>835be2d0-43bb-4812-b7ee-c2617cd2b8c5</Guid>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlGroupSpec">
+      <Name>Grupo 2</Name>
+      <Guid>4301f5ad-4e3a-44dd-ae7f-5cd85a99808e</Guid>
+      <Items />
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+      <BordersVisible>false</BordersVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 21</Name>
+      <Guid>99a97e7f-c742-4968-9d26-c421fb301783</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>Configuración</Name>
+          <Guid>6ae34c94-ed5b-4333-b9c8-d4a4ea765024</Guid>
+          <Items>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>CODIGO COLOR</Name>
+              <Guid>74b4ea1a-f2c3-4431-b07c-5d4e4bab1b39</Guid>
+              <ReadOnly>true</ReadOnly>
+              <PropertyName>COLOR_CODE</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>CODIGO CANTOS</Name>
+              <Guid>35417f82-0255-4926-a8bd-bcc46a23a7ec</Guid>
+              <ReadOnly>true</ReadOnly>
+              <PropertyName>P_CANTOS_CODE</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>CODIGO COLOR CANTOS</Name>
+              <Guid>71abacb7-ffd8-48ea-9e21-84f04bdcffb3</Guid>
+              <ReadOnly>true</ReadOnly>
+              <PropertyName>COL_CANTOS_CODE</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>RECARGAR SOLO WOOD CONFIG</Name>
+          <Guid>5289b6cd-0af3-46df-af51-9bd9445e9eea</Guid>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>INSCA ENCOLADO SOLO WOOD</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>INSCA ENCOLADO SOLO WOOD.iLogicVb</Path>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="EmptySpaceSpec">
+      <Name>Espacio vacío 10</Name>
+      <Guid>8739bafb-46af-4016-b0d7-0980ee857298</Guid>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>CREAR CONFIGURACION</Name>
+      <Guid>48a697d8-10cb-4b3c-94e2-48cd88a23b9c</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA ENCOLADO MODEL STATE</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA ENCOLADO MODEL STATE.iLogicVb</Path>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="TextPropertyControlSpec">
+      <Name>RUTA PRODUCCION</Name>
+      <Guid>0941ce24-30bd-4c3e-8d3c-852218dd9213</Guid>
+      <PropertyName>RUTA_PRODUCCION</PropertyName>
+      <PropertySetName>Custom</PropertySetName>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 12</Name>
+      <Guid>fb176f58-6cbb-4a1e-8a13-04e84e760ffb</Guid>
+      <Items />
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 20</Name>
+      <Guid>a9ac139c-afc5-44d6-b195-9ef9fe6081eb</Guid>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>AÑADIR A DESCRIPCION</Name>
+          <Guid>a87397b5-2f9e-41e5-bda3-01b6b2df508f</Guid>
+          <Font>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>8.25</Size>
+            <Bold>false</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <SizeConstraints>
+            <MinimumSize>
+              <Width>
+                <Value>200</Value>
+                <Units>Pixel</Units>
+              </Width>
+              <Height>
+                <Value>0</Value>
+                <Units>Em</Units>
+              </Height>
+            </MinimumSize>
+            <MaximumSize>
+              <Width>
+                <Value>200</Value>
+                <Units>Pixel</Units>
+              </Width>
+              <Height>
+                <Value>0</Value>
+                <Units>Em</Units>
+              </Height>
+            </MaximumSize>
+          </SizeConstraints>
+          <PropertyName>ADD_DESC</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>Descripción</Name>
+          <Guid>6ce781d8-ab1e-46a4-b54b-c27459a1824f</Guid>
+          <ReadOnly>true</ReadOnly>
+          <PropertyName>Description</PropertyName>
+          <PropertySetName>Project</PropertySetName>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>INSCA DESCRIPCION</Name>
+          <Guid>a229b910-69c7-4407-8093-ee579334f070</Guid>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>INSCA DESCRIPCION</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>INSCA DESCRIPCION.iLogicVb</Path>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="PictureFolderSpec">
+      <Name>Carpeta de imágenes 1</Name>
+      <Guid>b1714ee3-229c-40a2-8892-f1f3373fc49b</Guid>
+      <Items>
+        <UiElementSpec xsi:type="PictureSourceSpec">
+          <Name>Sin verificar</Name>
+          <Guid>ecd7378c-5710-4f4d-abdc-27c5864289a5</Guid>
+          <Bitmap>
+            <FileName>R:\INVENTOR\CAJETINES_INVENTOR2022\Odoo\Sin_verificar.png</FileName>
+            <BitmapByteArray>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</BitmapByteArray>
+          </Bitmap>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="PictureSourceSpec">
+          <Name>Error</Name>
+          <Guid>17db792f-637f-48c0-964f-65a3f3f1a1b0</Guid>
+          <Bitmap>
+            <FileName>R:\INVENTOR\CAJETINES_INVENTOR2022\Odoo\Error.png</FileName>
+            <BitmapByteArray>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</BitmapByteArray>
+          </Bitmap>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="PictureSourceSpec">
+          <Name>Verificado</Name>
+          <Guid>c30b9b83-0310-4a1e-81fa-9241719234ad</Guid>
+          <Bitmap>
+            <FileName>R:\INVENTOR\CAJETINES_INVENTOR2022\Odoo\Correcto.png</FileName>
+            <BitmapByteArray>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</BitmapByteArray>
+          </Bitmap>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>false</AllowCustomization>
+  <PredefinedButtons>Done</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

@@ -1,0 +1,72 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+Sub Main
+	Dim oSourceFileName As String = SelectFile 'run custom Function
+	If String.IsNullOrEmpty(oSourceFileName) Then
+		MsgBox("Source document file name was Empty. Exiting rule.", vbCritical, "")
+		Exit Sub
+	End If
+	Dim oTargetFileName As String = SelectFile 'run custom Function
+	If String.IsNullOrEmpty(oTargetFileName) Then
+		MsgBox("Target document file name was Empty. Exiting rule.", vbCritical, "")
+		Exit Sub
+	End If
+	Dim oSourceDoc As Document = ThisApplication.Documents.Open(oSourceFileName, False)
+	Dim oTargetDoc As Document = ThisApplication.Documents.Open(oTargetFileName, False)
+	CopyRules(oSourceDoc, oTargetDoc)
+	CopyEventTriggers(oSourceDoc, oTargetDoc)
+	oSourceDoc.Close
+	oTargetDoc.Update2(True) 'True = Accept/Skip Any Errors and Continue
+	oTargetDoc.Save
+	oTargetDoc.Close
+End Sub
+
+Function SelectFile() As String
+	Dim oFileDialog As Inventor.FileDialog = Nothing
+	ThisApplication.CreateFileDialog(oFileDialog)
+	oFileDialog.DialogTitle = "Browse To And Select A File."
+	oFileDialog.InitialDirectory = ThisApplication.DesignProjectManager.ActiveDesignProject.WorkspacePath
+	oFileDialog.Filter = "Autodesk Inventor Files (*.iam;*.dwg;*.idw;*.ipt:*.ipn;*.ide) | *.iam;*.dwg;*.idw;*ipt;*.ipn;*.ide | All files (*.*)|*.*"
+	oFileDialog.MultiSelectEnabled = False
+	oFileDialog.OptionsEnabled = False
+	oFileDialog.CancelError = True
+	oFileDialog.InsertMode = False
+	Try
+		oFileDialog.ShowOpen
+	Catch
+		Logger.Error("File Dialog was canceled.")
+		Return ""
+	End Try
+	Return oFileDialog.FileName
+End Function
+
+Sub CopyRules(oSourceDoc As Document, oTargetDoc As Document)
+	Dim oAuto As IiLogicAutomation = iLogicVb.Automation
+	Dim oSourceRule, oTargetRule As iLogicRule
+	If oAuto.Rules(oSourceDoc).OfType(Of iLogicRule).Count = 0 Then Exit Sub
+	For Each oSourceRule In oAuto.Rules(oSourceDoc)
+		oTargetRule = oAuto.AddRule(oTargetDoc, oSourceRule.Name, "")
+		oTargetRule.Text = oSourceRule.Text
+	Next
+End Sub
+
+Sub CopyEventTriggers(oSourceDoc As Document, oTargetDoc As Document)
+	Dim oSourceEventProps, oTargetEventProps As PropertySet
+	Dim oInternalName As String = "{2C540830-0723-455E-A8E2-891722EB4C3E}"
+	If Not oSourceDoc.PropertySets.PropertySetExists(oInternalName, oSourceEventProps) Then
+		MsgBox("Could not find Event Triggers PropertySet in Source document. Exiting rule.", vbCritical, "")
+		Exit Sub
+	End If
+	If Not oTargetDoc.PropertySets.PropertySetExists(oInternalName, oTargetEventProps) Then
+		oTargetEventProps = oTargetDoc.PropertySets.Add("_iLogicEventsRules", oInternalName)
+	End If
+	If oSourceEventProps.Count = 0 Then Exit Sub
+	For Each oSourceProp As Inventor.Property In oSourceEventProps
+		oTargetEventProps.Add(oSourceProp.Value, oSourceProp.Name, oSourceProp.PropId)
+	Next
+End Sub

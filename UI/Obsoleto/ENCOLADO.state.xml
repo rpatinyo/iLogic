@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormStatePersist xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Size>
+    <Width>846</Width>
+    <Height>775</Height>
+  </Size>
+  <Location>
+    <X>303</X>
+    <Y>46</Y>
+  </Location>
+  <DipToPixelConversionFactors>
+    <WidthFactor>1</WidthFactor>
+    <HeightFactor>1</HeightFactor>
+  </DipToPixelConversionFactors>
+  <SplitterLocations>
+    <SplitterLocation>
+      <Name>Divisor 1</Name>
+      <Location>
+        <X>0</X>
+        <Y>196</Y>
+      </Location>
+    </SplitterLocation>
+    <SplitterLocation>
+      <Name>Divisor 2</Name>
+      <Location>
+        <X>0</X>
+        <Y>492</Y>
+      </Location>
+    </SplitterLocation>
+  </SplitterLocations>
+  <GroupExpansionStateList>
+    <GroupExpansionState>
+      <Name>OPERACIONES</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>MATERIAL_1</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>COLOR MATERIAL</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>MATERIAL CANTOS</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>Grupo 1</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>COLOR CANTOS</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>Grupo 2</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+    <GroupExpansionState>
+      <Name>Configuración</Name>
+      <Expanded>true</Expanded>
+    </GroupExpansionState>
+  </GroupExpansionStateList>
+  <TabGroupSelectedPageList>
+    <TabGroupSelectedPage>
+      <Name />
+      <SelectedIndex>0</SelectedIndex>
+    </TabGroupSelectedPage>
+  </TabGroupSelectedPageList>
+</FormStatePersist>

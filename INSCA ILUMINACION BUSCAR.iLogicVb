@@ -1,0 +1,17 @@
+﻿ Dim fileSystemObj As Object
+  fileSystemObj = CreateObject("Scripting.FileSystemObject")
+iLogicVb.RunExternalRule("INSCA ILUMINACION CODIGO")
+iLogicVb.RunExternalRule("INSCA ILUMINACION CATEGORIA")
+iLogicVb.RunExternalRule("INSCA ILUMINACION NOTAS")
+iLogicVb.RunExternalRule("INSCA ILUMINACION VAULT_ID")
+
+  Nombre_archivo = iProperties.Value("Custom", "CODIGO_ILUMINACION") & ".ipt"
+  Guardado = ThisDoc.WorkspacePath & "\" & Nombre_archivo
+  Logger.Info(Guardado)
+  
+  iProperties.Value("Inventor Summary Information", "Title") = iProperties.Value("Custom", "CODIGO_ILUMINACION")
+  iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "CODIGO_ILUMINACION")
+  iProperties.Value("Project", "Description") = Parameter("DESCRIPCION")
+  iProperties.Value("Custom", "DESCRIPCION") = Parameter("DESCRIPCION")
+
+

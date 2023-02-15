@@ -1,0 +1,111 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+Dim odoc As PartDocument
+odoc = ThisDoc.Document
+
+Dim ocomp As PartComponentDefinition
+ocomp = odoc.ComponentDefinition
+
+Dim model_states As ModelStates
+model_states = ocomp.ModelStates
+
+Dim fileSystemObj As Object
+fileSystemObj = CreateObject("Scripting.FileSystemObject")
+
+Dim undo As Transaction
+'undo = ThisApplication.TransactionManager.StartTransaction(odoc, "Versión de pieza")
+
+If Parameter("OP_PINTAR") = False Then
+	repeticiones = 1
+Else
+	repeticiones = 2
+End If
+
+For i = 1 To repeticiones
+
+	iLogicVb.RunExternalRule("CHAPA SQL RUTA FABRICACION")
+
+	Select Parameter("Tipo")
+		Case "Chapa_SQL"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			Largo_nombre_archivo = Len(Nombre_archivo)
+
+			Select Largo_nombre_archivo
+				Case 0
+					iProperties.Value("Custom", "VDS_NumSchm") = "METAL"
+					iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+					ThisDoc.Document.SaveAs("C:\testing.ipt", False)
+					Nombre_archivo = ThisDoc.FileName(False) 'without extension
+					CODIGO = Nombre_archivo
+					'undo.End
+				Case 9
+					Prefijo = Left(Nombre_archivo, 4)
+					Sufijo = Right(Nombre_archivo, 5)
+					CODIGO = Prefijo & "0" & Sufijo
+
+					If Prefijo = "B30." Then
+						Prefijo = "A30.1"
+						CODIGO = Prefijo & Sufijo
+					End If
+
+				Case 10
+					CODIGO = Nombre_archivo
+					'											
+			End Select
+									
+			MultiValue.UpdateAfterChange = True
+			If PARAMETER("OP_PINTAR") = True Then
+				model_states("Principal").Activate
+				CONFIG = iProperties.Value("Custom", "CODIGO_MATERIAL_INVENTOR") & iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_INVENTOR")
+				VALOR = CODIGO & "." & CONFIG
+				iProperties.Value("Project", "Part Number") = CODIGO
+				iProperties.Value("Custom", "DESCRIPCION_PIEZA") = iProperties.Value("Project", "Description")
+				DESCRIP = iProperties.Value("Custom", "DESCRIPCION_MATERIAL") & " # " & iProperties.Value("Custom", "COLOR_MATERIAL")
+				Else
+					iProperties.Value("Project", "Part Number") = CODIGO
+					DESCRIP = iProperties.Value("Custom", "DESCRIPCION_MATERIAL") & " # CRUDO"
+					VALOR = CODIGO & "." & iProperties.Value("Custom", "CODIGO_MATERIAL_INVENTOR") & "000"
+			End If
+				
+			Try
+				model_states.Add(DESCRIP)
+				model_stateS(DESCRIP).Activate
+				iProperties.Value("Project", "Part Number") = VALOR
+				iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION_PIEZA")
+
+				If Parameter("OP_PINTAR") = False Then
+					iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_INVENTOR") = "000"
+					iProperties.Value("Custom", "COLOR_MATERIAL") = "CRUDO"
+					iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") = "I0039Y"
+				End If
+
+
+				iProperties.Value("Custom", "Categoria") = "METAL"
+				iProperties.Value("Custom", "MATERIAL") = iProperties.Value("Custom", "DESCRIPCION_MATERIAL")
+				iProperties.Value("Custom", "MATERIAL_COLOR") = iProperties.Value("Custom", "COLOR_MATERIAL")
+				surfaceArea = Parameter("L1") / 1000 * Parameter("L2") / 1000
+				S_PINT = Parameter("N_CARAS_PINTADAS") * surfaceArea
+				iProperties.Value("Custom", "S_PIEZA") = FormatNumber(CDbl(surfaceArea), "3", vbFalse)
+
+				If Parameter("OP_PINTAR") = False Then
+					S_PINT = 0
+					iProperties.Value("Custom", "SPINT") = SPINT
+				Else
+					iProperties.Value("Custom", "SPINT") = FormatNumber(CDbl(S_PINT), "3", vbFalse)
+				End If
+
+
+				model_states.Item("Principal").Activate
+				InventorVb.DocumentUpdate()
+				MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+
+			Catch
+			End Try
+
+	End Select
+	If Parameter("OP_PINTAR") = True Then
+		Parameter("OP_PINTAR") = False
+	End If
+	If i = 2 Then
+		Parameter("OP_PINTAR") = False
+	End If
+Next

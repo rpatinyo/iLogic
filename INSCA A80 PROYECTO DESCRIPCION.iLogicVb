@@ -1,0 +1,34 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+If parameter("L1")>1 And parameter("L1")<100 Then
+	LL = "00" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+	ElseIf parameter("L1") >= 100 And parameter("L1") <1000 Then
+		LL = "0" & FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+		ElseIf parameter("L1") >= 1000 Then
+			LL = FormatNumber(CDbl(PARAMETER("L1")), "1", vbFalse)
+End If
+
+If parameter("L2")>1 And parameter("L2")<100 Then
+	LA = "00" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+	ElseIf parameter("L2")>=100 And parameter("L2")<1000 Then
+		LA = "0" & FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+		ElseIf parameter("L2") >= 1000 Then
+			LA = FormatNumber(CDbl(PARAMETER("L2")), "1", vbFalse)
+End If
+
+If parameter("L3")>1 And parameter("L3")<100 Then
+	LE = "0" & FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+	Else
+		LE = FormatNumber(CDbl(PARAMETER("L3")), "1", vbFalse)
+End If
+	
+	desc = LL & "x" & LA & "x" & LE
+	
+	
+iProperties.Value("Project", "Description") = PARAMETER("TIPO_A80") & " " & PARAMETER("DESCRIPCION") & " " & desc & "mm"

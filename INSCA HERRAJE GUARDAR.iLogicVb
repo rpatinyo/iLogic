@@ -1,0 +1,93 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+Dim odoc As PartDocument
+odoc = ThisDoc.Document
+
+Dim ocomp As PartComponentDefinition
+ocomp = odoc.ComponentDefinition
+
+Dim model_states As ModelStates
+model_states = ocomp.ModelStates
+
+Dim fileSystemObj As Object
+fileSystemObj = CreateObject("Scripting.FileSystemObject")
+
+Dim undo As Transaction
+'undo = ThisApplication.TransactionManager.StartTransaction(odoc, "Versión de pieza")
+
+Select Parameter("Tipo")
+	Case "Herraje"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			Largo_nombre_archivo = Len(Nombre_archivo)
+			
+			Select Largo_nombre_archivo
+				Case 0
+						iProperties.Value("Custom", "VDS_NumSchm") = "HERRAJE"
+						iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+						ThisDoc.Document.SaveAs("C:\testing.ipt", False)
+						Nombre_archivo = ThisDoc.FileName(False) 'without extension
+						CODIGO = Nombre_archivo
+						'undo.End
+				Case 9
+						Prefijo = Left(Nombre_archivo, 4)
+						Sufijo = Right(Nombre_archivo, 5)
+						CODIGO = Prefijo & "0" & Sufijo
+												
+				Case 10
+						CODIGO = Nombre_archivo
+'											
+			End Select
+			MultiValue.UpdateAfterChange = True
+			model_states("Principal").Activate
+			CONFIG = Right(iProperties.Value("Custom", "CODIGO_HERRAJE"), 6)
+			VALOR = CODIGO & "." & CONFIG
+			iProperties.Value("Project", "Part Number") = CODIGO
+			iProperties.Value("Project", "Description") = Parameter("DESCRIPCION")
+			iLogicVb.RunExternalRule("SACARAROS HERRAJE")
+			iProperties.Value("Custom", "DESCRIPCION_HERRAJE") = iProperties.Value("Project", "Description")
+			DESCRIP = iProperties.Value("Custom", "DESCRIPCION_HERRAJE")
+			Try
+				If iProperties.Value("Custom", "TIPO_HERRAJE") = "GUIA" Then
+					VALOR = CODIGO & "." & "D" & CONFIG
+					DESCRIP = iProperties.Value("Custom", "DESCRIPCION_HERRAJE") & " GUIA DERECHA"
+					VALOR2 = CODIGO & "." & "I" & CONFIG
+					DESCRIP2 = iProperties.Value("Custom", "DESCRIPCION_HERRAJE") & " GUIA IZQUIERDA"
+				End If
+	
+				model_states.Add(DESCRIP)
+				model_stateS(DESCRIP).Activate
+				iProperties.Value("Project", "Part Number") = VALOR
+					
+				If parameter("TIPO_HERRAJE") = "GUIA" Then
+					iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION_HERRAJE") & " GUIA DERECHA"
+					iProperties.Value("Custom", "DESCRIPCION_HERRAJE") = iProperties.Value("Project", "Description")
+					Else
+						iProperties.Value("Project", "Description") = iProperties.Value("Custom", "DESCRIPCION_HERRAJE")
+				End If
+				Try
+					Feature.IsActive("Simetría1") = False
+				Catch
+				End Try
+				If parameter("TIPO_HERRAJE") = "GUIA" Then
+					VALOR2 = CODIGO & "." & "I" & CONFIG
+					model_states.Add(DESCRIP2)
+					model_stateS(DESCRIP2).Activate
+					iProperties.Value("Project", "Part Number") = VALOR2
+					iProperties.Value("Project", "Description") = Parameter("DESCRIPCION") & " GUIA IZQUIERDA"
+					iProperties.Value("Custom", "DESCRIPCION_HERRAJE") = iProperties.Value("Project", "Description")
+					iProperties.Value("Custom", "CODIGO_HERRAJE") = ""
+					iProperties.Value("Custom", "SUJECION GUIA DERECHA") = ""
+					iProperties.Value("Custom", "SUJECION GUIA IZQUIERDA") = ""
+					Try
+						Feature.IsActive("Simetría1") = True
+					Catch
+					End Try
+				End If
+				model_states.Item("Principal").Activate
+				MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+				InventorVb.DocumentUpdate()
+			Catch
+			End Try
+
+End Select
+		
+'undo.end

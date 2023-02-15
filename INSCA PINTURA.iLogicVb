@@ -1,0 +1,191 @@
+﻿PAR = Parameter("Tipo")
+
+If PAR = "Tubo redondo" or PAR = "Macizo redondo" Then
+
+PARAMETER("OP_PINTAR") = False
+
+PARAMETER("OP_PINTAR") = iProperties.Value("Custom", "PR_PINTURA")
+
+If iProperties.Value("Custom", "PR_PINTURA") = True Then
+
+iProperties.Value("Custom", "SPINT") = Round((Math.PI * PARAMETER("DIAMETRO") * PARAMETER("L1")) / 1000000,3)
+
+Else
+	
+iProperties.Value("Custom", "SPINT") = 0 
+
+End If
+
+ iProperties.Value("Custom", "S_PIEZA") = Round((Math.PI * PARAMETER("DIAMETRO") * PARAMETER("L1")) / 1000000,3)
+
+Try
+volume = iProperties.Volume / 1000000000
+DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+CALCULO_PESO = Round(volume * DENSIDAD,2)
+iProperties.Value("Custom", "PESO") = CALCULO_PESO
+
+Catch
+i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+End Try
+
+ElseIf PAR = "Tubo rectangular/cuadrado" Then
+
+parameter("OP_PINTAR") = False
+
+OP_PINTAR = iProperties.Value("Custom", "PR_PINTURA")
+
+If iProperties.Value("Custom", "PR_PINTURA") = True Then
+
+iProperties.Value("Custom", "SPINT") = Round(((2*parameter("HONDO")*parameter("L1"))+(2*parameter("ANCHO")*parameter("L1"))) / 1000000,3)
+Else
+	
+'iProperties.Value("Custom", "SPINT") = 0 & " m²"
+iProperties.Value("Custom", "SPINT") = 0
+End If
+
+ iProperties.Value("Custom", "S_PIEZA") = Round(((2*parameter("HONDO")*parameter("L1"))+(2*parameter("ANCHO")*parameter("L1"))) / 1000000,3)
+
+Try
+volume = iProperties.Volume / 1000000000
+DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+CALCULO_PESO = Round(volume * DENSIDAD,2)
+iProperties.Value("Custom", "PESO") = CALCULO_PESO
+
+Catch
+i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+End Try
+
+
+ElseIf PAR = "Chapa" Then
+
+OP_PINTAR = False
+
+OP_PINTAR = iProperties.Value("Custom", "PR_PINTURA")
+
+If iProperties.Value("Custom", "PR_PINTURA") = True Then
+	iProperties.Value("Custom", "SPINT") = Round(((2 * LARGO_CHAPA * ANCHO_CHAPA) / 1000000), 3)
+	iProperties.Value("Custom", "MATERIAL_COLOR") = Parameter("COL")
+Else
+	iProperties.Value("Custom", "SPINT") = 0
+
+End If
+
+
+Try
+volume = iProperties.Volume / 1000000000
+DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+CALCULO_PESO = Round(volume * DENSIDAD,2)
+iProperties.Value("Custom", "PESO") = CALCULO_PESO
+
+Catch
+i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+End Try
+
+
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+
+ElseIf PAR = "Madera" Then
+
+iLogicVb.RunExternalRule("INSCA MADERA COLOR CANTOS")
+iLogicVb.RunExternalRule("INSCA FILTRO COLOR")
+iLogicVb.RunExternalRule("INSCA RUTA FABRICACION")
+
+'	CC = iProperties.Value("Custom", "COLOR_CODE")
+'	PCC = iProperties.Value("Custom", "P_CANTOS_CODE")
+'	CCC = iProperties.Value("Custom", "COL_CANTOS_CODE")
+
+parameter("OP_PINTAR") = iProperties.Value("Custom", "Pintar")
+
+If iProperties.Value("Custom", "Pintar") = False Then
+
+iProperties.Value("Custom", "MATERIAL_COLOR") = "CRUDO"
+iProperties.Value("Custom", "COLOR_CODE") ="I0039Y"
+Else
+
+	iProperties.Value("Custom", "COLOR_CODE")= Parameter("COL_CODE")
+
+End If	
+
+parameter("OP_PINTAR_CANTOS") = iProperties.Value("Custom", "Pintar_cantos")
+
+parameter("OP_CHAPAR_CANTOS") = iProperties.Value("Custom", "Chapar_cantos")
+
+MAXIMO = CDbl(MaxOfMany(parameter("L1"),parameter("L2")))
+MINIMO = CDbl(MinOfMany(parameter("L1"),parameter("L2")))
+
+If iProperties.Value("Custom", "Pintar_cantos") = True Then
+	Try
+		iProperties.Value("Custom", "COL_CANTOS_CODE") = Parameter("COL_CANTOS_CODE")
+		parameter("SUPERFICIE_CANTOS_PINTADO") = CDbl((parameter("PINTAR_CANTOS_LARGO") * (MAXIMO / 1000) * (parameter("L3") / 1000))) + CDbl((parameter("PINTAR_CANTOS_CORTO") * (MINIMO / 1000) * (parameter("L3") / 1000)))
+		iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = parameter("PINTAR_CANTOS_LARGO") & "CL+" & parameter("PINTAR_CANTOS_CORTO") & "CC"
+	Catch
+	End Try
+	Else
+	
+		parameter("PINTAR_CANTOS_LARGO") = 0
+		parameter("PINTAR_CANTOS_CORTO") = 0
+		parameter("SUPERFICIE_CANTOS_PINTADO") = 0
+		
+		iProperties.Value("Custom", "COL_CANTOS_CODE") = "I0039Y"
+		iProperties.Value("Custom", "NRO_CANTOS_PINTADO") = 0 & "CL+" & 0 & "CC"
+	
+End If
+
+
+
+
+If iProperties.Value("Custom", "Chapar_cantos") = True Then
+
+
+parameter("LONG_CANTOS") = (parameter("CANTOS_LARGO") * MAXIMO) + (parameter("CANTOS_CORTO") * MINIMO)
+iProperties.Value("Custom", "NRO_CANTOS") = parameter("CANTOS_LARGO") & "CL+" & parameter("CANTOS_CORTO") & "CC"
+
+Else
+
+iProperties.Value("Custom", "P_CANTOS_CODE") = "000000"
+parameter("CANTOS_LARGO") = 0
+parameter("CANTOS_CORTO") = 0
+parameter("LONG_CANTOS") = 0
+
+iProperties.Value("Custom", "NRO_CANTOS") = "0" & "CL+" & "0" & "CC"
+
+
+End If
+
+If iProperties.Value("Custom", "Pintar") = True Then
+
+iProperties.Value("Custom", "SPINT") = (parameter("N_CARAS_PINTADAS") * parameter("L1") * parameter("L2")) / 1000000
+NRO_CARAS_PINT = parameter("N_CARAS_PINTADAS")
+iProperties.Value("Custom", "NRO_CARAS_PINTADAS") = NRO_CARAS_PINT
+
+Else
+
+iProperties.Value("Custom", "SPINT") = 0
+NRO_CARAS_PINT = 0
+iProperties.Value("Custom", "NRO_CARAS_PINTADAS") = NRO_CARAS_PINT
+
+End If
+
+Try
+volume = iProperties.Volume / 1000000000
+DENSIDAD = CDbl(iProperties.Value("Custom", "DENSIDAD_ODOO"))
+CALCULO_PESO = Round(volume * DENSIDAD,2)
+iProperties.Value("Custom", "PESO") = CALCULO_PESO
+
+Catch
+i = MessageBox.Show("Densidad no establecida en el material de Odoo", "ERROR PESO", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+
+End Try
+
+
+
+End If
+
+RuleParametersOutput()
+
+InventorVb.DocumentUpdate()
+

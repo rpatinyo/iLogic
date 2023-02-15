@@ -1,0 +1,69 @@
+﻿MultiValue.UpdateAfterChange = True
+
+Dim ODOC As AssemblyDocument
+ODOC = ThisDoc.Document
+OCOMP = ODOC.ComponentDefinition
+MODEL_STATES = OCOMP.ModelStates
+
+Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de ensamblaje")
+
+iLogicVb.RunExternalRule("INSCA COLOR")
+
+COL_CODE1 = iProperties.Value("Custom", "COL_CODE1")
+COL_CODE2 = iProperties.Value("Custom", "COL_CODE2")
+COL_CODE3 = iProperties.Value("Custom", "COL_CODE3")
+
+TEMP_CODE = COL_CODE1 & "-" & COL_CODE2 & "-" & COL_CODE3
+
+ODOO = MultiValue.List("CODE_ODOO")
+CREADO = False
+
+For i=0 To ODOO.Count-1
+If ODOO(i) = TEMP_CODE Then
+	
+	CODE = MultiValue.List("CODE_CONFIG")
+	CODE_F = CODE(i)
+	
+	MODEL_STATES.Item("Principal").Activate
+	'CODIGO_INIC = ThisDoc.FileName(False)
+	
+	CODIGO = Left(ThisDoc.FileName(False), 9)
+	Prefijo = Left(CODIGO, 4)
+	Sufijo = Right(CODIGO, 5)
+	
+	VALOR = Prefijo & "0" & Sufijo & "." & "000" & CODE_F
+	Try
+		MODEL_STATES.Add(VALOR)
+		Catch
+			i = MessageBox.Show("Esta configuración ya está dada de alta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+			CREADO = True
+		Exit For
+		End Try
+
+	iProperties.Value("Project", "Part Number") = VALOR
+	'iLogicVb.RunExternalRule("INSCA MEDIDAS")
+	iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+	iLogicVb.RunExternalRule("INSCA SOLD PINT")
+'	If Parameter("Tipo") = "A32" Then
+		
+'	iProperties.Value("Project", "Description") = iProperties.Value("Custom", "LARGO") & "x" & iProperties.Value("Custom", "ANCHO") & "x" & iProperties.Value("Custom", "HONDO")
+
+	
+	MODEL_STATES.Item("Principal").Activate
+	iLogicVb.RunExternalRule("INSCA MEDIDAS")
+	iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+	iLogicVb.RunExternalRule("INSCA SOLD PINT")
+	ODOC.Rebuild2
+	CREADO = True
+	iProperties.Value("Project", "Part Number") = VALOR
+	Exit For
+	
+End If
+
+Next
+
+If CREADO = False Then
+	MessageBox.Show("La configuración, no existe." & vbNewLine & vbNewLine & "Dar de alta configuración en Odoo.", "No existe", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1)
+End If
+

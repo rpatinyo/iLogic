@@ -1,0 +1,349 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+Dim odoc As PartDocument
+odoc = ThisDoc.Document
+
+Dim ocomp As PartComponentDefinition
+ocomp = odoc.ComponentDefinition
+
+Dim model_states As ModelStates
+model_states = ocomp.ModelStates
+
+Dim fileSystemObj As Object
+fileSystemObj = CreateObject("Scripting.FileSystemObject")
+
+Dim undo As Transaction
+undo = ThisApplication.TransactionManager.StartTransaction(odoc, "Versión de pieza")
+
+Select Parameter("Tipo")
+	Case "Textil"
+			Nombre_archivo = ThisDoc.FileName(False) 'without extension
+			
+			If Nombre_archivo = "" Then
+				Nombre_archivo = "Z99"
+				
+			End If
+			
+			Largo_nombre_archivo = Len(Nombre_archivo)
+			Codigo_archivo = Left(Nombre_archivo, 3)
+			
+			Opcion = Codigo_archivo & "-" & Largo_nombre_archivo
+			
+			
+			Tipo_codigo_textil = Left(parameter("CODIGO_TEXTIL"), 3)
+			
+			
+			Select Opcion
+				Case "Z99-3"
+					
+					
+						Select Tipo_codigo_textil
+							Case "PC0"
+									iProperties.Value("Custom", "VDS_NumSchm") = "TEXTIL FABRICAR"
+									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									
+									ThisDoc.Document.SaveAs("C:\testing.ipt", False)
+									Nombre_archivo = ThisDoc.FileName(False) 'without extension
+									CODIGO = Nombre_archivo
+									MultiValue.UpdateAfterChange = True
+									model_states("Principal").Activate
+									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+									VALOR = CODIGO & "." & CONFIG
+									iProperties.Value("Project", "Part Number") = CODIGO
+									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+									DESCRIP = iProperties.Value("Project", "Description")
+							
+									Try
+										model_states.Add(VALOR)
+										model_stateS(VALOR).Activate
+										iProperties.Value("Project", "Part Number") = VALOR
+										iProperties.Value("Project", "Description") = DESCRIP
+										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										model_states.Item("Principal").Activate
+										MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+									Catch
+									End Try
+							
+							Case "TXT"
+									iProperties.Value("Custom", "VDS_NumSchm") = "TEXTIL FABRICAR"
+									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									
+									ThisDoc.Document.SaveAs("C:\testing.ipt", False)
+									Nombre_archivo = ThisDoc.FileName(False) 'without extension
+									
+									Nombre_archivo_A90 = ThisDoc.PathAndFileName(False) & ".ipt"
+									
+									
+									PREFIJO = "A91."
+									SUFIJO = Right(Nombre_archivo, 6)
+									Nombre_archivo = PREFIJO & SUFIJO
+									iProperties.Value("Custom", "DocNumber") = Nombre_archivo
+									Guardado = ThisDoc.WorkspacePath & "\" & Nombre_archivo & ".ipt"
+									
+									ThisDoc.Document.SaveAs(Guardado, False)
+									
+									Try
+										Dim oPart As PartDocument
+										oPart = ThisApplication.Documents.Open(Nombre_archivo_A90, False)
+										
+										oPart.Close
+									Catch
+									End Try
+									
+									Try
+										My.Computer.FileSystem.DeleteFile(Nombre_Archivo_A90)
+										
+									Catch
+									MessageBox.Show(Nombre_Archivo_A90 & vbLf & "    . . . can not delete file, or file not found.", "iLogic")
+									End Try
+									CODIGO = Nombre_archivo
+									MultiValue.UpdateAfterChange = True
+									
+									model_states("Principal").Activate
+									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+									VALOR = CODIGO & "." & CONFIG
+									iProperties.Value("Project", "Part Number") = CODIGO
+									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+									DESCRIP = iProperties.Value("Project", "Description")
+							
+									Try
+										model_states.Add(VALOR)
+										model_stateS(VALOR).Activate
+										iProperties.Value("Project", "Part Number") = VALOR
+										iProperties.Value("Project", "Description") = DESCRIP
+										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										
+										model_states.Item("Principal").Activate
+										MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+									Catch
+									End Try
+						End Select
+							
+				Case "A90-9"
+					
+					Nombre_archivo = ThisDoc.FileName(False) 'without extension
+					Select Tipo_codigo_textil
+							Case "PC0"
+									PREFIJO = Left(Nombre_archivo, 4)
+									SUFIJO = Right(Nombre_archivo, 5)
+									Nombre_archivo = PREFIJO & "0" & SUFIJO
+									iProperties.Value("Custom", "DocNumber") = Nombre_archivo
+									Guardado = ThisDoc.WorkspacePath & "\" & Nombre_archivo & ".ipt"
+									
+									ThisDoc.Document.SaveAs(Guardado, False)
+									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									CODIGO = Nombre_archivo
+									MultiValue.UpdateAfterChange = True
+									model_states("Principal").Activate
+									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+									VALOR = CODIGO & "." & CONFIG
+									iProperties.Value("Project", "Part Number") = CODIGO
+									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+									DESCRIP = iProperties.Value("Project", "Description")
+									Try
+										model_states.Add(VALOR)
+										model_stateS(VALOR).Activate
+										iProperties.Value("Project", "Part Number") = VALOR
+										iProperties.Value("Project", "Description") = DESCRIP
+										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										model_states.Item("Principal").Activate
+										MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+									Catch
+									End Try
+							Case "TXT"
+									PREFIJO = "A91."
+									SUFIJO = Right(Nombre_archivo, 5)
+									Nombre_archivo = PREFIJO & "0" & SUFIJO
+									iProperties.Value("Custom", "DocNumber") = Nombre_archivo
+									Guardado = ThisDoc.WorkspacePath & "\" & Nombre_archivo & ".ipt"
+									
+									ThisDoc.Document.SaveAs(Guardado, False)
+									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									CODIGO = Nombre_archivo
+									MultiValue.UpdateAfterChange = True
+									model_states("Principal").Activate
+									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+									VALOR = CODIGO & "." & CONFIG
+									iProperties.Value("Project", "Part Number") = CODIGO
+									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+									DESCRIP = iProperties.Value("Project", "Description")
+									Try
+										model_states.Add(VALOR)
+										model_stateS(VALOR).Activate
+										iProperties.Value("Project", "Part Number") = VALOR
+										iProperties.Value("Project", "Description") = DESCRIP
+										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										model_states.Item("Principal").Activate
+										MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+									Catch
+									End Try
+					End Select
+					
+				Case "A90-10"
+					
+					Nombre_archivo = ThisDoc.FileName(False) 'without extension
+					Select Tipo_codigo_textil
+							Case "PC0"
+									iProperties.Value("Custom", "DocNumber") = Nombre_archivo
+									ThisDoc.Save
+									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									CODIGO = Nombre_archivo
+									MultiValue.UpdateAfterChange = True
+									model_states("Principal").Activate
+									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+									VALOR = CODIGO & "." & CONFIG
+									iProperties.Value("Project", "Part Number") = CODIGO
+									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+									DESCRIP = iProperties.Value("Project", "Description")
+									Try
+										model_states.Add(VALOR)
+										model_stateS(VALOR).Activate
+										iProperties.Value("Project", "Part Number") = VALOR
+										iProperties.Value("Project", "Description") = DESCRIP
+										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										model_states.Item("Principal").Activate
+										MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+									Catch
+									End Try
+									
+									ThisDoc.Save
+								
+							Case "TXT"
+									PREFIJO = "A91."
+									SUFIJO = Right(Nombre_archivo, 6)
+									Nombre_archivo = PREFIJO & SUFIJO
+									iProperties.Value("Custom", "DocNumber") = Nombre_archivo
+									Guardado = ThisDoc.WorkspacePath & "\" & Nombre_archivo & ".ipt"
+									
+									ThisDoc.Document.SaveAs(Guardado, False)
+									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									CODIGO = Nombre_archivo
+									MultiValue.UpdateAfterChange = True
+									model_states("Principal").Activate
+									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+									VALOR = CODIGO & "." & CONFIG
+									iProperties.Value("Project", "Part Number") = CODIGO
+									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+									DESCRIP = iProperties.Value("Project", "Description")
+									Try
+										model_states.Add(VALOR)
+										model_stateS(VALOR).Activate
+										iProperties.Value("Project", "Part Number") = VALOR
+										iProperties.Value("Project", "Description") = DESCRIP
+										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										model_states.Item("Principal").Activate
+										MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+									Catch
+									End Try
+								
+					End Select
+				Case "A91-10"
+					
+					Nombre_archivo_A91 = ThisDoc.FileName(False) 'without extension
+					Select Tipo_codigo_textil
+							Case "PC0"
+'									iProperties.Value("Custom", "VDS_NumSchm") = "TEXTIL FABRICAR"
+'									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									MessageBox.Show("PARA CREAR ESTA CONFIGURACIÓN, GUÁRDALO COMO A90 Y VUELVE A CONFIGURARLO", "ERROR")
+'									ThisDoc.Document.SaveAs("C:\testing.ipt", False)
+'									Nombre_archivo = ThisDoc.FileName(False) 'without extension
+									
+'									MessageBox.Show("A90 nuevo creado", "Ruta A90")
+'									ThisDoc.Save
+
+'									MessageBox.Show("A90 nuevo guardado", "Title")
+																	
+'									Try
+'										Dim oPart As PartDocument
+'										oPart = ThisApplication.Documents.Open(Nombre_archivo_A91, False)
+'										MessageBox.Show(Nombre_Archivo_A91, "Cerrar")
+'										oPart.Close
+'									Catch
+'									End Try
+									
+'									CODIGO = Nombre_archivo
+'									MultiValue.UpdateAfterChange = True
+									
+'									model_states("Principal").Activate
+'									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+'									VALOR = CODIGO & "." & CONFIG
+'									iProperties.Value("Project", "Part Number") = CODIGO
+'									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+'									DESCRIP = iProperties.Value("Project", "Description")
+							
+'									Try
+'										model_states.Add(VALOR)
+'										model_stateS(VALOR).Activate
+'										iProperties.Value("Project", "Part Number") = VALOR
+'										iProperties.Value("Project", "Description") = DESCRIP
+'										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										
+'										model_states.Item("Principal").Activate
+'									Catch
+'									End Try
+'									ThisDoc.Save
+									
+							Case "TXT"
+									iProperties.Value("Custom", "DocNumber") = Nombre_archivo
+									ThisDoc.Save
+									iProperties.Value("Custom", "VDS_Category") = "Ingeniería"
+									CODIGO = Nombre_archivo
+									MultiValue.UpdateAfterChange = True
+									model_states("Principal").Activate
+									CONFIG = Right(iProperties.Value("Custom", "CODIGO_TEXTIL"), 6)
+									VALOR = CODIGO & "." & CONFIG
+									iProperties.Value("Project", "Part Number") = CODIGO
+									S_PIEZA = iProperties.Value("Custom", "S_PIEZA")
+									DESCRIP = iProperties.Value("Project", "Description")
+									Try
+										model_states.Add(VALOR)
+										model_stateS(VALOR).Activate
+										iProperties.Value("Project", "Part Number") = VALOR
+										iProperties.Value("Project", "Description") = DESCRIP
+										iProperties.Value("Custom", "S_PIEZA") = S_PIEZA
+										model_states.Item("Principal").Activate
+										MessageBox.Show("CONFIGURACIÓN CREADA CORRECTAMENTE", "CONFIGURACIÓN")
+									Catch
+									End Try
+									
+									ThisDoc.Save
+					End Select
+			End select		
+					
+End Select
+		
+undo.end
+
+'			Select Largo_nombre_archivo
+'				Case 9
+'						Prefijo = Left(Nombre_archivo, 4)
+'						Sufijo = Right(Nombre_archivo, 5)
+'						CODIGO = Prefijo & "0" & Sufijo
+						
+'				Case 10
+'						CODIGO = Nombre_archivo
+					
+					
+												
+'						MultiValue.UpdateAfterChange = True
+'						model_states("Principal").Activate
+'						CONFIG = Right(iProperties.Value("Custom", "CODIGO_A80"), 6)
+'						VALOR = CODIGO & "." & CONFIG
+'						iProperties.Value("Project", "Part Number") = CODIGO
+'						PESO = iProperties.Value("Custom", "PESO")
+'						DESCRIP = iProperties.Value("Project", "Description") 
+						
+'						Try
+'							model_states.Add(VALOR)
+'							model_stateS(VALOR).Activate
+'							iProperties.Value("Project", "Part Number") = VALOR
+'							iProperties.Value("Project", "Description") = DESCRIP
+'							iProperties.Value("Custom", "PESO") = PESO
+'							model_states.Item("Principal").Activate
+'							Catch
+'						End Try
+						
+'					'undo.End
+						
+
+
+

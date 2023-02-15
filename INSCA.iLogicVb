@@ -1,0 +1,2503 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+Sub main()
+
+'Borrar_todo_Ens()
+
+
+Parameter.Quiet = True
+iLogicVb.RunExternalRule("INSCA LIMPIA")
+
+'No es plano, ensamblaje o ensamblaje soldado.
+If ThisDoc.Document.SubType <> "{BBF9FDF1-52DC-11D0-8C04-0800090BE8EC}" And ThisDoc.Document.SubType <> "{E60F81E1-49B3-11D0-93C3-7E0706000000}" And ThisDoc.Document.SubType <> "{28EC8354-9024-440F-A8A2-0E0E55D635B0}" Then
+
+	Try
+		antiguo = (iProperties.Value("Custom", "INS_PIEZA"))
+
+		Dim undo As Transaction
+		undo = ThisApplication.TransactionManager.StartTransaction(ThisDoc.Document, "Pieza antigua")
+
+		antigua()
+
+		comprobar_tipo()
+
+		Try
+			If Parameter("Tipo") <> "" Then
+
+				'Hacer algo si el parámetro existe
+				MessageBox.Show("FORMATO CORRECTO.", "INSCA")
+			End If
+		Catch
+		End Try
+		Try
+			If Parameter("Tipo") = "" Then
+				MessageBox.Show("EL PROCESO DE ACTUALIZACIÓN Y CODIFICACIÓN SE HA DETENIDO.", "INSCA", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1)
+			End If
+
+		Catch
+		End Try
+
+		undo.End
+
+	Catch
+	End Try
+End If
+
+'Es ensamblaje o ensablaje soldado.
+If ThisDoc.Document.SubType <> "{E60F81E1-49B3-11D0-93C3-7E0706000000}" Or ThisDoc.Document.SubType <> "{28EC8354-9024-440F-A8A2-0E0E55D635B0}" Then
+
+
+	Try
+		antiguo = (iProperties.Value("Custom", "INS_PIEZA"))
+
+		Dim undo As Transaction
+		undo = ThisApplication.TransactionManager.StartTransaction(ThisDoc.Document, "Ensamblaje antiguo")
+
+		antiguo_ens()
+
+		comprobar_tipo()
+
+		'i = MessageBox.Show("El archivo ya tiene el formato correcto." & vbCrLf & "Guarde el dibujo para crear todas las variables", "INSCA", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1)
+		Try
+			If Parameter("Tipo") <> "" Then
+
+				'Hacer algo si el parámetro existe
+				MessageBox.Show("FORMATO CORRECTO.", "INSCA")
+			End If
+		Catch
+		End Try
+		Try
+			If Parameter("Tipo") = "" Then
+				MessageBox.Show("EL PROCESO DE ACTUALIZACIÓN Y CODIFICACIÓN SE HA DETENIDO.", "INSCA", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1)
+			End If
+
+		Catch
+		End Try
+
+		undo.End
+
+	Catch
+	End Try
+
+End If
+
+End Sub
+
+Sub antigua()
+
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+
+	iprop("N_PIEZA")
+
+	Try
+		iProperties.Value("Custom", "N_PIEZA") = divide()
+	Catch
+
+	End Try
+
+	Try
+		parametros.Item("Tipo").Delete
+	Catch
+	End Try
+
+	parametros.UserParameters.AddByValue("Tipo", "", kTextUnits)
+
+	Dim array_tipo_plantillas As New ArrayList
+	'array_tipo_plantillas.Add("Madera")
+	'array_tipo_plantillas.Add("Chapa")
+	'array_tipo_plantillas.Add("Macizo redondo")
+	'array_tipo_plantillas.Add("Tubo redondo")
+	'array_tipo_plantillas.Add("Tubo rectangular/cuadrado")
+	array_tipo_plantillas.Add("Iluminacion")
+	array_tipo_plantillas.Add("Rotulacion")
+	array_tipo_plantillas.Add("Herraje")
+	array_tipo_plantillas.Add("Cristal/Metacrilato")
+	array_tipo_plantillas.Add("Textil")
+	array_tipo_plantillas.Add("Madera_SQL")
+	array_tipo_plantillas.Add("Chapa_SQL")
+	array_tipo_plantillas.Add("Azulejo")
+	array_tipo_plantillas.Add("Tubo RC_SQL")
+	array_tipo_plantillas.Add("Tubo O_SQL")
+
+	array_tipo_plantillas.Sort
+	For i = 0 To array_tipo_plantillas.Count - 1
+
+		MultiValue.List("Tipo") = array_tipo_plantillas
+	Next
+
+
+
+	iLogicForm.ShowGlobal("Tipo de documento", FormMode.Modal)
+
+
+End Sub
+
+Sub antiguo_ens()
+
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+
+	iprop_ens("N_PIEZA")
+	Try
+		iProperties.Value("Custom", "N_PIEZA") = divide()
+	Catch
+	End Try
+
+
+	Try
+		parametros.Item("Tipo").Delete
+	Catch
+
+	End Try
+
+	parametros.UserParameters.AddByValue("Tipo", "", kTextUnits)
+
+	Dim array_tipo_ensamblaje As New ArrayList
+	'array_tipo_ensamblaje.Add("A00")
+	array_tipo_ensamblaje.Add("A00 SQL")
+	'array_tipo_ensamblaje.Add("A12")
+	'array_tipo_ensamblaje.Add("A15")
+	'array_tipo_ensamblaje.Add("A32")
+	'array_tipo_ensamblaje.Add("Encolado")
+	array_tipo_ensamblaje.Add("Encolado SQL")
+	array_tipo_ensamblaje.Add("Soldadura SQL")
+	array_tipo_ensamblaje.Add("A12 SQL")
+	array_tipo_ensamblaje.Add("A15 SQL")
+	array_tipo_ensamblaje.Add("A32 SQL")
+	array_tipo_ensamblaje.Add("A72 SQL")
+	array_tipo_ensamblaje.Sort
+	For i = 0 To array_tipo_ensamblaje.Count - 1
+
+		MultiValue.List("Tipo") = array_tipo_ensamblaje
+	Next
+	'MultiValue.SetList("Tipo","A00","A12","A15","A32","Embalaje","Encolado","Soldadura", "SOLDADURA SQL")
+	iLogicForm.ShowGlobal("Tipo de documento", FormMode.Modal)
+
+End Sub
+
+Sub TUBO_REDONDO()
+
+	conectar_metal()
+
+	Prop_redondo()
+
+End Sub
+
+Sub MACIZO_REDONDO()
+
+	conectar_metal()
+
+	Prop_macizo_redondo()
+
+End Sub
+
+Sub TUBO_RECTANGULAR()
+
+	conectar_metal()
+
+	Prop_rect()
+
+End Sub
+
+Sub CHAPA()
+
+	conectar_metal()
+
+	Prop_chapa()
+
+End Sub
+
+Sub MADERA()
+
+	conectar_madera()
+
+	Prop_madera()
+
+End Sub
+
+Sub AZULEJO()
+
+	conectar_azulejo()
+
+	Prop_azulejo()
+
+End Sub
+
+Sub MADERA_SQL()
+
+	conectar_madera_sql()
+
+	Prop_madera_sql()
+
+End Sub
+
+Sub CHAPA_SQL()
+
+	conectar_chapa_sql()
+
+	Prop_chapa_sql()
+
+End Sub
+
+
+Sub TUBO_RC_SQL()
+
+	conectar_TUBO_RC_SQL()
+
+	Prop_TUBO_RC_SQL()
+
+End Sub
+
+Sub TUBO_O_SQL()
+
+	conectar_TUBO_O_SQL()
+
+	Prop_TUBO_O_SQL()
+
+End Sub
+
+Sub ILUMINACION()
+	Prop_Iluminacion()
+
+End Sub
+
+Sub ROTULACION()
+	Prop_Rotulacion()
+
+End Sub
+
+Sub HERRAJE()
+
+	Prop_herraje()
+
+End Sub
+
+Sub A80()
+
+	Prop_A80()
+
+End Sub
+
+Sub TEXTIL()
+
+	Prop_TEXTIL()
+
+End Sub
+
+Sub SOLDADURA_SQL()
+	Prop_soldadura_sql()
+
+End Sub
+
+Sub A12_SQL()
+	Prop_A12_sql()
+
+End Sub
+
+Sub A72_SQL()
+	Borrar_todo_Ens()
+	iLogicVb.RunExternalRule("A72 SQL PARAMETROS")
+
+
+End Sub
+
+Sub SOLDADURA()
+	Prop_soldadura()
+
+End Sub
+
+Sub ENCOLADO_SQL()
+	Prop_encolado_sql()
+
+End Sub
+
+Sub ENCOLADO()
+	Prop_encolado()
+
+End Sub
+
+Sub A00_SQL()
+	Prop_ens_A00_SQL()
+
+End Sub
+
+Sub A00()
+	Prop_ens_A00()
+
+End Sub
+
+Sub A12()
+	Prop_ens()
+
+End Sub
+
+Sub A15()
+	Prop_ens()
+
+End Sub
+
+Sub A32()
+	Prop_ens()
+
+End Sub
+
+Sub conectar_madera()
+
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "L2")
+	Renombra_parametro("INS_HONDO", "L3")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+
+	exp_param("L1")
+	exp_param("L2")
+	exp_param("L3")
+
+	Borrar_todo()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+
+	Dim propiedades() As String = {"MAT", "ACABADO", "MEDIDAS", "DESC", "CODIGO_VIRTUAL_MADERA", "MAT_CODE", "DENSIDAD_ODOO", _
+	"F_MAT", "F_ACABADO", "F_MEDIDAS", "COL", "COL_CODE", "P_CANTOS_CODE", "WOOD_CONFIG", "WOOD_CONFIG_CODE", "COL_CANTOS", "COL_CANTOS_CODE", _
+	"MAT_CANTOS", "ACABADO_CANTOS", "MEDIDAS_CANTOS", "DESC_CANTOS", "F_MAT_CANTOS", "DETIPO_DESC", "DETIPO_CODE", "F_MEDIDAS_ACA", _
+	"F_DESCRIPCION", "F_CODE", "F_CODIGO_VIRTUAL_MADERA", "ACABADO_TEMPORAL", "F_DENSIDAD_ODOO", "F_DESCRIPCION_ACA", "F_CODE_ACA", _
+	"F_CODIGO_VIRTUAL_MADERA_ACA", "ACA_TEMP", "F_DENSIDAD_ODOO_ACA", "F_ACABADO_CANTOS", "F_MEDIDAS_CANTOS", "F_DESCRIPCION_CANTOS", _
+	"F_P_CANTOS_CODE", "ACABADO_TEMPORAL_CANTOS", "F_MEDIDAS_ACA_CANTOS", "F_DESCRIPCION_ACA_CANTOS", "F_CODE_ACA_CANTOS", "ACA_TEMP_CANTOS", "ACA_P_CANTOS_CODE" }
+
+	For Each prop In propiedades
+		comprobar(prop)
+	Next
+
+	For Each prop In propiedades
+		parametro(prop)
+	Next
+
+
+	Conexion("x_bi_sql_view_categoria_madera", "MAT", 6)
+	Conexion("x_bi_sql_view_categoria_madera", "ACABADO", 7)
+	Conexion("x_bi_sql_view_categoria_madera", "MEDIDAS", 8)
+	Conexion("x_bi_sql_view_categoria_madera", "DESC", 9)
+	Conexion("x_bi_sql_view_categoria_madera", "CODIGO_VIRTUAL_MADERA", 10)
+	Conexion("x_bi_sql_view_categoria_madera", "MAT_CODE", 11)
+	Conexion("x_bi_sql_view_categoria_madera", "DENSIDAD_ODOO", 12)
+
+	Conexion("x_bi_sql_view_cantos", "MAT_CANTOS", 6)
+	Conexion("x_bi_sql_view_cantos", "ACABADO_CANTOS", 7)
+	Conexion("x_bi_sql_view_cantos", "MEDIDAS_CANTOS", 8)
+	Conexion("x_bi_sql_view_cantos", "DESC_CANTOS", 9)
+	Conexion("x_bi_sql_view_cantos", "P_CANTOS_CODE", 10)
+
+	Conexion("wood_config", "WOOD_CONFIG", 10)
+	Conexion("wood_config", "WOOD_CONFIG_CODE", 1)
+
+
+	Conexion("x_bi_sql_view_color_madera", "COL", 6)
+	Conexion("x_bi_sql_view_color_madera", "COL_CODE", 7)
+
+	Conexion("x_bi_sql_view_color_madera", "COL_CANTOS", 6)
+	Conexion("x_bi_sql_view_color_madera", "COL_CANTOS_CODE", 7)
+
+	Conexion("Tipo_pieza", "DETIPO_DESC", 1)
+	Conexion("Tipo_pieza", "DETIPO_CODE", 2)
+
+
+
+	Filtro("MAT", "F_MAT")
+	Filtro("MAT_CANTOS", "F_MAT_CANTOS")
+
+End Sub
+
+Sub conectar_madera_sql()
+
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "L2")
+	Renombra_parametro("INS_HONDO", "L3")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+
+	exp_param("L1")
+	exp_param("L2")
+	exp_param("L3")
+
+	Borrar_todo()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+	Dim propiedades() As String = {"TIPO_PIEZA", "ABREV_TIPO_PIEZA", "TSQL", "CSQL", "SQL", "PAR", "TIPO_MATERIAL", "ACABADO_MATERIAL", "ESPESOR_MATERIAL", "CODIGO_MATERIAL_INVENTOR", _
+	"DESCRIPCION_MATERIAL", "CODIGO_MATERIAL_VIRTUAL", "DENSIDAD_MATERIAL", "COLOR_MATERIAL", "CODIGO_COLOR_MATERIAL", "LONGITUD_CANTOS_CHA", _
+	"N_CANTOS_CHA", "MATERIAL_CANTOS", "ACABADO_CANTOS", "MEDIDAS_CANTOS", "DESCRIPCION_CANTOS", "COLOR_CANTOS", "SUP_CANTOS_PIN", _
+	"N_CANTOS_PIN", "CODIGO_COLOR_CANTOS", "CODIGO_CANTOS", "CODIGO_WOODCONFIG" }
+
+	iprop("LONGITUD_CANTOS_CHA")
+	iprop("COLOR_CANTOS")
+
+	For Each prop In propiedades
+		comprobar(prop)
+	Next
+
+	For Each prop In propiedades
+		parametro(prop)
+	Next
+
+End Sub
+
+Sub conectar_azulejo()
+
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "L2")
+	Renombra_parametro("INS_HONDO", "L3")
+	'comprobar("INS_HONDO")
+	'comprobar("INS_RADIO")
+
+	exp_param("L1")
+	exp_param("L2")
+	exp_param("L3")
+
+	Borrar_todo()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+	Dim propiedades() As String = {"TIPO_PIEZA", "ABREV_TIPO_PIEZA", "TSQL", "CSQL", "SQL", "PAR", "DENSIDAD_MATERIAL" }
+
+	For Each prop In propiedades
+		comprobar(prop)
+	Next
+
+	For Each prop In propiedades
+		parametro(prop)
+	Next
+
+End Sub
+
+Sub conectar_chapa_sql()
+
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "L2")
+	MessageBox.Show(parameter("INS_HONDO"), "INS_HONDO")
+	MessageBox.Show(parameter("INS_ESPESOR"), "INS_ESPESOR")
+	If Parameter("INS_HONDO") > 0 Then
+		Renombra_parametro("INS_HONDO", "L3")
+	Else If Parameter("INS_ESPESOR") > 0
+	Renombra_parametro("INS_ESPESOR", "L3")
+	End If
+
+	'comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+
+	exp_param("L1")
+	exp_param("L2")
+	exp_param("L3")
+
+	Borrar_todo()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+	Dim propiedades() As String = {"TIPO_PIEZA", "TSQL", "CSQL", "SQL", "PAR", "TIPO_MATERIAL", "ACABADO_MATERIAL", "ESPESOR_MATERIAL", _
+	"DESCRIPCION_MATERIAL", "CODIGO_MATERIAL_VIRTUAL", "COLOR_MATERIAL", "CODIGO_MATERIAL_INVENTOR", "ABREV_TIPO_PIEZA", "DENSIDAD_MATERIAL", "CODIGO_COLOR_MATERIAL", "N_PLEGADOS" }
+
+	For Each prop In propiedades
+		comprobar(prop)
+	Next
+
+	For Each prop In propiedades
+		parametro(prop)
+	Next
+
+End Sub
+
+Sub conectar_TUBO_RC_SQL()
+
+	valores_CHAPA("LARGO")
+	valores_CHAPA("ANCHO")
+	valores_CHAPA("HONDO")
+	valores_CHAPA("ESPESOR")
+	valores_CHAPA("RADIO")
+
+	Try
+		Renombra_parametro("L1", "L1_OLD")
+	Catch
+	End Try
+
+	Try
+		Renombra_parametro("L2", "L2_OLD")
+	Catch
+	End Try
+
+	Renombra_parametro("INS_LARGO", "L1")
+
+
+	If Parameter("INS_ANCHO") >= Parameter("INS_HONDO") Then
+		Renombra_parametro("INS_ANCHO", "ANCHO")
+		Renombra_parametro("INS_HONDO", "HONDO")
+	Else
+		Renombra_parametro("INS_ANCHO", "INS_ANCHO_OLD")
+		Renombra_parametro("INS_HONDO", "INS_HONDO_OLD")
+		Renombra_parametro("INS_ANCHO", "INS_HONDO")
+		Renombra_parametro("INS_HONDO", "INS_ANCHO_OLD")
+	End If
+
+
+	Renombra_parametro("INS_RADIO", "RADIO")
+	Renombra_parametro("INS_ESPESOR", "ESPESOR")
+
+	VAL1 = Parameter("CORTE_SOLDADURA")
+	Parameter("CORTE_SOLDADURA") = VAL1
+	VAL2 = Parameter("CORTE_SOLDADURA_COTA")
+	Parameter("CORTE_SOLDADURA_COTA") = VAL2
+	comprobar("CORTE_SOLDADURA")
+	comprobar("CORTE_SOLDADURA_COTA")
+
+	exp_param("L1")
+	exp_param("ANCHO")
+	exp_param("HONDO")
+	exp_param("RADIO")
+	exp_param("ESPESOR")
+
+	Borrar_todo()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+	Dim propiedades() As String = {"TIPO_PIEZA", "ABREV_TIPO_PIEZA", "TSQL", "CSQL", "SQL", "PAR", "TIPO_MATERIAL", "ACABADO_MATERIAL", "ESPESOR_MATERIAL", "CODIGO_MATERIAL_INVENTOR", _
+	"DESCRIPCION_MATERIAL", "CODIGO_MATERIAL_VIRTUAL", "DENSIDAD_MATERIAL", "COLOR_MATERIAL", "CODIGO_COLOR_MATERIAL", "SECCION_MATERIAL" }
+
+	For Each prop In propiedades
+		comprobar(prop)
+	Next
+
+	For Each prop In propiedades
+		parametro(prop)
+	Next
+
+End Sub
+
+Sub conectar_TUBO_O_SQL()
+
+	CONTADOR = 0
+	FLAG_INS_ANCHO = 0
+	FLAG_INS_HONDO = 0
+	FLAG_INS_ESPESOR = 0
+
+	If PARAMETER("INS_ANCHO") > 0 Then
+		CONTADOR = CONTADOR + 1
+		FLAG_INS_ANCHO = 1
+	End If
+	If Parameter("INS_HONDO") > 0 Then
+		CONTADOR = CONTADOR + 1
+		FLAG_INS_HONDO = 1
+	End If
+	If Parameter("INS_ESPESOR") > 0 Then
+		CONTADOR = CONTADOR + 1
+		FLAG_INS_ESPESOR = 1
+	End If
+
+	Dim array_parametros As New ArrayList
+	array_parametros.Add(parameter("INS_ANCHO"))
+	array_parametros.Add(parameter("INS_HONDO"))
+	array_parametros.Add(parameter("INS_ESPESOR"))
+
+	array_parametros.Sort
+	MAX_array_parametros = array_parametros(2)
+	SEG_array_parametros = array_parametros(1)
+
+	Select CONTADOR
+		Case 1
+			If FLAG_INS_ANCHO = 1 Then
+				Renombra_parametro("INS_ANCHO", "DIAMETRO")
+				Renombra_parametro("INS_ESPESOR", "ESPESOR")
+				Renombra_parametro("INS_LARGO", "L1")
+				exp_param("L1")
+				exp_param("DIAMETRO")
+				exp_param("ESPESOR")
+			End If
+
+			If FLAG_INS_HONDO = 1 Then
+				Renombra_parametro("INS_HONDO", "DIAMETRO")
+				Renombra_parametro("INS_ESPESOR", "ESPESOR")
+				Renombra_parametro("INS_LARGO", "L1")
+				exp_param("L1")
+				exp_param("DIAMETRO")
+				exp_param("ESPESOR")
+			End If
+
+			If FLAG_INS_ESPESOR = 1 Then
+				Renombra_parametro("INS_ESPESOR", "DIAMETRO")
+				Renombra_parametro("INS_LARGO", "L1")
+				Renombra_parametro("INS_ANCHO", "ESPESOR")
+				exp_param("L1")
+				exp_param("DIAMETRO")
+				exp_param("ESPESOR")
+			End If
+
+		Case 2
+			If FLAG_INS_ANCHO = 1 And PARAMETER("INS_ANCHO") = MAX_array_parametros Then
+				Renombra_parametro("INS_ANCHO", "DIAMETRO")
+				If FLAG_INS_HONDO = 1 And PARAMETER("INS_HONDO") = SEG_array_parametros Then
+					Renombra_parametro("INS_HONDO", "ESPESOR")
+				Else If FLAG_INS_ESPESOR = 1 And PARAMETER("INS_ESPESOR") = SEG_array_parametros Then
+				Renombra_parametro("INS_ESPESOR", "ESPESOR")
+			End If
+			Renombra_parametro("INS_LARGO", "L1")
+			exp_param("L1")
+			exp_param("DIAMETRO")
+			exp_param("ESPESOR")
+			End If
+
+			If FLAG_INS_HONDO = 1 And PARAMETER("INS_HONDO") = MAX_array_parametros Then
+				Renombra_parametro("INS_HONDO", "DIAMETRO")
+				If FLAG_INS_ANCHO = 1 And PARAMETER("INS_ANCHO") = SEG_array_parametros Then
+					Renombra_parametro("INS_ANCHO", "ESPESOR")
+				Else If FLAG_INS_ESPESOR = 1 And PARAMETER("INS_ESPESOR") = SEG_array_parametros Then
+				Renombra_parametro("INS_ESPESOR", "ESPESOR")
+			End If
+			Renombra_parametro("INS_LARGO", "L1")
+			exp_param("L1")
+			exp_param("DIAMETRO")
+			exp_param("ESPESOR")
+			End If
+
+			If FLAG_INS_ESPESOR = 1 And PARAMETER("INS_ESPESOR") = MAX_array_parametros Then
+				Renombra_parametro("INS_ESPESOR", "DIAMETRO")
+				If FLAG_INS_HONDO = 1 And PARAMETER("INS_HONDO") = SEG_array_parametros Then
+					Renombra_parametro("INS_HONDO", "ESPESOR")
+				Else If FLAG_INS_ANCHO = 1 And PARAMETER("INS_ANCHO") = SEG_array_parametros Then
+				Renombra_parametro("INS_ANCHO", "ESPESOR")
+			End If
+			Renombra_parametro("INS_LARGO", "L1")
+			exp_param("L1")
+			exp_param("DIAMETRO")
+			exp_param("ESPESOR")
+			End If
+	End Select
+
+	Borrar_todo()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+	Dim propiedades() As String = {"TIPO_PIEZA", "ABREV_TIPO_PIEZA", "TSQL", "CSQL", "SQL", "PAR", "TIPO_MATERIAL", "ACABADO_MATERIAL", "ESPESOR_MATERIAL", "CODIGO_MATERIAL_INVENTOR", _
+	"DESCRIPCION_MATERIAL", "CODIGO_MATERIAL_VIRTUAL", "DENSIDAD_MATERIAL", "COLOR_MATERIAL", "CODIGO_COLOR_MATERIAL", "SECCION_MATERIAL" }
+
+	For Each prop In propiedades
+		comprobar(prop)
+	Next
+
+	For Each prop In propiedades
+		parametro(prop)
+	Next
+
+End Sub
+
+Sub conectar_metal()
+	If Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+
+		valores_CHAPA("LARGO")
+		valores_CHAPA("ANCHO")
+		valores_CHAPA("HONDO")
+		valores_CHAPA("ESPESOR")
+		valores_CHAPA("RADIO")
+
+		Try
+			Renombra_parametro("L1", "L1_OLD")
+		Catch
+		End Try
+
+		Try
+			Renombra_parametro("L2", "L2_OLD")
+		Catch
+		End Try
+
+		Renombra_parametro("INS_LARGO", "L1")
+		Renombra_parametro("INS_ANCHO", "ANCHO")
+		Renombra_parametro("INS_HONDO", "HONDO")
+		Renombra_parametro("INS_RADIO", "RADIO")
+		Renombra_parametro("INS_ESPESOR", "ESPESOR")
+
+		VAL1 = Parameter("CORTE_SOLDADURA")
+		Parameter("CORTE_SOLDADURA") = VAL1
+		VAL2 = Parameter("CORTE_SOLDADURA_COTA")
+		Parameter("CORTE_SOLDADURA_COTA") = VAL2
+		comprobar("CORTE_SOLDADURA")
+		comprobar("CORTE_SOLDADURA_COTA")
+
+		exp_param("L1")
+		exp_param("ANCHO")
+		exp_param("HONDO")
+		exp_param("RADIO")
+		exp_param("ESPESOR")
+
+	Else If Parameter("Tipo") = "Tubo O_SQL" Then
+
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "DIAMETRO")
+	Renombra_parametro("INS_ESPESOR", "ESPESOR")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+	exp_param("L1")
+	exp_param("DIAMETRO")
+	exp_param("ESPESOR")
+
+	Else If Parameter("Tipo") = "Tubo redondo" Then
+
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "DIAMETRO")
+	Renombra_parametro("INS_ESPESOR", "ESPESOR")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+	exp_param("L1")
+	exp_param("DIAMETRO")
+	exp_param("ESPESOR")
+
+	Else If Parameter("Tipo") = "Macizo redondo" Then
+
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "ESPESOR")
+	Renombra_parametro("INS_ESPESOR", "DIAMETRO")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+	exp_param("L1")
+	exp_param("DIAMETRO")
+	exp_param("ESPESOR")
+
+	Else If Parameter("Tipo") = "Chapa" Then
+	valores_CHAPA("LARGO")
+	valores_CHAPA("ANCHO")
+	valores_CHAPA("HONDO")
+	valores_CHAPA("ESPESOR")
+	valores_CHAPA("RADIO")
+
+	Renombra_parametro("INS_LARGO", "LARGO")
+	Renombra_parametro("INS_ANCHO", "ANCHO")
+	Renombra_parametro("INS_ESPESOR", "ESPESOR")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+
+	exp_param("LARGO")
+	exp_param("ANCHO")
+	exp_param("ESPESOR")
+
+	End If
+
+	Borrar_todo()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+
+	Dim propiedades() As String = {"MAT", "ACABADO", "MEDIDAS", "DESC", "MAT_CODE", "F_MAT", "F_ACABADO", "F_MEDIDAS", "COL", "COL_CODE", "CODIGO_VIRTUAL_METAL", "DENSIDAD_ODOO", "F_DESCRIPCION", "F_CODE", "F_CODIGO_VIRTUAL_METAL", "ACABADO_TEMPORAL", "F_DENSIDAD_ODOO", "F_MEDIDAS_ACA", "F_DESCRIPCION_ACA", "F_CODE_ACA", "F_CODIGO_VIRTUAL_METAL_ACA", "ACABADO_TEMP_ACA", "F_DENSIDAD_ODOO_ACA", "ACA_TEMP", "COL_CODIGO" }
+
+	For Each prop In propiedades
+		comprobar(prop)
+	Next
+
+	For Each prop In propiedades
+		parametro(prop)
+		multivalue.SetList(prop, "")
+	Next
+
+	parametro_bool("OP_PINTAR")
+
+	Conexion("x_bi_sql_view_categoria_metal", "MAT", 6)
+	Conexion("x_bi_sql_view_categoria_metal", "ACABADO", 7)
+	Conexion("x_bi_sql_view_categoria_metal", "MEDIDAS", 8)
+	Conexion("x_bi_sql_view_categoria_metal", "DESC", 9)
+	Conexion("x_bi_sql_view_categoria_metal", "CODIGO_VIRTUAL_METAL", 10)
+	Conexion("x_bi_sql_view_categoria_metal", "MAT_CODE", 11)
+
+	Conexion("x_bi_sql_view_categoria_metal", "DENSIDAD_ODOO", 12)
+
+	Conexion("x_bi_sql_view_color_metal", "COL", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL_CODE", 8)
+	Conexion("x_bi_sql_view_color_metal", "COL_CODIGO", 7)
+
+
+	Filtro("MAT", "F_MAT")
+
+End Sub
+
+Sub conectar_ens()
+
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+
+	MultiValue.SetList("COL1", "")
+	MultiValue.SetList("COL2", "")
+	MultiValue.SetList("COL3", "")
+	MultiValue.SetList("COL_CODE", "")
+	MultiValue.SetList("CODE_ODOO", "")
+	MultiValue.SetList("CODE_CONFIG", "")
+
+	Conexion("x_bi_sql_view_color_metal", "COL1", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL2", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL3", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL_CODE", 7)
+
+	Conexion("a32_a32", "CODE_ODOO", 6)
+	Conexion("a32_a32", "CODE_CONFIG", 1)
+
+End Sub
+
+Sub Prop_chapa()
+
+	Borrar_todo()
+
+	ipropbool("PR_PLEGADORA")
+	ipropbool("PR_OPERACIONES_MANUALES")
+	ipropbool("PR_PRENSA")
+	ipropbool("PR_SOLDADURA")
+	ipropbool("PR_SERIGRAFIA")
+	ipropbool("PR_PINTURA")
+	ipropbool("PR_ILUMINACION")
+
+	iprop("DESC_DEFECTO")
+	iprop("RUTA_PRODUCCION")
+	iprop("MATERIAL")
+	iprop("MATERIAL_CODE")
+	iprop("CODIGO_VIRTUAL")
+	iprop("DENSIDAD_ODOO")
+	iprop("CATEGORIA")
+
+	iprop("N_PIEZA")
+	iProperties.Value("Custom", "N_PIEZA") = divide()
+	iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "N_PIEZA")
+
+	parametro_bool("DESC_DEFECTO")
+
+	iProperties.Value("Custom", "LARGO_CHAPA") = CType(Round(SheetMetal.FlatExtentsLength, 1), String)
+	iProperties.Value("Custom", "ANCHO_CHAPA") = CType(Round(SheetMetal.FlatExtentsWidth, 1), String)
+
+	If Left(Right(iProperties.Value("Custom", "LARGO_CHAPA"), 2), 1) <> "." Then
+		iProperties.Value("Custom", "LARGO_CHAPA") = iProperties.Value("Custom", "LARGO_CHAPA") & ".0"
+	End If
+	If Left(Right(iProperties.Value("Custom", "ANCHO_CHAPA"), 2), 1) <> "." Then
+		iProperties.Value("Custom", "ANCHO_CHAPA") = iProperties.Value("Custom", "ANCHO_CHAPA") & ".0"
+	End If
+
+	iProperties.Value("Custom", "CATEGORIA") = "METAL"
+
+End Sub
+
+Sub Prop_redondo()
+
+	Borrar_todo()
+
+	ipropbool("PR_PINTURA")
+	ipropbool("PR_OPERACIONES_MANUALES")
+	ipropbool("PR_PRENSA")
+	ipropbool("PR_SOLDADURA")
+	ipropbool("PR_SERIGRAFIA")
+	ipropbool("PR_ILUMINACION")
+
+	iprop("DESC_DEFECTO")
+	iprop("RUTA_PRODUCCION")
+	parametro_bool("DESC_DEFECTO")
+
+	iprop("MATERIAL")
+	iprop("MATERIAL_CODE")
+	iprop("MATERIAL_COLOR")
+	iprop("COLOR_CODE")
+	iprop("CODIGO_VIRTUAL")
+	iprop("DENSIDAD_ODOO")
+	iprop("CATEGORIA")
+
+	iprop("N_PIEZA")
+	iProperties.Value("Custom", "N_PIEZA") = divide()
+	iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "N_PIEZA")
+
+	iProperties.Value("Custom", "CATEGORIA") = "METAL"
+
+End Sub
+Sub Prop_macizo_redondo()
+
+	Borrar_todo()
+
+	ipropbool("PR_PINTURA")
+	ipropbool("PR_OPERACIONES_MANUALES")
+	'ipropbool("PR_PRENSA")
+	'ipropbool("PR_SOLDADURA")
+	ipropbool("PR_SERIGRAFIA")
+	ipropbool("PR_ILUMINACION")
+
+	iprop("DESC_DEFECTO")
+	iprop("RUTA_PRODUCCION")
+	parametro_bool("DESC_DEFECTO")
+
+	iprop("MATERIAL")
+	iprop("MATERIAL_CODE")
+	iprop("MATERIAL_COLOR")
+	iprop("COLOR_CODE")
+	iprop("CODIGO_VIRTUAL")
+	iprop("DENSIDAD_ODOO")
+	iprop("CATEGORIA")
+
+	iprop("N_PIEZA")
+	iProperties.Value("Custom", "N_PIEZA") = divide()
+	iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "N_PIEZA")
+
+	iProperties.Value("Custom", "CATEGORIA") = "METAL"
+
+End Sub
+
+Sub Prop_rect()
+
+	Borrar_todo()
+
+	ipropbool("PR_PINTURA")
+	ipropbool("PR_OPERACIONES_MANUALES")
+	ipropbool("PR_PRENSA")
+	ipropbool("PR_SOLDADURA")
+	ipropbool("PR_SERIGRAFIA")
+	ipropbool("PR_ILUMINACION")
+
+	iprop("DESC_DEFECTO")
+	iprop("RUTA_PRODUCCION")
+	iprop("MATERIAL")
+	iprop("MATERIAL_CODE")
+	iprop("CODIGO_VIRTUAL")
+	iprop("DENSIDAD_ODOO")
+	iprop("CATEGORIA")
+
+	parametro_bool("DESC_DEFECTO")
+
+	iprop("N_PIEZA")
+	iProperties.Value("Custom", "N_PIEZA") = divide()
+	iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "N_PIEZA")
+
+	iProperties.Value("Custom", "CATEGORIA") = "METAL"
+End Sub
+
+Sub Prop_madera()
+
+	Borrar_todo()
+
+	ipropbool("Cortar")
+	ipropbool("Mecanizar")
+	ipropbool("Chapar_cantos")
+	ipropbool("Cara_buena")
+	ipropbool("Pintar")
+	ipropbool("Pintar_cantos")
+	ipropbool("CORTE_MANUAL")
+
+
+	parametro_bool("OP_PINTAR")
+	parametro_bool("OP_PINTAR_CANTOS")
+	parametro_bool("OP_CHAPAR_CANTOS")
+
+	iprop("DESC_DEFECTO")
+	iprop("RUTA_PRODUCCION")
+	iprop("MATERIAL")
+	iprop("MATERIAL_CODE")
+	iprop("CODIGO_VIRTUAL")
+	iprop("DENSIDAD_ODOO")
+	iprop("COLOR_CODE")
+	iprop("COL_CANTOS_CODE")
+	iprop("NRO_CANTOS")
+	iprop("P_CANTOS_CODE")
+	iprop("LARGO_CORTE")
+	iprop("ANCHO_CORTE")
+	iprop("CATEGORIA")
+
+	parametro_bool("DESC_DEFECTO")
+	parametro_bool("OP_PINTAR")
+	parametro_bool("OP_PINTAR_CANTOS")
+	parametro_bool("OP_CHAPAR_CANTOS")
+
+	parametro_bool("Pintar_cantos")
+	parametro("SUPERFICIE_CANTOS_PINTADO", False)
+	parametro("SUPERFICIE_MADERA", False)
+	parametro("PINTAR_CANTOS_LARGO", False)
+	parametro("PINTAR_CANTOS_CORTO", False)
+	parametro("MALLA")
+	parametro("N_CARAS_PINTADAS")
+	parametro("COLOR_CODE")
+
+	parametro_unidad("CANTOS_LARGO", "su")
+	parametro_unidad("CANTOS_CORTO", "su")
+	parametro_unidad("LONG_CANTOS", "mm")
+
+	'exp_param("CANTOS_LARGO")
+	'exp_param("CANTOS_CORTO")
+	EXP_PARAM("LONG_CANTOS")
+
+	MultiValue.SetList("MALLA", "0", "1", "2")
+	MultiValue.SetList("N_CARAS_PINTADAS", "1", "2")
+
+	iprop("N_PIEZA")
+	iProperties.Value("Custom", "N_PIEZA") = divide()
+	iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "N_PIEZA")
+
+	iProperties.Value("Custom", "LARGO_CORTE") = FormatNumber(PARAMETER("L1") + 10, 1)
+	iProperties.Value("Custom", "ANCHO_CORTE") = FormatNumber(PARAMETER("L2") + 10, 1)
+	iProperties.Value("Custom", "CATEGORIA") = "MADERA"
+	iProperties.Value("Custom", "SUPERFICIE_MADERA") = (Parameter("L1") * Parameter("L2")) / 1000000
+
+End Sub
+
+Sub Prop_madera_sql()
+
+	Borrar_todo()
+
+	parametro("MALLA")
+	MultiValue.SetList("MALLA", "0", "1", "2")
+
+	parametro("N_CARAS_PINTADAS")
+	MultiValue.SetList("N_CARAS_PINTADAS", "1", "2")
+
+	parametro("CANTOS_LARGOS_CHA")
+	MultiValue.SetList("CANTOS_LARGOS_CHA", "0", "1", "2")
+
+	parametro("CANTOS_CORTOS_CHA")
+	MultiValue.SetList("CANTOS_CORTOS_CHA", "0", "1", "2")
+
+	parametro("CANTOS_LARGOS_PIN")
+	MultiValue.SetList("CANTOS_LARGOS_PIN", "0", "1", "2")
+
+	parametro("CANTOS_CORTOS_PIN")
+	MultiValue.SetList("CANTOS_CORTOS_PIN", "0", "1", "2")
+
+	parametro("CODIGO_WOODCONFIG")
+	parametro("L1_CORTE")
+	parametro("L2_CORTE")
+	parametro("ESPESOR_ORIGINAL")
+	PARAMETER("ESPESOR_ORIGINAL") = Parameter("L3")
+
+	parametro_bool("OP_PINTAR")
+	parametro_bool("OP_PINTAR_CANTOS")
+	parametro_bool("OP_CHAPAR_CANTOS")
+	parametro_bool("OP_MANUAL")
+	iprop("LONGITUD_CANTOS_CHA")
+End Sub
+
+Sub Prop_azulejo()
+
+	Borrar_todo()
+
+	parametro("Tipo")
+	MultiValue.SetList("Tipo", "Azulejo")
+
+End Sub
+
+Sub Prop_chapa_sql()
+
+	Borrar_todo()
+
+	parametro("N_CARAS_PINTADAS")
+	MultiValue.SetList("N_CARAS_PINTADAS", "1", "2")
+
+	parametro("L1_DES_CHAPA")
+	parametro("L2_DES_CHAPA")
+	parametro("CODIGO_COLOR_MATERIAL_INVENTOR")
+	parametro("ESPESOR_ORIGINAL")
+	MessageBox.Show(parameter("L3"), "L3")
+
+	parameter("ESPESOR_ORIGINAL") = Parameter("L3")
+	MessageBox.Show(parameter("ESPESOR_ORIGINAL"), "ESPESOR_ORIGINAL")
+
+	parametro_bool("OP_PINTAR")
+	parametro_bool("OP_PLEGAR")
+	parametro_bool("OP_MANUAL")
+	parametro_bool("OP_SOLDAR")
+	parametro_bool("OP_SERIGRAFIAR")
+	iprop("ABREV_TIPO_PIEZA")
+	iprop("CODIGO_COLOR_MATERIAL_INVENTOR")
+	iprop("COLOR_MATERIAL")
+
+End Sub
+
+Sub Prop_TUBO_RC_SQL()
+
+	Borrar_todo()
+
+	parametro("CODIGO_COLOR_MATERIAL_INVENTOR")
+	parametro("SECCION_MATERIAL_ORIG")
+	PARAMETER("SECCION_MATERIAL_ORIG") = "1mm"
+	parametro_bool("OP_PINTAR")
+	parametro_bool("OP_SOLDAR")
+	parametro_bool("OP_MANUAL")
+	parametro_bool("OP_SERIGRAFIAR")
+	parametro_bool("OP_PRENSAR")
+
+	iprop("ABREV_TIPO_PIEZA")
+	iprop("CODIGO_COLOR_MATERIAL_INVENTOR")
+	iprop("COLOR_MATERIAL")
+
+End Sub
+
+Sub Prop_soldadura_sql()
+
+	Borrar_todo_Ens()
+
+	parametro_ens("TSQL", True)
+	parametro_ens("CSQL", True)
+	parametro_ens("SQL", True)
+	parametro_ens("PAR", True)
+	parametro_ens("TIPO_MATERIAL", True)
+	parametro_ens("TIPO_PIEZA", True)
+	parametro_ens("ABREV_TIPO_PIEZA", True)
+	parametro_ens("CODIGO_MATERIAL", True)
+	parametro_ens("CODIGO_MATERIAL_INVENTOR", True)
+	parametro_ens("CODIGO_COLOR_MATERIAL_INVENTOR", True)
+	parametro_ens("CODIGO_COLOR_MATERIAL", True)
+	parametro_ens("COLOR_MATERIAL", True)
+	parametro_bool_ens("OP_PINTAR")
+	parametro_bool_ens("OP_MANUAL")
+	parametro_bool_ens("OP_SERIGRAFIAR")
+	iprop_ens("ABREV_TIPO_PIEZA")
+	iprop_ens("CODIGO_COLOR_MATERIAL_INVENTOR")
+	iprop_ens("COLOR_MATERIAL")
+	iprop_ens("CODIGO_MATERIAL_INVENTOR")
+
+
+	Dim propiedades() As String = {"RUTA_PRODUCCION", "TIPO_MATERIAL", "DESC_DEFECTO", "ANCHO", "HONDO", "LARGO", "SPINT", "PESO" }
+
+	For Each valor In propiedades
+
+		iprop_ens(Valor)
+
+	Next
+
+
+End Sub
+
+Sub Prop_A12_sql()
+
+	Borrar_todo_Ens()
+
+	parametro_ens("TSQL", True)
+	parametro_ens("CSQL", True)
+	parametro_ens("SQL", True)
+	parametro_ens("PAR", True)
+	parametro_ens("TIPO_PIEZA", True)
+	parametro_ens("ABREV_TIPO_PIEZA", True)
+	parametro_ens("CODIGO_COLOR_MATERIAL_INVENTOR", True)
+	parametro_ens("CODIGO_COLOR_MATERIAL", True)
+	parametro_ens("COLOR_MATERIAL", True)
+	parametro_ens("CODIGO_COLOR_MATERIAL_2", True)
+	parametro_ens("COLOR_MATERIAL_2", True)
+	parametro_ens("CODIGO_COLOR_MATERIAL_3", True)
+	parametro_ens("COLOR_MATERIAL_3", True)
+	parametro_ens("CODIGO_WOODCONFIG", True)
+
+	iprop_ens("ABREV_TIPO_PIEZA")
+	iprop_ens("CODIGO_COLOR_MATERIAL_INVENTOR")
+	iprop_ens("COLOR_MATERIAL")
+	iprop_ens("COLOR_MATERIAL_2")
+	iprop_ens("COLOR_MATERIAL_3")
+
+	Dim propiedades() As String = {"DESC_DEFECTO", "ANCHO", "HONDO", "LARGO", "PESO" }
+
+	For Each valor In propiedades
+
+		iprop_ens(Valor)
+
+	Next
+
+
+End Sub
+
+Sub Prop_TUBO_O_SQL()
+
+	Borrar_todo()
+
+	parametro("CODIGO_COLOR_MATERIAL_INVENTOR")
+	parametro("SECCION_MATERIAL_ORIG")
+	PARAMETER("SECCION_MATERIAL_ORIG") = "1mm"
+	parametro_bool("OP_PINTAR")
+	parametro_bool("OP_SOLDAR")
+	parametro_bool("OP_MANUAL")
+	parametro_bool("OP_SERIGRAFIAR")
+	parametro_bool("OP_PRENSAR")
+
+	iprop("ABREV_TIPO_PIEZA")
+	iprop("CODIGO_COLOR_MATERIAL_INVENTOR")
+	iprop("COLOR_MATERIAL")
+
+End Sub
+
+Sub Prop_ens()
+
+	Borrar_todo_Ens()
+
+	iprop_ens("ACABADO_1")
+	iprop_ens("ACABADO_2")
+	iprop_ens("ACABADO_3")
+	iprop_ens("COL_CODE1")
+	iprop_ens("COL_CODE2")
+	iprop_ens("COL_CODE3")
+	iprop_ens("LARGO")
+	iprop_ens("ANCHO")
+	iprop_ens("PESO")
+
+	parametro_ens("COL1")
+	parametro_ens("COL2")
+	parametro_ens("COL3")
+	parametro_ens("COL_CODE")
+	parametro_ens("CODE_ODOO")
+	parametro_ens("CODE_CONFIG")
+	parametro_ens("PINTURA")
+
+	Conexion("x_bi_sql_view_color_metal", "COL1", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL2", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL3", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL_CODE", 7)
+
+	Conexion("a32_a32", "CODE_ODOO", 6)
+	Conexion("a32_a32", "CODE_CONFIG", 1)
+
+	iprop_ens("N_PIEZA")
+	iProperties.Value("Custom", "N_PIEZA") = divide()
+	iProperties.Value("Project", "Part Number") = iProperties.Value("Custom", "N_PIEZA")
+	parameter("PINTURA") = False
+End Sub
+
+Sub Prop_encolado()
+
+	Borrar_todo_Ens()
+
+	'Dim Propiedades () as String ={}
+
+
+	Dim Propiedades() As String = {"N_CARAS_PINTADAS", "COL_CANTOS", "COMPROBACION_FINALIZADA", "C_MECANIZAR", "C_BUENA", "VALIDADO", "RUTA_PRODUCCION", "Ruta01", "Ruta02", "Ruta03", "Ruta04", "NRO_CANTOS", "SPINT", "MATERIAL", "MATERIAL_CODE", "CODIGO_VIRTUAL", "DENSIDAD_ODOO", "MATERIAL_CANTOS", "COLOR_CODE", "COL_CANTOS_CODE", "VS", "MAT_CODE", "CODIGO_CANTOS", "CANTOS", "CANTOS_CODE", "P_CANTOS_CODE", "WOOD_CONFIG_CODE", "MATERIAL_COLOR", "CATEGORIA", "VDS_Category", "VDS_NumSchm", "L1", "L2", "L3", "ADD_DESC", "COMPROBAR_MECANIZAR", "LONG_CANTOS", "SUPERFICIE_MADERA", "L_CANTOS", "NRO_CANTOS_PINTADO", "SUPERFICIE_CANTOS_PINTADO", "NRO_CARAS_PINTADAS", "PESO" }
+	Dim Partxt() As String = {"MAT", "ACABADO", "MEDIDAS", "DESC", "MAT_CODE", "CODIGO_VIRTUAL_MADERA", "F_MAT", "F_ACABADO", "F_MEDIDAS", "COL", "COL_CODE", "P_CANTOS_CODE", "WOOD_CONFIG", "WOOD_CONFIG_CODE", "COL_CANTOS", "COL_CANTOS_CODE", "DETIPO_DESC", "DETIPO_CODE", "DENSIDAD_ODOO", "F_DESCRIPCION", "F_CODE", "F_CODIGO_VIRTUAL_MADERA", "ACABADO_TEMPORAL", "F_DENSIDAD_ODOO", "F_MEDIDAS_ACA", "F_DESCRIPCION_ACA", "F_CODE_ACA", "F_CODIGO_VIRTUAL_MADERA_ACA", "ACA_TEMP", "F_DENSIDAD_ODOO_ACA", "MAT_CANTOS", "ACABADO_CANTOS", "MEDIDAS_CANTOS", "DESC_CANTOS", "F_MAT_CANTOS", "F_ACABADO_CANTOS", "F_MEDIDAS_CANTOS", "F_DESCRIPCION_CANTOS", "F_P_CANTOS_CODE", "ACABADO_TEMPORAL_CANTOS", "F_MEDIDAS_ACA_CANTOS", "F_DESCRIPCION_ACA_CANTOS", "F_CODE_ACA_CANTOS", "ACA_TEMP_CANTOS", "ACA_P_CANTOS_CODE" }
+	Dim Parsu() As String = {"CANTOS_LARGO", "CANTOS_CORTO", "N_CARAS_PINTADAS", "PINTAR_CANTOS_LARGO", "PINTAR_CANTOS_CORTO", "SUPERFICIE_CANTOS_PINTADO" }
+	Dim parmm() As String = {"L1", "L2", "L3", "LONG_CANTOS" }
+	Dim parbool() As String = {"CHAPADO", "MECANIZADO", "OP_PINTAR", "CRUDO", "OP_PINTAR_CANTOS", "OP_CHAPAR_CANTOS" }
+	Dim Pbool() As String = {"pintar", "Pintar_cantos", "Chapar_cantos", "C_MECANIZAR" }
+
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+	Dim oCom As AssemblyComponentDefinition
+	oCom = oDoc.ComponentDefinition
+
+	For Each prb In Pbool
+		ipropbool_ens(prb)
+	Next
+
+
+	For Each prop In Partxt
+		parametro_ens(prop)
+	Next
+
+	For Each propsu In Parsu
+		parametro_unidad_ens(propsu, "su")
+	Next
+
+	For Each propmm In parmm
+		parametro_unidad_ens(propmm, "mm")
+	Next
+
+	For Each propbool In parbool
+		parametro_bool_ens(propbool)
+	Next
+
+	For Each pp In Propiedades
+		iprop_ens(pp)
+	Next
+
+	MultiValue.SetList("N_CARAS_PINTADAS", 1, 2)
+
+	exp_param_ens("L1")
+	exp_param_ens("L2")
+	exp_param_ens("L3")
+
+	Conexion("x_bi_sql_view_categoria_madera", "MAT", 6)
+	Conexion("x_bi_sql_view_categoria_madera", "ACABADO", 7)
+	Conexion("x_bi_sql_view_categoria_madera", "MEDIDAS", 8)
+	Conexion("x_bi_sql_view_categoria_madera", "DESC", 9)
+	Conexion("x_bi_sql_view_categoria_madera", "CODIGO_VIRTUAL_MADERA", 10)
+	Conexion("x_bi_sql_view_categoria_madera", "MAT_CODE", 11)
+	Conexion("x_bi_sql_view_categoria_madera", "DENSIDAD_ODOO", 12)
+
+	Conexion("x_bi_sql_view_cantos", "MAT_CANTOS", 6)
+	Conexion("x_bi_sql_view_cantos", "ACABADO_CANTOS", 7)
+	Conexion("x_bi_sql_view_cantos", "MEDIDAS_CANTOS", 8)
+	Conexion("x_bi_sql_view_cantos", "DESC_CANTOS", 9)
+	Conexion("x_bi_sql_view_cantos", "P_CANTOS_CODE", 10)
+
+	Conexion("wood_config", "WOOD_CONFIG", 10)
+	Conexion("wood_config", "WOOD_CONFIG_CODE", 1)
+
+
+	Conexion("x_bi_sql_view_color_madera", "COL", 6)
+	Conexion("x_bi_sql_view_color_madera", "COL_CODE", 7)
+
+	Conexion("x_bi_sql_view_color_madera", "COL_CANTOS", 6)
+	Conexion("x_bi_sql_view_color_madera", "COL_CANTOS_CODE", 7)
+
+	Conexion("Tipo_pieza", "DETIPO_DESC", 1)
+	Conexion("Tipo_pieza", "DETIPO_CODE", 2)
+
+
+	Filtro("MAT", "F_MAT")
+	FILTRO("MAT_CANTOS", "F_MAT_CANTOS")
+
+
+End Sub
+
+Sub Prop_encolado_sql()
+
+	Borrar_todo_Ens()
+
+	'Renombra_parametro("INS_LARGO", "L1")
+	'Renombra_parametro("INS_ANCHO", "L2")
+	'Renombra_parametro("INS_HONDO", "L3")
+	'comprobar("INS_HONDO")
+	'comprobar("INS_RADIO")
+
+	'exp_param("L1")
+	'exp_param("L2")
+	'exp_param("L3")
+
+	'Borrar_todo()
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+	Dim oCom As AssemblyComponentDefinition
+	oCom = oDoc.ComponentDefinition
+
+	'ipropbool_ens(prb)
+	'parametro_ens(prop)
+	'parametro_unidad_ens(propsu,"su")
+	'parametro_unidad_ens(propmm,"mm")
+	'parametro_bool_ens(propbool)
+	'iprop_ens("MM")
+
+	parametro_unidad_ens("L1", "mm")
+	parametro_unidad_ens("L2", "mm")
+	parametro_unidad_ens("L3", "mm")
+
+	parametro_bool_ens("OP_PINTAR")
+	parametro_bool_ens("OP_PINTAR_CANTOS")
+	parametro_bool_ens("OP_CHAPAR_CANTOS")
+	parametro_bool_ens("OP_MANUAL")
+
+	parametro_ens("MALLA")
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+	MultiValue.SetList("MALLA", "0", "1", "2")
+	parametro_ens("N_CARAS_PINTADAS")
+	MultiValue.SetValueOptions(True, DefaultIndex := 0)
+	MultiValue.SetList("N_CARAS_PINTADAS", "1", "2")
+	parametro_ens("CANTOS_LARGOS_CHA")
+	MultiValue.SetList("CANTOS_LARGOS_CHA", "0", "1", "2")
+	parametro_ens("CANTOS_CORTOS_CHA")
+	MultiValue.SetList("CANTOS_CORTOS_CHA", "0", "1", "2")
+	parametro_ens("CANTOS_LARGOS_PIN")
+	MultiValue.SetList("CANTOS_LARGOS_PIN", "0", "1", "2")
+	parametro_ens("CANTOS_CORTOS_PIN")
+	MultiValue.SetList("CANTOS_CORTOS_PIN", "0", "1", "2")
+
+
+	parametro_ens("TIPO_PIEZA")
+	parametro_ens("ABREV_TIPO_PIEZA")
+	parametro_ens("TSQL")
+	parametro_ens("CSQL")
+	parametro_ens("SQL")
+	parametro_ens("PAR")
+	parametro_ens("TIPO_MATERIAL")
+	parametro_ens("ACABADO_MATERIAL")
+	parametro_ens("ESPESOR_MATERIAL")
+	parametro_ens("CODIGO_MATERIAL_INVENTOR")
+	parametro_ens("DESCRIPCION_MATERIAL")
+	parametro_ens("CODIGO_MATERIAL_VIRTUAL")
+	parametro_ens("DENSIDAD_MATERIAL")
+	parametro_ens("COLOR_MATERIAL")
+	parametro_ens("CODIGO_COLOR_MATERIAL")
+	parametro_ens("LONGITUD_CANTOS_CHA")
+	parametro_ens("N_CANTOS_CHA")
+	parametro_ens("MATERIAL_CANTOS")
+	parametro_ens("ACABADO_CANTOS")
+	parametro_ens("MEDIDAS_CANTOS")
+	parametro_ens("DESCRIPCION_CANTOS")
+	parametro_ens("COLOR_CANTOS")
+	parametro_ens("SUP_CANTOS_PIN")
+	parametro_ens("N_CANTOS_PIN")
+	parametro_ens("CODIGO_COLOR_CANTOS")
+	parametro_ens("CODIGO_CANTOS")
+	parametro_ens("CODIGO_WOODCONFIG")
+
+	iprop_ens("TIPO_PIEZA")
+	iprop_ens("ABREV_TIPO_PIEZA")
+	iprop_ens("TSQL")
+	iprop_ens("CSQL")
+	iprop_ens("SQL")
+	iprop_ens("PAR")
+	iprop_ens("TIPO_MATERIAL")
+	iprop_ens("ACABADO_MATERIAL")
+	iprop_ens("ESPESOR_MATERIAL")
+	iprop_ens("CODIGO_MATERIAL_INVENTOR")
+	iprop_ens("DESCRIPCION_MATERIAL")
+	iprop_ens("CODIGO_MATERIAL_VIRTUAL")
+	iprop_ens("DENSIDAD_MATERIAL")
+	iprop_ens("COLOR_MATERIAL")
+	iprop_ens("CODIGO_COLOR_MATERIAL")
+	iprop_ens("LONGITUD_CANTOS_CHA")
+	iprop_ens("N_CANTOS_CHA")
+	iprop_ens("MATERIAL_CANTOS")
+	iprop_ens("ACABADO_CANTOS")
+	iprop_ens("MEDIDAS_CANTOS")
+	iprop_ens("DESCRIPCION_CANTOS")
+	iprop_ens("COLOR_CANTOS")
+	iprop_ens("SUP_CANTOS_PIN")
+	iprop_ens("N_CANTOS_PIN")
+	iprop_ens("CODIGO_COLOR_CANTOS")
+	iprop_ens("CODIGO_CANTOS")
+	iprop_ens("CODIGO_WOODCONFIG")
+	iprop_ens("PESO")
+	'exp_param_ens("L1")
+	'exp_param_ens("L2")
+	'exp_param_ens("L3")
+	iLogicVb.RunExternalRule("ENCOLADO SQL MEDIDAS")
+	iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+End Sub
+
+Sub Prop_Iluminacion()
+
+	Borrar_todo()
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	Dim oComop As PartComponentDefinition
+	oComp = oDoc.ComponentDefinition
+
+
+	Dim Parametros() As String = {"TSQL", "PAR", "CSQL", "SQL", "CLASIFICACION", "TIPO_ILUMINACION", "DESCRIPCION", "CODIGO_ILUMINACION", "CATEGORIA", "FILTRO", "NOTAS", "VAULT_ID", "INS_LARGO", "CODIGO_COMPRA_ILUMINACION" }
+
+	For Each par In Parametros
+		parametro(par, false)
+	Next
+
+	Dim Propiedades() As String = {"CATEGORIA", "CLASIFICACION", "CODIGO_ILUMINACION", "DESCRIPCION", "TIPO_ILUMINACION", "NOTAS", "VAULT_ID", "BANNER", "CODIGO_COMPRA_ILUMINACION" }
+
+	For Each prop In Propiedades
+		iprop(prop)
+	Next
+
+	PARAMETER("INS_LARGO") = iProperties.Value("Summary", "Subject")
+
+End Sub
+
+Sub Prop_Rotulacion()
+
+	Borrar_todo()
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+	Dim oComop As PartComponentDefinition
+	oComp = oDoc.ComponentDefinition
+
+
+	Dim Parametros() As String = {"TSQL", "PAR", "CSQL", "SQL", "TYPE", "TIPO_ROT", "CODE", "DESCRIPCION", "CODE_CONCAT", "CATEGORIA", "FILTRO", "NOTAS", "VAULT_ID" }
+
+	For Each par In Parametros
+		parametro(par, False)
+	Next
+
+	Dim Propiedades() As String = {"CATEGORIA", "CLASIFICACION", "CODIGO_ROTULACION", "DESCRIPCION", "NOTAS", "VAULT_ID", "BANNER" }
+
+	For Each prop In Propiedades
+		iprop(prop)
+	Next
+	MultiValue.SetList("TIPO_ROT", "SERIGRAFÍA", "VINILO")
+	PARAMETER("INS_LARGO") = iProperties.Value("Summary", "Subject")
+
+End Sub
+
+Sub Prop_herraje()
+
+
+	DESC2 = iProperties.Value("Custom", "CODIGO_DES") & " - " & iProperties.Value("Custom", "CODIGO_DES2") & " - " & iProperties.Value("Custom", "CODIGO")
+
+	Borrar_todo()
+
+	Logger.Info("BORRADO")
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+	Dim oCom As PartComponentDefinition
+	oCom = oDoc.ComponentDefinition
+
+	Dim Propiedades() As String = {"VDS_Category", "CATEGORIA", "CODIGO_HERRAJE", "DESCRIPCION_HERRAJE", "MODELO", "TIPO_HERRAJE", "BANNER", "VAULT_ID", "NOTAS", "DESC_VAULT_NET", "SUJECION GUIA IZQUIERDA", "SUJECION GUIA DERECHA" }
+
+	For Each prop In Propiedades
+		iprop(prop)
+	Next
+
+
+	iProperties.Value("Custom", "DESC_VAULT_NET") = DESC2
+
+	Dim Parametros() As String = {"TSQL", "PAR", "CSQL", "SQL", "TIPO_HERRAJE", "MODELO", "DESCRIPCION", "CODIGO_HERRAJE", "CATEGORIA", "VAULT_ID", "NOTAS", "SUJECION_GUIA_IZQUIERDA", "SUJECION_GUIA_DERECHA" }
+
+	For Each par In Parametros
+		parametro(par, TRUE)
+	Next
+
+End Sub
+
+Sub Prop_A80()
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "L2")
+	Renombra_parametro("INS_HONDO", "L3")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+
+	exp_param("L1")
+	exp_param("L2")
+	exp_param("L3")
+
+	DESC2 = iProperties.Value("Custom", "CODIGO_DES") & " - " & iProperties.Value("Custom", "CODIGO_DES2") & " - " & iProperties.Value("Custom", "CODIGO")
+
+	Borrar_todo()
+
+	Logger.Info("BORRADO")
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+	Dim oCom As PartComponentDefinition
+	oCom = oDoc.ComponentDefinition
+
+	Dim Propiedades() As String = {"VDS_Category", "CATEGORIA", "CODIGO_A80", "DESCRIPCION_A80", "TIPO_A80", "BANNER", "VAULT_ID", "NOTAS", "DESC_VAULT_NET", "PESO" }
+
+	For Each prop In Propiedades
+		iprop(prop)
+	Next
+
+
+	iProperties.Value("Custom", "DESC_VAULT_NET") = DESC2
+
+	Dim Parametros() As String = {"TSQL", "PAR", "CSQL", "SQL", "TIPO_A80", "DESCRIPCION", "CODIGO_A80", "VAULT_ID", "NOTAS", "DENSIDAD_A80" }
+
+	For Each par In Parametros
+		parametro(par, True)
+	Next
+
+End Sub
+
+Sub Prop_TEXTIL()
+	Renombra_parametro("INS_LARGO", "L1")
+	Renombra_parametro("INS_ANCHO", "L2")
+	Renombra_parametro("INS_HONDO", "L3")
+	Renombra_parametro("INS_ESPESOR", "L4")
+	comprobar("INS_HONDO")
+	comprobar("INS_RADIO")
+	comprobar("INS_ESPESOR")
+
+	exp_param("L1")
+	exp_param("L2")
+	exp_param("L3")
+	exp_param("L4")
+
+
+	DESC2 = iProperties.Value("Custom", "CODIGO_DES") & " - " & iProperties.Value("Custom", "CODIGO_DES2") & " - " & iProperties.Value("Custom", "CODIGO")
+
+	Borrar_todo()
+
+	Logger.Info("BORRADO")
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+	Dim oCom As PartComponentDefinition
+	oCom = oDoc.ComponentDefinition
+
+	Dim Propiedades() As String = {"VDS_Category", "CATEGORIA", "CODIGO_TEXTIL", "DESCRIPCION_TEXTIL", "TIPO_TEXTIL", "BANNER", "VAULT_ID", "NOTAS", "DESC_VAULT_NET", "PESO" }
+
+	For Each prop In Propiedades
+		iprop(prop)
+	Next
+
+
+	iProperties.Value("Custom", "DESC_VAULT_NET") = DESC2
+
+	Dim Parametros() As String = {"TSQL", "PAR", "CSQL", "SQL", "TIPO_TEXTIL", "DESCRIPCION", "CODIGO_TEXTIL", "VAULT_ID", "NOTAS", "DENSIDAD_TEXTIL" }
+
+	For Each par In Parametros
+		parametro(par, True)
+	Next
+
+End Sub
+
+Sub Prop_ens_A00_SQL
+
+	Borrar_todo_Ens()
+
+	iprop_ens("BANNER")
+	iprop_ens("BUSQUEDA")
+	iprop_ens("CATEGORIA")
+	iprop_ens("CODIGO_CONFIG")
+	iprop_ens("CODIGO_DESCRIPCION")
+	iprop_ens("DESCRIPCION")
+	iprop_ens("NOTAS")
+	iprop_ens("PESO")
+	iprop_ens("VAULT_ID")
+	iprop_ens("VDS_Category")
+
+	parametro_ens("Tipo")
+	parametro_ens("TSQL")
+	parametro_ens("CSQL")
+	parametro_ens("PAR")
+	parametro_ens("SQL")
+	parametro_ens("DESCRIPCION")
+	parametro_ens("CATEGORIA")
+	parametro_ens("CODIGO_CONFIG")
+	parametro_ens("NOTAS")
+	'parametro_ens("CODIGO")
+	'parametro_ens("CONFIG")
+	parametro_ens("VAULT_ID")
+	parametro_ens("CODIGO_DESCRIPCION")
+
+	'iLogicForm.ShowGlobal("A00 SQL")
+
+End Sub
+
+Sub Prop_ens_A00
+
+	Borrar_todo_Ens()
+
+	iprop_ens("BANNER")
+	iprop_ens("BUSQUEDA")
+	iprop_ens("CATEGORIA")
+	iprop_ens("CONFIG")
+	iprop_ens("CÓDIGO")
+	iprop_ens("DESCRIPCION")
+	iprop_ens("NOTAS")
+	iprop_ens("PESO")
+	iprop_ens("VAULT_ID")
+	iprop_ens("techinical_office")
+
+	parametro_ens("TSQL")
+	parametro_ens("CSQL")
+	parametro_ens("PAR")
+	parametro_ens("SQL")
+	parametro_ens("DESCRIPCION")
+	parametro_ens("CATEGORIA")
+	parametro_ens("CODIGO_CONFIG")
+	parametro_ens("NOTAS")
+	parametro_ens("CODIGO")
+	parametro_ens("CONFIG")
+	parametro_ens("VAULT_ID")
+
+	iLogicForm.ShowGlobal("A00")
+
+End Sub
+
+Sub Prop_soldadura()
+
+	Borrar_todo_Ens()
+
+	parametro_ens("COL_CODE", True)
+	parametro_ens("COL", True)
+	parametro_ens("MAT", True)
+	parametro_ens("MAT_FILTRADO", True)
+	parametro_ens("MAT_CODE", True)
+	parametro_ens("F_MAT", True)
+	parametro_ens("VIRTUAL_CODE")
+	parametro_ens("COL_CODIGO")
+
+	parametro_bool_ens("PINTURA")
+	parametro_bool_ens("CRUDO")
+	parametro_bool_ens("OP_MANUAL")
+
+	parametro_unidad_ens("INDICE_RUTA", "su")
+
+	Dim propiedades() As String = {"COLOR_CODE", "RUTA_PRODUCCION", "Ruta01", "Ruta02", "Ruta03", "DESC_DEFECTO", "MATERIAL", "MATERIAL_CODE", "PR_PINTURA", "MATERIAL_COLOR", "CRUDO", "ANCHO", "HONDO", "LARGO", "CODIGO_VIRTUAL", "SPINT", "PESO", "COLOR_CODIGO" }
+
+	For Each valor In propiedades
+
+		iprop_ens(Valor)
+
+	Next
+
+	Conexion("x_bi_sql_view_categoria_metal", "MAT", 6)
+	Conexion("x_bi_sql_view_categoria_metal", "MAT_CODE", 11)
+
+
+
+	Conexion("x_bi_sql_view_color_metal", "COL", 6)
+	Conexion("x_bi_sql_view_color_metal", "COL_CODE", 8)
+	Conexion("x_bi_sql_view_color_metal", "COL_CODIGO", 7)
+
+	Conexion("x_bi_sql_view_categoria_metal", "VIRTUAL_CODE", 10)
+
+	Dim filtrado As New ArrayList
+	materiales = MultiValue.List("MAT")
+
+	For Each mt As String In materiales
+
+		If Not filtrado.Contains(mt) Then
+			filtrado.Add(mt)
+		End If
+
+	Next
+
+	MultiValue.List("MAT") = filtrado
+
+
+	Filtro("MAT", "F_MAT")
+
+
+
+End Sub
+
+Sub comprobar_tipo()
+	Dim undo As Transaction
+	undo = ThisApplication.TransactionManager.StartTransaction(ThisDoc.Document, "Comprobar tipos")
+
+	If Parameter("Tipo") = "Madera" Then
+
+		MADERA()
+
+	ElseIf Parameter("Tipo") = "Madera_SQL" Then
+
+		MADERA_SQL()
+
+	ElseIf Parameter("Tipo") = "Azulejo" Then
+
+		AZULEJO()
+
+	ElseIf Parameter("Tipo") = "A32 SQL" Then
+
+		A12_SQL()
+
+	ElseIf Parameter("Tipo") = "A72 SQL" Then
+
+		A72_SQL()
+
+	ElseIf Parameter("Tipo") = "A15 SQL" Then
+
+		A12_SQL()
+
+	ElseIf Parameter("Tipo") = "A12 SQL" Then
+
+		A12_SQL()
+
+	ElseIf Parameter("Tipo") = "Soldadura SQL" Then
+
+		SOLDADURA_SQL()
+
+	ElseIf Parameter("Tipo") = "Tubo RC_SQL" Then
+
+		TUBO_RC_SQL()
+
+	ElseIf Parameter("Tipo") = "Tubo O_SQL" Then
+
+		TUBO_O_SQL()
+
+
+	ElseIf Parameter("Tipo") = "Chapa_SQL" Then
+
+		CHAPA_SQL()
+
+	ElseIf Parameter("Tipo") = "Chapa" Then
+
+		CHAPA()
+
+	ElseIf Parameter("Tipo") = "Tubo redondo" Then
+
+		TUBO_REDONDO()
+
+	ElseIf Parameter("Tipo") = "Macizo redondo" Then
+
+		MACIZO_REDONDO()
+
+	ElseIf Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+
+		TUBO_RECTANGULAR()
+
+	ElseIf Parameter("Tipo") = "Iluminacion" Then
+
+		ILUMINACION()
+
+	ElseIf Parameter("Tipo") = "Rotulacion" Then
+
+		ROTULACION()
+
+	ElseIf Parameter("Tipo") = "Herraje" Then
+
+		HERRAJE()
+
+	ElseIf Parameter("Tipo") = "Cristal/Metacrilato" Then
+
+		A80()
+
+	ElseIf Parameter("Tipo") = "Textil" Then
+
+		TEXTIL()
+
+	ElseIf Parameter("Tipo") = "A00 SQL" Then
+
+		A00_SQL()
+
+	ElseIf Parameter("Tipo") = "A00" Then
+
+		A00()
+
+	ElseIf Parameter("Tipo") = "A12" Then
+
+		A12()
+
+	ElseIf Parameter("Tipo") = "A15" Then
+
+		A15()
+
+	ElseIf Parameter("Tipo") = "A32" Then
+
+		A32()
+
+	ElseIf Parameter("Tipo") = "Encolado SQL" Then
+
+		ENCOLADO_SQL()
+
+	ElseIf Parameter("Tipo") = "Encolado" Then
+
+		ENCOLADO()
+
+	ElseIf Parameter("Tipo") = "Soldadura" Then
+
+		SOLDADURA()
+
+	End If
+
+	undo.End
+
+End Sub
+
+Sub peso_ens()
+
+	Dim oDoc As AssemblyDocument = ThisDoc.Document
+	Dim oDef As AssemblyComponentDefinition = oDoc.ComponentDefinition
+	Dim oCs As ComponentOccurrences = oDef.Occurrences
+	Dim PESO_TOTAL As Double = 0
+
+	iProperties.Value("Custom", "PESO") = PESO_TOTAL
+	For Each oC As ComponentOccurrence In oCs
+		Try
+
+			PES = CDbl(iProperties.Value(oC.Name, "Custom", "PESO"))
+			PESO_TOTAL += CDbl(PES)
+		Catch
+		End Try
+
+
+	Next
+	'Logger.Info(PESO_TOTAL)
+	iProperties.Value("Custom", "PESO") = PESO_TOTAL
+End Sub
+
+Sub medidas_ens()
+
+	Dim odoc As AssemblyDocument
+	odoc = ThisApplication.ActiveDocument
+	Dim vX, vXmax, vXmin As Double
+	Dim vy, vYmax, vYmin As Double
+	Dim vz, vZmax, vZmin As Double
+
+	vXmax = odoc.ComponentDefinition.RangeBox.MaxPoint.X
+	vXmin = odoc.ComponentDefinition.RangeBox.MinPoint.X
+
+	vX = vXmax - vXmin
+	vX2 = FormatNumber(vX * 10, 1)
+
+	vYmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Y
+	vYmin = odoc.ComponentDefinition.RangeBox.MinPoint.Y
+
+	vy = vYmax - vYmin
+	vY2 = FormatNumber(vy * 10, 1)
+
+	vZmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Z
+	vZmin = odoc.ComponentDefinition.RangeBox.MinPoint.Z
+
+	vz = vZmax - vZmin
+	vZ2 = FormatNumber(vz * 10, 1)
+
+	parameter("LARGO") = vX2
+	parameter("ANCHO") = vY2
+	parameter("HONDO") = vZ2
+
+
+	VLARGO = parameter("LARGO").Split(",")
+	VANCHO = parameter("ANCHO").Split(",")
+	VHONDO = parameter("HONDO").Split(",")
+
+	If parameter("LARGO") >= 1000 Then
+		iProperties.Value("Custom", "LARGO") = VLARGO(0) & VLARGO(1)
+	Else
+		iProperties.Value("Custom", "LARGO") = Parameter("LARGO")
+	End If
+
+	If parameter("ANCHO") >= 1000 Then
+		iProperties.Value("Custom", "ANCHO") = VANCHO(0) & VANCHO(1)
+	Else
+		iProperties.Value("Custom", "ANCHO") = parameter("ANCHO")
+	End If
+
+	If parameter("HONDO") >= 1000 Then
+		iProperties.Value("Custom", "HONDO") = VHONDO(0) & VHONDO(1)
+	Else
+		iProperties.Value("Custom", "HONDO") = parameter("HONDO")
+	End If
+
+
+End Sub
+
+Sub color_ens()
+
+	Valor_color("COL1", "COL_CODE1")
+	Valor_color("COL2", "COL_CODE2")
+	Valor_color("COL3", "COL_CODE3")
+
+	iProperties.Value("Custom", "ACABADO_1") = COL1
+	iProperties.Value("Custom", "ACABADO_2") = COL2
+	iProperties.Value("Custom", "ACABADO_3") = COL3
+
+
+	RuleParametersOutput()
+	InventorVb.DocumentUpdate()
+
+End Sub
+
+Sub model_state_ens()
+
+	MultiValue.UpdateAfterChange = True
+
+	Dim ODOC As AssemblyDocument
+	ODOC = ThisDoc.Document
+	OCOMP = ODOC.ComponentDefinition
+	MODEL_STATES = OCOMP.ModelStates
+
+	Dim undo As Transaction
+	undo = ThisApplication.TransactionManager.StartTransaction(ODOC, "Versión de ensamblaje")
+
+	COL_CODE1 = iProperties.Value("Custom", "COL_CODE1")
+	COL_CODE2 = iProperties.Value("Custom", "COL_CODE2")
+	COL_CODE3 = iProperties.Value("Custom", "COL_CODE3")
+
+	TEMP_CODE = COL_CODE1 & "-" & COL_CODE2 & "-" & COL_CODE3
+
+	ODOO = MultiValue.List("CODE_ODOO")
+	CREADO = False
+
+	For i = 0 To ODOO.Count - 1
+		If ODOO(i) = TEMP_CODE Then
+
+			CODE = MultiValue.List("CODE_CONFIG")
+			CODE_F = CODE(i)
+
+			MODEL_STATES.Item("Principal").Activate
+			CODIGO = ThisDoc.FileName(False)
+
+			VALOR = CODIGO & "." & "000" & CODE_F
+			Try
+				MODEL_STATES.Add(VALOR)
+			Catch
+				i = MessageBox.Show("Esta configuración ya está dada de alta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+				CREADO = True
+				Exit For
+			End Try
+
+			iProperties.Value("Project", "Part Number") = VALOR
+			iLogicVb.RunRule("MEDIDAS")
+			iProperties.Value("Project", "Description") = iProperties.Value("Custom", "LARGO") & "X" & iProperties.Value("Custom", "ANCHO") & "X" & iProperties.Value("Custom", "HONDO")
+
+
+			MODEL_STATES.Item("Principal").Activate
+
+			ODOC.Rebuild2
+			CREADO = True
+			iProperties.Value("Project", "Part Number") = VALOR
+			Exit For
+
+		End If
+
+	Next
+
+	If CREADO = False Then
+		MessageBox.Show("La configuración, no existe." & vbNewLine & vbNewLine & "Dar de alta configuración en Odoo.", "No existe", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1)
+	End If
+
+
+
+End Sub
+
+'Métodos creados
+
+Sub Conexion(tabla As String, iProp As String, campo As Integer)
+
+	Dim Table_ As String = tabla
+	Dim query As String = "SELECT * FROM " & Table_
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+End Sub
+
+Sub Renombra_parametro(antiguo As String, nuevo As String)
+
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+
+	parametros(antiguo).Name = nuevo
+
+End Sub
+
+Sub Filtro(prop As String, prop_filtrada As String)
+
+	array_prop = MultiValue.List(prop)
+	array_fprop = MultiValue.List(prop_filtrada)
+
+	For Each valor In array_prop
+		If array_fprop.Contains(valor) Then
+		Else
+
+			array_fprop.Add(valor)
+		End If
+	Next
+
+	MultiValue.List(prop_filtrada) = array_fprop
+
+
+End Sub
+
+Sub comprobar(nombre As String)
+
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+
+	Dim parametro As Parameter
+	Dim Existe As Boolean
+	Existe = False
+	For Each Parametro In parametros
+		If parametro.name = nombre Then
+			Existe = True
+		End If
+	Next
+
+	If Existe = True Then
+		parametros.Item(nombre).Delete
+	End If
+End Sub
+
+Sub parametro(nombre As String, Optional multi As Boolean = True)
+
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, "", kTextUnits)
+
+	If multi = True Then
+		MultiValue.SetList(nombre, "")
+	End If
+
+End Sub
+
+Sub parametro_ens(nombre As String, Optional multi As Boolean = True)
+
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, "", kTextUnits)
+
+	If multi = True Then
+		MultiValue.SetList(nombre, "")
+	End If
+
+End Sub
+
+Sub parametro_bool(nombre As String)
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, False, kBooleanUnits)
+
+End Sub
+
+Sub parametro_bool_ens(nombre As String)
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, False, kBooleanUnits)
+
+End Sub
+
+Sub parametro_unidad(nombre As String, unidades As String)
+
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, 0, unidades)
+
+End Sub
+
+Sub parametro_unidad_ens(nombre As String, unidades As String)
+
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+
+	parametros = ocompdef.Parameters
+	parametros.UserParameters.AddByValue(nombre, 0, unidades)
+
+End Sub
+
+Sub iprop(nombre As String)
+
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	Dim oDef As PartComponentDefinition
+	oDef = oDoc.ComponentDefinition
+
+	oCustom = oDoc.PropertySets("Inventor User Defined Properties")
+
+	Try
+		valor = oCustom.Item(nombre).PropId
+	Catch
+		oCustom.Add("", nombre)
+	End Try
+
+	iProperties.Value("Custom", nombre) = ""
+End Sub
+
+Sub iprop_ens(nombre As String)
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+
+	Dim oDef As AssemblyComponentDefinition
+	oDef = oDoc.ComponentDefinition
+
+	oCustom = oDoc.PropertySets("Inventor User Defined Properties")
+
+	Try
+		valor = oCustom.Item(nombre).PropId
+	Catch
+		oCustom.Add("", nombre)
+	End Try
+
+	iProperties.Value("Custom", nombre) = ""
+End Sub
+
+Sub ipropbool(nombre As String)
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+	Dim oDef As PartComponentDefinition
+	oDef = oDoc.ComponentDefinition
+
+	oCustom = oDoc.PropertySets("Inventor User Defined Properties")
+
+	Try
+		valor = oCustom.Item(nombre).PropId
+
+	Catch
+		oCustom.Add(False, nombre)
+		'iProperties.Value("Custom", nombre) = False
+	End Try
+
+End Sub
+
+Sub ipropbool_ens(nombre As String)
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+	Dim oDef As AssemblyComponentDefinition
+	oDef = oDoc.ComponentDefinition
+
+	oCustom = oDoc.PropertySets("Inventor User Defined Properties")
+
+	Try
+		valor = oCustom.Item(nombre).PropId
+
+	Catch
+		oCustom.Add(False, nombre)
+		'iProperties.Value("Custom", nombre) = False
+	End Try
+
+End Sub
+
+Sub Borrar_todo()
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	Dim att As PropertySet
+	iProperties.Value("Summary", "Subject") = Parameter("INS_LARGO")
+	att = oDoc.PropertySets.Item("Inventor User Defined Properties")
+
+	Dim prop As Inventor.Property
+
+	For Each prop In att
+		prop.Delete
+	Next
+
+End Sub
+
+Sub Borrar_todo_Ens()
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+
+	Dim att As PropertySet
+	att = oDoc.PropertySets.Item("Inventor User Defined Properties")
+
+	Dim prop As Inventor.Property
+
+	For Each prop In att
+		prop.Delete
+	Next
+
+End Sub
+
+Sub existe(prop As String)
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+	Dim att As PropertySet
+	att = oDoc.PropertySets.Item("Inventor User Defined Properties")
+
+	Try
+		valor = att(prop).PropId
+
+	Catch
+
+	End Try
+
+End Sub
+
+Sub exp_param(nombre As String)
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+	ocompdef = oDoc.ComponentDefinition
+
+	Dim parametros As UserParameters
+	parametros = ocompdef.Parameters.UserParameters
+
+	par = parametros(nombre)
+
+	par.ExposedAsProperty() = True
+	par.CustomPropertyFormat.PropertyType = CustomPropertyTypeEnum.kTextPropertyType
+	par.CustomPropertyFormat.Units = "mm"
+	par.CustomPropertyFormat.ShowTrailingZeros = True
+	par.CustomPropertyFormat.ShowLeadingZeros = True
+	par.CustomPropertyFormat.Precision = CustomPropertyPrecisionEnum.kOneDecimalPlacePrecision
+	par.CustomPropertyFormat.ShowUnitsString = False
+
+End Sub
+
+Function divide()
+	Dim odoc As Document
+	odoc = ThisDoc.Document
+
+
+
+	Dim nombre As String
+	nombre = ThisDoc.FileName(False)
+
+	Dim VALORES() As String
+	VALORES = nombre.Split(".")
+	If odoc.SubType = "{4D29B490-49B2-11D0-93C3-7E0706000000}" Then
+		If VALORES(0) = "A10" Then
+			nombre_nuevo = VALORES(0) & ".0" & VALORES(1)
+
+		Else If VALORES(0) = "B10" Then
+		nombre_nuevo = "A10.1" & VALORES(1)
+
+	Else
+
+		nombre_nuevo = VALORES(0) & ".0" & VALORES(1)
+
+	End If
+	ElseIf odoc.SubType = "{E60F81E1-49B3-11D0-93C3-7E0706000000}" Then
+
+		If VALORES(0) = "A30" Then
+			nombre_nuevo = VALORES(0) & ".0" & VALORES(1)
+
+		Else If VALORES(0) = "B30" Then
+
+		nombre_nuevo = "A30.1" & VALORES(1)
+
+
+	Else
+
+		nombre_nuevo = VALORES(0) & ".0" & VALORES(1)
+
+	End If
+
+	End If
+
+	Return nombre_nuevo
+
+End Function
+
+Function carpeta_guardado()
+
+	' Define folder browse dialog
+	Dim Dialog = New FolderBrowserDialog()
+
+	' Set options for folder browser dialog
+	Dialog.SelectedPath = ThisDoc.Path
+	Dialog.ShowNewFolderButton = True
+	Dialog.Description = "Seleccionar carpeta"
+
+	Dialog.ShowDialog()
+
+	save_path = Dialog.SelectedPath & "\"
+
+	Return save_path
+
+End Function
+
+Sub desarrollo()
+
+	parameter("LARGO_CHAPA") = Round(SheetMetal.FlatExtentsLength, 1)
+	parameter("ANCHO_CHAPA") = Round(SheetMetal.FlatExtentsWidth, 1)
+
+	ThisApplication.ActiveDocument.Update
+
+
+End Sub
+
+Sub Valor_color(Color As String, codigo As String)
+
+	VALOR1 = MultiValue.List(Color)
+	INDICE1 = VALOR1.IndexOf(Parameter(Color))
+
+	VALOR2 = MultiValue.List("COL_CODE")
+
+	iProperties.Value("Custom", codigo) = VALOR2(INDICE1)
+
+End Sub
+
+Sub valores_CHAPA(nombre As String)
+
+
+	Dim oDoc As PartDocument
+	oDoc = ThisDoc.Document
+
+
+	ocompdef = oDoc.ComponentDefinition
+	parametros = ocompdef.Parameters
+
+	Dim parametro As Parameter
+	Dim existe As Boolean
+	existe = False
+
+	For Each parametro In parametros
+		If parametro.name = nombre Then
+			existe = True
+		End If
+	Next
+
+	If existe = True Then
+		parametros.Item("INS_" & nombre).Delete
+		Renombra_parametro(nombre, "INS_" & nombre)
+	End If
+
+End Sub
+
+Sub exp_param_ens(nombre As String)
+
+	Dim oDoc As AssemblyDocument
+	oDoc = ThisDoc.Document
+
+	Dim ocompdef As AssemblyComponentDefinition
+	ocompdef = oDoc.ComponentDefinition
+
+	Dim parametros As UserParameters
+	parametros = ocompdef.Parameters.UserParameters
+
+	par = parametros(nombre)
+
+	par.ExposedAsProperty() = True
+	par.CustomPropertyFormat.PropertyType = CustomPropertyTypeEnum.kTextPropertyType
+	par.CustomPropertyFormat.Units = "mm"
+	par.CustomPropertyFormat.ShowTrailingZeros = True
+	par.CustomPropertyFormat.ShowLeadingZeros = True
+	par.CustomPropertyFormat.Precision = CustomPropertyPrecisionEnum.kOneDecimalPlacePrecision
+	par.CustomPropertyFormat.ShowUnitsString = False
+
+End Sub

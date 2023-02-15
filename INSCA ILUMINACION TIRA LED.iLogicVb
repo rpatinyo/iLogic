@@ -1,0 +1,10 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+Sub main()
+Parameter("Length")= ThisDoc.Document.ComponentDefinition.Sketches.Item(1).Profiles.Item(1).RegionProperties.Perimeter * 10
+End Sub

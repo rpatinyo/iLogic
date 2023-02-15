@@ -1,0 +1,31 @@
+﻿Parameter("OP_PINTAR") = iProperties.Value("Custom", "pintar")
+
+
+If iProperties.Value("Custom", "pintar") = True Then
+Try
+COLOR_LIST = MultiValue.List("COL")
+COLOR_CODE = MultiValue.List("COL_CODE")
+
+Dim array_filtro As New ArrayList
+
+
+
+COL_IND = COLOR_LIST.IndexOf(PARAMETER("COL"))
+
+PARAMETER("COL_CODE") = COLOR_CODE(COL_IND)
+
+
+iProperties.Value("Custom", "MATERIAL_COLOR") = Parameter("COL")
+iProperties.Value("Custom", "COLOR_CODE") = PARAMETER("COL_CODE") 
+iProperties.Value("Custom", "N_CARAS_PINTADAS") = Parameter("N_CARAS_PINTADAS")
+
+Catch
+End Try
+
+Else
+	iProperties.Value("Custom", "MATERIAL_COLOR") = "CRUDO"
+	iProperties.Value("Custom", "COLOR_CODE") = "I0039Y"
+	iProperties.Value("Custom", "N_CARAS_PINTADAS") = "0"
+End If
+
+iLogicVb.RunExternalRule("INSCA ENCOLADO MEDIDAS")

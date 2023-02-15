@@ -1,0 +1,946 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>APARIENCIA MADERA</Name>
+  <Guid>64886ce1-2b67-4d0b-acba-8a0fe2a7483e</Guid>
+  <SizeConstraints>
+    <MinimumSize>
+      <Width>
+        <Value>840</Value>
+        <Units>Pixel</Units>
+      </Width>
+      <Height>
+        <Value>609</Value>
+        <Units>Pixel</Units>
+      </Height>
+    </MinimumSize>
+    <MaximumSize>
+      <Width>
+        <Value>840</Value>
+        <Units>Pixel</Units>
+      </Width>
+      <Height>
+        <Value>609</Value>
+        <Units>Pixel</Units>
+      </Height>
+    </MaximumSize>
+  </SizeConstraints>
+  <Items>
+    <UiElementSpec xsi:type="ControlTabGroupSpec">
+      <Name>MATERIAL</Name>
+      <Guid>3d105ec1-afcb-49a1-a220-9d18ddbc0341</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>MATERIAL</Name>
+          <Guid>f3cb8799-2157-467c-9b43-7905e9256f79</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 8</Name>
+              <Guid>ce04cafc-9fc9-4f10-812d-26db5c7e9998</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>MATERIAL</Name>
+                  <Guid>138e653c-a52d-4ab6-b7df-71d63601ba83</Guid>
+                  <ToolTip />
+                  <ParameterName>F_MAT</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>FILTRO MATERIAL</Name>
+                  <Guid>33bdf382-4ddf-4dbd-9fd3-0f5edad0d795</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA FILTRO MATERIAL</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA FILTRO MATERIAL.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 9</Name>
+              <Guid>e26b4173-1c3d-48b0-91a2-0326c2ede20a</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>ACABADO</Name>
+                  <Guid>6e2865b7-b74b-49cf-a1b4-8d7b09108e52</Guid>
+                  <ToolTip />
+                  <ParameterName>F_ACABADO</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>FILTRO ACABADO</Name>
+                  <Guid>e608ab66-e5d1-4409-9c50-216289b67315</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA FILTRO ACABADO</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA FILTRO ACABADO.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 10</Name>
+              <Guid>65407d66-3847-4bf0-a3b1-67c163940956</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>ESPESOR</Name>
+                  <Guid>5c8b6dfe-d893-4d71-82b0-0996e4820628</Guid>
+                  <ToolTip />
+                  <ParameterName>F_MEDIDAS_ACA</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>FILTRO MEDIDAS</Name>
+                  <Guid>dae29788-6c71-456a-9115-7baead4a7c3e</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>30</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <Image>
+                    <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                    <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                  </Image>
+                  <TextVisible>false</TextVisible>
+                  <RuleName>INSCA FILTRO MEDIDAS</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA FILTRO MEDIDAS.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 11</Name>
+              <Guid>8da9e9c8-8e66-468c-9952-a61f3861bba3</Guid>
+              <Items>
+                <UiElementSpec xsi:type="TextPropertyControlSpec">
+                  <Name>CODIGO MATERIAL</Name>
+                  <Guid>113bf235-71ff-42c3-a28a-6dc36ae4e191</Guid>
+                  <PropertyName>MATERIAL_CODE</PropertyName>
+                  <PropertySetName>Custom</PropertySetName>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 11</Name>
+          <Guid>00724ffb-542e-4210-9b1b-b60f60a0f828</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>COLOR MATERIAL</Name>
+          <Guid>8b892a4f-cb3c-404c-b83a-a377545ba9b1</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 13</Name>
+              <Guid>63c15878-093a-4100-a711-58a9cb7e1798</Guid>
+              <Items>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 19</Name>
+                  <Guid>128432ef-61e6-485f-abdf-e5313be1f540</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="BooleanPropertyControlSpec">
+                      <Name>PINTAR</Name>
+                      <Guid>3224e3ed-f219-41a4-8ab7-89b68e3dfc46</Guid>
+                      <SizeConstraints>
+                        <MinimumSize>
+                          <Width>
+                            <Value>450</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MinimumSize>
+                        <MaximumSize>
+                          <Width>
+                            <Value>450</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MaximumSize>
+                      </SizeConstraints>
+                      <PropertyName>Pintar</PropertyName>
+                      <PropertySetName>Custom</PropertySetName>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                      <Name>ACTUALIZAR</Name>
+                      <Guid>43636c55-ad5c-4c79-a498-fc6200b06f1d</Guid>
+                      <Image>
+                        <BitmapByteArray />
+                      </Image>
+                      <TextVisible>true</TextVisible>
+                      <RuleName>INSCA PINTURA</RuleName>
+                      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                      <Path>INSCA PINTURA.iLogicVb</Path>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="EmptySpaceSpec">
+                      <Name>Espacio vacío 10</Name>
+                      <Guid>ef2ed668-309f-4bd5-b8bc-6e5e48d63016</Guid>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 14</Name>
+              <Guid>06f00806-20a3-4991-9e9a-4d3249e568dd</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>COLOR MATERIAL</Name>
+                  <Guid>303724f5-5bae-4895-9d95-e3820df0b1b4</Guid>
+                  <ToolTip />
+                  <EnablingParameterName>OP_PINTAR</EnablingParameterName>
+                  <ParameterName>COL</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="EmptySpaceSpec">
+                  <Name>Espacio vacío 12</Name>
+                  <Guid>c6686e4e-5607-40dd-b23a-b1dcbee059a1</Guid>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="MultiValueNumericParameterControlSpec">
+                  <Name>NUMERO CARAS PINTADAS</Name>
+                  <Guid>87527d77-8d2a-4fb8-8ac0-78c051fb1d92</Guid>
+                  <ToolTip />
+                  <EnablingParameterName>OP_PINTAR</EnablingParameterName>
+                  <ParameterName>N_CARAS_PINTADAS</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="EmptySpaceSpec">
+                  <Name>Espacio vacío 3</Name>
+                  <Guid>dd6cd939-15ee-4024-90f5-e23885198c9e</Guid>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 12</Name>
+          <Guid>1e653efc-c0e5-4456-8cb1-f1541370eed4</Guid>
+          <Items>
+            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+              <Name>MALLA</Name>
+              <Guid>72fbe7bc-d83c-4dc0-b45d-60d0757c8d6c</Guid>
+              <ToolTip />
+              <ParameterName>MALLA</ParameterName>
+              <EditControlType>ComboBox</EditControlType>
+              <AllowCustomValues>false</AllowCustomValues>
+              <MinimumItemsToShow>2</MinimumItemsToShow>
+              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 4</Name>
+              <Guid>c675590c-06f8-4ebf-a096-58fa8c06456b</Guid>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlTabGroupSpec">
+      <Name>CANTOS</Name>
+      <Guid>b395a9f9-8eb3-496e-9553-5ea51ced7495</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 15</Name>
+          <Guid>4e47120a-1a5e-45cf-8482-8fdc4bb238ce</Guid>
+          <Items>
+            <UiElementSpec xsi:type="BooleanPropertyControlSpec">
+              <Name>CHAPAR CANTOS</Name>
+              <Guid>29372a6e-b853-4b7e-98ee-f1b37180d90a</Guid>
+              <PropertyName>Chapar_cantos</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>ACTUALIZAR</Name>
+              <Guid>8ec02808-b13e-4e16-8847-8f4c797e9edc</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA PINTURA</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA PINTURA.iLogicVb</Path>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 7</Name>
+              <Guid>0243f3f6-8a47-4b66-9ec7-cc275a0f528f</Guid>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>MATERIAL CANTOS</Name>
+          <Guid>360c068e-ded2-4c97-8348-771d952db22a</Guid>
+          <EnablingParameterName>OP_CHAPAR_CANTOS</EnablingParameterName>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 5</Name>
+              <Guid>8f23d19d-203b-4949-adcb-d7aaa5f5c74c</Guid>
+              <Items>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 6</Name>
+                  <Guid>57a7ff24-7a06-4f18-b7bc-2fb853d56a8b</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>CANTOS LARGO</Name>
+                      <Guid>2a646983-bf89-47e2-b48d-59a0472c652b</Guid>
+                      <ToolTip />
+                      <EnablingParameterName>CHAPADO</EnablingParameterName>
+                      <SizeConstraints>
+                        <MinimumSize>
+                          <Width>
+                            <Value>300</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MinimumSize>
+                        <MaximumSize>
+                          <Width>
+                            <Value>300</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MaximumSize>
+                      </SizeConstraints>
+                      <ParameterName>CANTOS_LARGO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>CANTOS CORTO</Name>
+                      <Guid>7850f3e0-4ea3-4e85-b91c-e5fc18c703a9</Guid>
+                      <ToolTip />
+                      <EnablingParameterName>CHAPADO</EnablingParameterName>
+                      <SizeConstraints>
+                        <MinimumSize>
+                          <Width>
+                            <Value>295</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MinimumSize>
+                        <MaximumSize>
+                          <Width>
+                            <Value>295</Value>
+                            <Units>Pixel</Units>
+                          </Width>
+                          <Height>
+                            <Value>0</Value>
+                            <Units>Em</Units>
+                          </Height>
+                        </MaximumSize>
+                      </SizeConstraints>
+                      <ParameterName>CANTOS_CORTO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 18</Name>
+                  <Guid>5dccde9d-aeba-4676-800d-eeaf57392dcd</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>LONGITUD TOTAL</Name>
+                      <Guid>7edb4c78-297b-4524-8b47-029345003d6d</Guid>
+                      <ToolTip />
+                      <EnablingParameterName>CHAPADO</EnablingParameterName>
+                      <ReadOnly>true</ReadOnly>
+                      <ParameterName>LONG_CANTOS</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="TextPropertyControlSpec">
+                      <Name>CANTOS</Name>
+                      <Guid>877cc3ba-1e55-49b7-9bc1-e67f12f3dd42</Guid>
+                      <ReadOnly>true</ReadOnly>
+                      <PropertyName>NRO_CANTOS</PropertyName>
+                      <PropertySetName>Custom</PropertySetName>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="EmptySpaceSpec">
+                  <Name>Espacio vacío 1</Name>
+                  <Guid>17054b5f-2d56-4a81-b087-2e608055f8fd</Guid>
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>20</Value>
+                        <Units>Pixel</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 4</Name>
+                  <Guid>a576871a-0931-419e-8319-7f2e3e3ed223</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="ControlGroupSpec">
+                      <Name>Grupo 1</Name>
+                      <Guid>a115027f-1375-400b-9f21-a677c7f3279c</Guid>
+                      <Items>
+                        <UiElementSpec xsi:type="ControlRowSpec">
+                          <Name>Fila 1</Name>
+                          <Guid>2aa7c008-d70e-45ea-8ddc-09110a37a0a3</Guid>
+                          <Items>
+                            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                              <Name>MATERIAL CANTOS</Name>
+                              <Guid>4db503ea-59ac-41fc-ac86-4bc1d9796b6b</Guid>
+                              <ToolTip />
+                              <ParameterName>F_MAT_CANTOS</ParameterName>
+                              <EditControlType>ComboBox</EditControlType>
+                              <AllowCustomValues>false</AllowCustomValues>
+                              <MinimumItemsToShow>2</MinimumItemsToShow>
+                              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                            </UiElementSpec>
+                            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                              <Name>MATERIAL CANTOS</Name>
+                              <Guid>153e4c6b-b034-42ce-9193-69ae8f0c5c64</Guid>
+                              <SizeConstraints>
+                                <MinimumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MinimumSize>
+                                <MaximumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MaximumSize>
+                              </SizeConstraints>
+                              <Image>
+                                <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                                <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                              </Image>
+                              <TextVisible>false</TextVisible>
+                              <RuleName>INSCA MADERA MATERIAL CANTOS</RuleName>
+                              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                              <Path>INSCA MADERA MATERIAL CANTOS.iLogicVb</Path>
+                            </UiElementSpec>
+                          </Items>
+                        </UiElementSpec>
+                        <UiElementSpec xsi:type="ControlRowSpec">
+                          <Name>Fila 2</Name>
+                          <Guid>1fffec1d-7974-4f06-b5bd-ba9fb6ad6b8f</Guid>
+                          <Items>
+                            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                              <Name>ACABADO CANTOS</Name>
+                              <Guid>3ee3f0e2-f88a-462d-bead-ab7c1447e164</Guid>
+                              <ToolTip />
+                              <ParameterName>F_ACABADO_CANTOS</ParameterName>
+                              <EditControlType>ComboBox</EditControlType>
+                              <AllowCustomValues>false</AllowCustomValues>
+                              <MinimumItemsToShow>2</MinimumItemsToShow>
+                              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                            </UiElementSpec>
+                            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                              <Name>ACABADO CANTOS</Name>
+                              <Guid>c6f885fe-28b9-4815-9a08-608fc6c8c38d</Guid>
+                              <SizeConstraints>
+                                <MinimumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MinimumSize>
+                                <MaximumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MaximumSize>
+                              </SizeConstraints>
+                              <Image>
+                                <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                                <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                              </Image>
+                              <TextVisible>false</TextVisible>
+                              <RuleName>INSCA MADERA ACABADO CANTOS</RuleName>
+                              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                              <Path>INSCA MADERA ACABADO CANTOS.iLogicVb</Path>
+                            </UiElementSpec>
+                          </Items>
+                        </UiElementSpec>
+                        <UiElementSpec xsi:type="ControlRowSpec">
+                          <Name>Fila 3</Name>
+                          <Guid>15876f60-1c40-461f-964a-3c0072adf5b2</Guid>
+                          <Items>
+                            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                              <Name>MEDIDAS CANTOS</Name>
+                              <Guid>64158899-59b9-4e67-8cfa-00e55c63dae0</Guid>
+                              <ToolTip />
+                              <ParameterName>F_MEDIDAS_ACA_CANTOS</ParameterName>
+                              <EditControlType>ComboBox</EditControlType>
+                              <AllowCustomValues>false</AllowCustomValues>
+                              <MinimumItemsToShow>2</MinimumItemsToShow>
+                              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                            </UiElementSpec>
+                            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                              <Name>MEDIDAS CANTOS</Name>
+                              <Guid>2590435b-af45-45a2-9736-ecc790fdc638</Guid>
+                              <SizeConstraints>
+                                <MinimumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MinimumSize>
+                                <MaximumSize>
+                                  <Width>
+                                    <Value>30</Value>
+                                    <Units>Pixel</Units>
+                                  </Width>
+                                  <Height>
+                                    <Value>20</Value>
+                                    <Units>Pixel</Units>
+                                  </Height>
+                                </MaximumSize>
+                              </SizeConstraints>
+                              <Image>
+                                <FileName>C:\Users\Paco\Desktop\Insca\lupa1.png</FileName>
+                                <BitmapByteArray>iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOvAAADrwBlbxySQAAAd1JREFUOE+9k71LQlEYxq+5uERTY0VFSS1BRNRQOLQ2BAUOjeLUP+DUkC0RJJR9YEVR9qGkeU0LwigjiooyEXLIhkDQJcRSAz+ejueebt28QVH0wAuX9zzPj/O+nMvhj/R/oFgsBpfLBZvNhkgkwrql+hIUj8eh0XSD4zhJ1dVW4+rqmrneJQuKRqMsWAHT9D1uwsDxOTC39IL6Rg09Ozw8Ym5BsqDW1hYoyipx9wA8PQNnlwVsOHNYsAJuH9DeOUhhmUyGJWRA4XCYmhatj3hOASfnBaw7cphbzsGyksf8agHOPRIkHovFwlIyoNnZGWq6JXu9uC5gc/sjRCibG6iq6YBW289SMqCpqUkKOiX7dHjyJZBibfJAbX0XBvr7WEoGFAgEhNHW8qRQAikWvy+MZjJNsJQMqKjmpkZy9TbsHIDC3gALVmE/vX3DFJRIJFjiC5Ber6fGBnUXljbIiLvAlhewk91oeobomd1uZ25BJSCz2UyN0lKS51BOv5VKDh4voX6SBOT3+yUAg8GAUCiE8fExjI6OwOfzIZvNMrdUIiidTkOlUokQtVrNTr4nEWQ0GiW3Kf4mP5EI0ul0FKBQKBAMBln3+xJBqVQKPM8jmUyyzs8kWfZv9Ecg4BV13s00X3781AAAAABJRU5ErkJggg==</BitmapByteArray>
+                              </Image>
+                              <TextVisible>false</TextVisible>
+                              <RuleName>INSCA MADERA MEDIDAS CANTOS</RuleName>
+                              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                              <Path>INSCA MADERA MEDIDAS CANTOS.iLogicVb</Path>
+                            </UiElementSpec>
+                          </Items>
+                        </UiElementSpec>
+                        <UiElementSpec xsi:type="TextPropertyControlSpec">
+                          <Name>MATERIAL_CANTOS</Name>
+                          <Guid>e16f0847-885b-4a68-9492-8e394b2b8547</Guid>
+                          <ReadOnly>true</ReadOnly>
+                          <PropertyName>MATERIAL_CANTOS</PropertyName>
+                          <PropertySetName>Custom</PropertySetName>
+                        </UiElementSpec>
+                      </Items>
+                      <CaptionImage>
+                        <BitmapByteArray />
+                      </CaptionImage>
+                      <BordersVisible>false</BordersVisible>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="SplitterSpec">
+          <Name>Divisor 1</Name>
+          <Guid>21cf794c-ab09-4f67-8fc1-49b5c478e4b1</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 6</Name>
+          <Guid>90048bee-94d0-4d7a-bb89-aa02062ab594</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 17</Name>
+          <Guid>dfa20b78-3c29-4187-b0a1-b716fb506fc2</Guid>
+          <Items>
+            <UiElementSpec xsi:type="BooleanPropertyControlSpec">
+              <Name>PINTAR CANTOS</Name>
+              <Guid>bf1bbb20-c4b5-4bcc-b6ce-2404664da51a</Guid>
+              <SizeConstraints>
+                <MinimumSize>
+                  <Width>
+                    <Value>127</Value>
+                    <Units>Pixel</Units>
+                  </Width>
+                  <Height>
+                    <Value>0</Value>
+                    <Units>Em</Units>
+                  </Height>
+                </MinimumSize>
+                <MaximumSize>
+                  <Width>
+                    <Value>127</Value>
+                    <Units>Pixel</Units>
+                  </Width>
+                  <Height>
+                    <Value>0</Value>
+                    <Units>Em</Units>
+                  </Height>
+                </MaximumSize>
+              </SizeConstraints>
+              <PropertyName>Pintar_cantos</PropertyName>
+              <PropertySetName>Custom</PropertySetName>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>ACTUALIZAR</Name>
+              <Guid>07b62613-ece1-4004-a998-746339e9ad68</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA PINTURA</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA PINTURA.iLogicVb</Path>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 9</Name>
+              <Guid>5bc8fac6-f818-4c2a-b159-00512c1657ea</Guid>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>COLOR CANTOS</Name>
+          <Guid>bf4cea44-a0cb-4c69-ac43-1baf878018fe</Guid>
+          <EnablingParameterName>OP_PINTAR_CANTOS</EnablingParameterName>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 16</Name>
+              <Guid>81e64c2b-0358-4aa9-9328-a14d3aecc34e</Guid>
+              <Items>
+                <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+                  <Name>COLOR CANTOS</Name>
+                  <Guid>a2520752-9cf1-45cb-8ef0-bee045e16fe8</Guid>
+                  <ToolTip />
+                  <SizeConstraints>
+                    <MinimumSize>
+                      <Width>
+                        <Value>420</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>0</Value>
+                        <Units>Em</Units>
+                      </Height>
+                    </MinimumSize>
+                    <MaximumSize>
+                      <Width>
+                        <Value>420</Value>
+                        <Units>Pixel</Units>
+                      </Width>
+                      <Height>
+                        <Value>0</Value>
+                        <Units>Em</Units>
+                      </Height>
+                    </MaximumSize>
+                  </SizeConstraints>
+                  <ParameterName>COL_CANTOS</ParameterName>
+                  <EditControlType>ComboBox</EditControlType>
+                  <AllowCustomValues>false</AllowCustomValues>
+                  <MinimumItemsToShow>2</MinimumItemsToShow>
+                  <RadioGroupColumnCount>1</RadioGroupColumnCount>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="EmptySpaceSpec">
+                  <Name>Espacio vacío 8</Name>
+                  <Guid>bfd2bb5d-0e52-4b36-9e66-145e9d518666</Guid>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 20</Name>
+                  <Guid>88b567b4-43d2-48ae-bfdd-56f29cb88687</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name> CANTOS LARGO</Name>
+                      <Guid>def90f75-7f2c-4d63-9ed2-b5737a85d4bd</Guid>
+                      <ToolTip />
+                      <ParameterName>PINTAR_CANTOS_LARGO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>CANTOS CORTO</Name>
+                      <Guid>15fdd198-dbe6-4181-bb0f-6de4cdc7258e</Guid>
+                      <ToolTip />
+                      <ParameterName>PINTAR_CANTOS_CORTO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="ControlRowSpec">
+                  <Name>Fila 21</Name>
+                  <Guid>e5b4d550-4354-41db-83c3-019536ff20b2</Guid>
+                  <Items>
+                    <UiElementSpec xsi:type="NumericParameterControlSpec">
+                      <Name>SUPERFICIE CANTOS PINTADO</Name>
+                      <Guid>25d5122a-0a96-44ca-b640-bc9b9eada936</Guid>
+                      <ToolTip />
+                      <ReadOnly>true</ReadOnly>
+                      <ParameterName>SUPERFICIE_CANTOS_PINTADO</ParameterName>
+                      <EditControlType>TextBox</EditControlType>
+                      <TrackBarProperties>
+                        <MinimumValue>1</MinimumValue>
+                        <MaximumValue>10</MaximumValue>
+                        <ValueIncrement>1</ValueIncrement>
+                      </TrackBarProperties>
+                    </UiElementSpec>
+                    <UiElementSpec xsi:type="TextPropertyControlSpec">
+                      <Name>CANTOS PINTADO</Name>
+                      <Guid>a28eff96-eec5-471a-ae4c-b856df3f34b0</Guid>
+                      <ReadOnly>true</ReadOnly>
+                      <PropertyName>NRO_CANTOS_PINTADO</PropertyName>
+                      <PropertySetName>Custom</PropertySetName>
+                    </UiElementSpec>
+                  </Items>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>false</BordersVisible>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="SplitterSpec">
+      <Name>Divisor 2</Name>
+      <Guid>835be2d0-43bb-4812-b7ee-c2617cd2b8c5</Guid>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlGroupSpec">
+      <Name>Grupo 2</Name>
+      <Guid>4301f5ad-4e3a-44dd-ae7f-5cd85a99808e</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 7</Name>
+          <Guid>d5ed9b6e-98a3-4185-ab04-42d2dfb4f0c9</Guid>
+          <Items>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>CARA BUENA</Name>
+              <Guid>87cda968-17db-4abb-ab3e-036cb607bf03</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA MADERA CARA BUENA</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA MADERA CARA BUENA.iLogicVb</Path>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>CARA BUENA 2</Name>
+              <Guid>4ccdf735-a1a7-419b-b2a7-ab1998414afb</Guid>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA MADERA CARA BUENA 2</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA MADERA CARA BUENA 2.iLogicVb</Path>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+      <BordersVisible>false</BordersVisible>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>CALCULO DE LONGITUDES Y CANTOS</Name>
+      <Guid>1dbf98b4-703b-4902-9dd6-59538961bd25</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA PINTURA</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA PINTURA.iLogicVb</Path>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlGroupSpec">
+      <Name>Configuración</Name>
+      <Guid>6ae34c94-ed5b-4333-b9c8-d4a4ea765024</Guid>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>CODIGO COLOR</Name>
+          <Guid>74b4ea1a-f2c3-4431-b07c-5d4e4bab1b39</Guid>
+          <ReadOnly>true</ReadOnly>
+          <PropertyName>COLOR_CODE</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>CODIGO CANTOS</Name>
+          <Guid>35417f82-0255-4926-a8bd-bcc46a23a7ec</Guid>
+          <ReadOnly>true</ReadOnly>
+          <PropertyName>P_CANTOS_CODE</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>CODIGO COLOR CANTOS</Name>
+          <Guid>71abacb7-ffd8-48ea-9e21-84f04bdcffb3</Guid>
+          <ReadOnly>true</ReadOnly>
+          <PropertyName>COL_CANTOS_CODE</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+      </Items>
+      <CaptionImage>
+        <BitmapByteArray />
+      </CaptionImage>
+      <BordersVisible>false</BordersVisible>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>Done</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

@@ -1,0 +1,133 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Imports system.Windows.Forms
+
+Sub main
+MED_CANTOS = FormatNumber(CDbl(Left(Parameter("MEDIDAS_CANTOS"), 3)))
+
+If (MED_CANTOS < (Parameter("L3") + 3)) Then
+	MessageBox.Show("MEDIDA DE CANTO SELECCIONADA NO COMPATIBLE CON EL ESPESOR DE LA PIEZA. COMPROBAR MEDIDAS", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+End If
+
+	
+	
+	If (MED_CANTOS > (Parameter("L3") + 3)) Then
+		
+		If ((MED_CANTOS > 16) And ((Parameter("L3") <= 13) And (parameter("L3") >= 10))) Then
+			MessageBox.Show("MEDIDA DE CANTO SELECCIONADA NO COMPATIBLE CON EL ESPESOR DE LA PIEZA. COMPROBAR MEDIDAS", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+		 ElseIf (MED_CANTOS >16) and (MED_CANTOS > (Parameter("L3") + 3))
+			 MessageBox.Show("MEDIDA DE CANTO SELECCIONADA NO COMPATIBLE CON EL ESPESOR DE LA PIEZA. COMPROBAR MEDIDAS", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
+		End If
+	End If
+			
+parameter("TSQL") = "x_bi_sql_view_cantos"
+parameter("PAR") = "CODIGO_CANTOS"
+parameter("CSQL") = "x_codigo"
+parameter("SQL") = " Select x_bi_sql_view_cantos.x_codigo " &
+		"From x_bi_sql_view_cantos " &
+		"Where (((x_bi_sql_view_cantos.x_material)='" & PARAMETER("MATERIAL_CANTOS") & "') AND ((x_bi_sql_view_cantos.x_tipoacabado)='" & PARAMETER("ACABADO_CANTOS") & "') AND ((x_bi_sql_view_cantos.x_medidas)='" & PARAMETER("MEDIDAS_CANTOS") & "'));"
+		
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+parameter("TSQL") = "x_bi_sql_view_cantos"
+parameter("PAR") = "DESCRIPCION_CANTOS"
+parameter("CSQL") = "x_descripcion"
+parameter("SQL") = " Select x_bi_sql_view_cantos.x_descripcion " &
+		"From x_bi_sql_view_cantos " &
+		"Where (((x_bi_sql_view_cantos.x_material)='" & PARAMETER("MATERIAL_CANTOS") & "') AND ((x_bi_sql_view_cantos.x_tipoacabado)='" & PARAMETER("ACABADO_CANTOS") & "') AND ((x_bi_sql_view_cantos.x_medidas)='" & PARAMETER("MEDIDAS_CANTOS") & "'));"
+		
+con3(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+LONGITUD_CANTOS = Parameter("CANTOS_LARGOS_CHA") * (Parameter("L1") / 1000) + (Parameter("L2") / 1000) * Parameter("CANTOS_CORTOS_CHA")
+LONGITUD_CANTOS = FormatNumber(CDbl(LONGITUD_CANTOS), "3", vbFalse)
+iProperties.Value("Custom", "LONGITUD_CANTOS_CHA") = LONGITUD_CANTOS
+
+CL = Parameter("CANTOS_LARGOS_CHA") & "CL+"
+CC = Parameter("CANTOS_CORTOS_CHA") & "CC"
+Parameter("N_CANTOS_CHA") = CL & CC
+iProperties.Value("Custom", "N_CANTOS_CHA") = Parameter("N_CANTOS_CHA")
+
+
+End Sub
+
+
+
+
+Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	
+	iProperties.Value("Custom", "CODIGO_CANTOS") = nombre(0)
+	parameter("CODIGO_CANTOS") = iProperties.Value("Custom", "CODIGO_CANTOS")
+		
+End Sub
+
+Sub con3(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	
+	iProperties.Value("Custom", "DESCRIPCION_CANTOS") = nombre(0)
+	parameter("DESCRIPCION_CANTOS") = iProperties.Value("Custom", "DESCRIPCION_CANTOS")
+		
+End Sub

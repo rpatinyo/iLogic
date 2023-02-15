@@ -1,0 +1,22 @@
+﻿CC = iProperties.Value("Custom", "COLOR_CODE")
+PCC = iProperties.Value("Custom", "P_CANTOS_CODE")
+CCC = iProperties.Value("Custom", "COL_CANTOS_CODE")
+
+VALOR = CC & "-" & PCC & "-" & CCC
+
+CONFIG = MultiValue.List("WOOD_CONFIG")
+CODES = MultiValue.List("WOOD_CONFIG_CODE")
+
+Dim vS As Boolean
+vS = False
+For i=0 To CONFIG.Count-1
+	If CONFIG(i) = VALOR Then
+		vS = True
+	End If
+Next
+
+iProperties.Value("Custom", "VS") = vS
+If vS = False Then
+		MessageBox.Show("La conlfiguración, no existe." & vbNewLine & vbNewLine &  "Dar de alta configuración en Odoo.", "No existe", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1)
+End If
+

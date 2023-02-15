@@ -1,0 +1,25 @@
+﻿If Parameter("Tipo") = "Madera" Then
+	
+iProperties.Value("Custom", "Cortar")= True
+iProperties.Value("Custom", "ERROR_MECANIZADO") = False
+
+'VOL = FormatNumber(CDbl(Parameter("L1")), 5) * FormatNumber(CDbl(Parameter("L1")), 5) * FormatNumber(CDbl(Parameter("L1")), 5)
+VOL = Round(Parameter("L1") * Parameter("L2") * Parameter("L3"), 6)
+
+If Round(VOL_REAL, 6) < Round(VOL, 6) Then
+'If (FormatNumber(CDbl(VOL_REAL), 5) < FormatNumber(CDbl(VOL), 5)) Then
+	iProperties.Value("Custom", "Mecanizar") = True
+	'MessageBox.Show(iProperties.Value("Custom", "Mecanizar"), "Title")
+
+	Else
+		iProperties.Value("Custom", "Mecanizar") = False
+		'MessageBox.Show(iProperties.Value("Custom", "Mecanizar"), "Title")
+End If
+
+
+End If
+
+
+
+
+

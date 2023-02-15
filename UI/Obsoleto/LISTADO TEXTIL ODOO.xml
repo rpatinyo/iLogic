@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FormSpecification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>LISTADO TEXTIL ODOO</Name>
+  <Guid>4bcbebda-cc73-476a-aa95-9a66067baf7d</Guid>
+  <SizeConstraints>
+    <MinimumSize>
+      <Width>
+        <Value>50</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>42</Value>
+        <Units>Em</Units>
+      </Height>
+    </MinimumSize>
+    <MaximumSize>
+      <Width>
+        <Value>50</Value>
+        <Units>Em</Units>
+      </Width>
+      <Height>
+        <Value>42</Value>
+        <Units>Em</Units>
+      </Height>
+    </MaximumSize>
+  </SizeConstraints>
+  <Items>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 2</Name>
+      <Guid>4c3ab3e5-e4c4-42d0-a502-517d4c5255a8</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>DESACTIVAR CONEXIÓN A VAULT</Name>
+          <Guid>42727295-0a87-4625-8fea-b803c389fff2</Guid>
+          <ToolTip>ES NECESARIO DESACTIVAR LA CONEXIÓN A VAULT</ToolTip>
+          <Font>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </Font>
+          <ContentsFont>
+            <FamilyName>Tahoma</FamilyName>
+            <Size>21.75</Size>
+            <Bold>true</Bold>
+            <Italic>false</Italic>
+          </ContentsFont>
+          <Items />
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>CONECTAR A ODOO</Name>
+      <Guid>1543ff0c-8a0c-4e42-8ae4-f6de12854367</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA TEXTIL CONEXION</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA TEXTIL CONEXION.iLogicVb</Path>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 1</Name>
+      <Guid>9a2f2ef8-21b5-4d28-8557-cc3824daa827</Guid>
+      <Items>
+        <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+          <Name>TIPO_TEXTIL</Name>
+          <Guid>bd02cda6-76c5-4ac7-98eb-05505d20b1b1</Guid>
+          <ToolTip />
+          <ParameterName>TIPO_TEXTIL</ParameterName>
+          <EditControlType>ComboBox</EditControlType>
+          <AllowCustomValues>false</AllowCustomValues>
+          <MinimumItemsToShow>2</MinimumItemsToShow>
+          <RadioGroupColumnCount>1</RadioGroupColumnCount>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+          <Name>OK</Name>
+          <Guid>8432c91e-1887-46ea-9c5c-71fdd59e93c9</Guid>
+          <SizeConstraints>
+            <MinimumSize>
+              <Width>
+                <Value>3</Value>
+                <Units>Em</Units>
+              </Width>
+              <Height>
+                <Value>2.344</Value>
+                <Units>Em</Units>
+              </Height>
+            </MinimumSize>
+            <MaximumSize>
+              <Width>
+                <Value>3</Value>
+                <Units>Em</Units>
+              </Width>
+              <Height>
+                <Value>2.344</Value>
+                <Units>Em</Units>
+              </Height>
+            </MaximumSize>
+          </SizeConstraints>
+          <Image>
+            <BitmapByteArray />
+          </Image>
+          <TextVisible>true</TextVisible>
+          <RuleName>INSCA TEXTIL DESCRIPCION</RuleName>
+          <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+          <Path>INSCA TEXTIL DESCRIPCION.iLogicVb</Path>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 5</Name>
+          <Guid>bfacc40f-1dae-432e-b5f8-847630a68593</Guid>
+          <Items>
+            <UiElementSpec xsi:type="MultiValueTextParameterControlSpec">
+              <Name>MODELO</Name>
+              <Guid>75f0c349-ef23-4c2f-88ba-ced2fb3a9a09</Guid>
+              <ToolTip />
+              <ParameterName>DESCRIPCION</ParameterName>
+              <EditControlType>ComboBox</EditControlType>
+              <AllowCustomValues>false</AllowCustomValues>
+              <MinimumItemsToShow>2</MinimumItemsToShow>
+              <RadioGroupColumnCount>1</RadioGroupColumnCount>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+              <Name>OK</Name>
+              <Guid>d7e0173f-213b-434e-ac4d-d5babf925ccb</Guid>
+              <SizeConstraints>
+                <MinimumSize>
+                  <Width>
+                    <Value>3</Value>
+                    <Units>Em</Units>
+                  </Width>
+                  <Height>
+                    <Value>2.344</Value>
+                    <Units>Em</Units>
+                  </Height>
+                </MinimumSize>
+                <MaximumSize>
+                  <Width>
+                    <Value>3</Value>
+                    <Units>Em</Units>
+                  </Width>
+                  <Height>
+                    <Value>2.344</Value>
+                    <Units>Em</Units>
+                  </Height>
+                </MaximumSize>
+              </SizeConstraints>
+              <Image>
+                <BitmapByteArray />
+              </Image>
+              <TextVisible>true</TextVisible>
+              <RuleName>INSCA TEXTIL ESPESOR</RuleName>
+              <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+              <Path>INSCA TEXTIL ESPESOR.iLogicVb</Path>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 6</Name>
+      <Guid>0ccf027b-e043-4d85-9ee1-199c88fedf6d</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlGroupSpec">
+          <Name>DIMENSIONES</Name>
+          <Guid>5d7bf60f-3d33-4ce6-8eeb-a93fe2b5800f</Guid>
+          <Items>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 7</Name>
+              <Guid>ebded58d-bf59-4292-82b3-21e4cd6f7044</Guid>
+              <Items>
+                <UiElementSpec xsi:type="TextPropertyControlSpec">
+                  <Name>L3</Name>
+                  <Guid>a8b4194f-425b-433a-b279-ce7042515748</Guid>
+                  <PropertyName>L3</PropertyName>
+                  <PropertySetName>Custom</PropertySetName>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="NumericParameterControlSpec">
+                  <Name>LARGO</Name>
+                  <Guid>d9b87873-9b6d-4da6-a18f-9748797d5ee3</Guid>
+                  <ToolTip />
+                  <ParameterName>L1</ParameterName>
+                  <EditControlType>TextBox</EditControlType>
+                  <TrackBarProperties>
+                    <MinimumValue>1</MinimumValue>
+                    <MaximumValue>10</MaximumValue>
+                    <ValueIncrement>1</ValueIncrement>
+                  </TrackBarProperties>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="NumericParameterControlSpec">
+                  <Name>ANCHO</Name>
+                  <Guid>73998617-377e-43dd-9026-93065c3edac0</Guid>
+                  <ToolTip />
+                  <ParameterName>L2</ParameterName>
+                  <EditControlType>TextBox</EditControlType>
+                  <TrackBarProperties>
+                    <MinimumValue>1</MinimumValue>
+                    <MaximumValue>10</MaximumValue>
+                    <ValueIncrement>1</ValueIncrement>
+                  </TrackBarProperties>
+                </UiElementSpec>
+                <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+                  <Name>CONFIRMAR DIMENSIONES</Name>
+                  <Guid>8b5e548e-8d2d-4a6c-9f2d-2ef5bab0f57e</Guid>
+                  <Image>
+                    <BitmapByteArray />
+                  </Image>
+                  <TextVisible>true</TextVisible>
+                  <RuleName>INSCA TEXTIL BUSCAR</RuleName>
+                  <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+                  <Path>INSCA TEXTIL BUSCAR.iLogicVb</Path>
+                </UiElementSpec>
+              </Items>
+            </UiElementSpec>
+            <UiElementSpec xsi:type="ControlRowSpec">
+              <Name>Fila 8</Name>
+              <Guid>7d7a5b27-a64f-400a-8c0c-c3e8832b226d</Guid>
+              <Items />
+            </UiElementSpec>
+          </Items>
+          <CaptionImage>
+            <BitmapByteArray />
+          </CaptionImage>
+          <BordersVisible>true</BordersVisible>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 4</Name>
+      <Guid>e857b6f1-c645-41ba-ba7d-89229931c823</Guid>
+      <Items>
+        <UiElementSpec xsi:type="TextPropertyControlSpec">
+          <Name>CODIGO_TEXTIL</Name>
+          <Guid>512d16e6-12be-4a78-873b-3e9caefd17c2</Guid>
+          <PropertyName>CODIGO_TEXTIL</PropertyName>
+          <PropertySetName>Custom</PropertySetName>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="EmptySpaceSpec">
+          <Name>Espacio vacío 2</Name>
+          <Guid>4509d1d1-067e-408f-b9d7-fcec11b218b0</Guid>
+        </UiElementSpec>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 3</Name>
+          <Guid>ffd0d587-06d8-43b1-b03a-2478ed9b8db9</Guid>
+          <Items>
+            <UiElementSpec xsi:type="TextPropertyControlSpec">
+              <Name>DESCRIPCIÓN</Name>
+              <Guid>53b08949-9015-410c-9881-fcf565ed267a</Guid>
+              <PropertyName>Description</PropertyName>
+              <PropertySetName>Project</PropertySetName>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="ControlRowSpec">
+      <Name>Fila 9</Name>
+      <Guid>14079690-b0be-45ac-9dfd-4fa3f7f2c2fb</Guid>
+      <Items>
+        <UiElementSpec xsi:type="ControlRowSpec">
+          <Name>Fila 10</Name>
+          <Guid>d29c2b92-439f-481a-9ef7-ecf374cab615</Guid>
+          <Items>
+            <UiElementSpec xsi:type="EmptySpaceSpec">
+              <Name>Espacio vacío 1</Name>
+              <Guid>e6c4b347-3629-4ce2-b676-1f24d4dea7ee</Guid>
+            </UiElementSpec>
+          </Items>
+        </UiElementSpec>
+      </Items>
+    </UiElementSpec>
+    <UiElementSpec xsi:type="iLogicExternalRuleControlSpec">
+      <Name>INSCA TEXTIL GUARDAR</Name>
+      <Guid>47b00a5e-fe6b-4bfb-8705-6cf0d9adaad5</Guid>
+      <Image>
+        <BitmapByteArray />
+      </Image>
+      <TextVisible>true</TextVisible>
+      <RuleName>INSCA TEXTIL GUARDAR</RuleName>
+      <RuleButtonBehavior>RunRule</RuleButtonBehavior>
+      <Path>INSCA TEXTIL GUARDAR.iLogicVb</Path>
+    </UiElementSpec>
+  </Items>
+  <StyleAndSkinName>
+    <StyleName>Default</StyleName>
+  </StyleAndSkinName>
+  <AllowCustomization>true</AllowCustomization>
+  <PredefinedButtons>None</PredefinedButtons>
+  <Modal>false</Modal>
+</FormSpecification>

@@ -1,0 +1,167 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+
+	parameter("TSQL") = "tipo_pieza"
+	parameter("PAR") = "ABREV_TIPO_PIEZA"
+	parameter("CSQL") = "abreviatura"
+	parameter("SQL") = "Select tipo_pieza.abreviatura " &
+	"From tipo_pieza " &
+	"Where (((tipo_pieza.name)='" & parameter("TIPO_PIEZA") & "'));"
+	con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+	Dim odoc As AssemblyDocument
+	odoc = ThisApplication.ActiveDocument
+	Dim vX, vXmax, vXmin As Double
+	Dim vy, vYmax, vYmin As Double
+	Dim vz, vZmax, vZmin As Double
+	
+	vXmax = odoc.ComponentDefinition.RangeBox.MaxPoint.X
+	vXmin = odoc.ComponentDefinition.RangeBox.MinPoint.X
+	
+	vX = vXmax - vXmin
+	vX2 = FormatNumber(vX * 10, 1)
+	
+	vYmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Y
+	vYmin = odoc.ComponentDefinition.RangeBox.MinPoint.Y
+	
+	vy = vYmax - vYmin
+	vY2 = FormatNumber( vy*10, 1)
+	
+	vZmax = odoc.ComponentDefinition.RangeBox.MaxPoint.Z
+	vZmin = odoc.ComponentDefinition.RangeBox.MinPoint.Z
+	
+	vz = vZmax - vZmin
+	vZ2 = FormatNumber(vz * 10, 1)
+	
+	LARGO = vX2
+	ANCHO = vY2
+	HONDO = vZ2
+	
+	
+	VLARGO = LARGO.Split(",")
+	VANCHO = ANCHO.Split(",")
+	VHONDO = HONDO.Split(",")
+	
+	If LARGO >= 1000 Then
+	iProperties.Value("Custom", "LARGO") = VLARGO(0) & VLARGO(1) 
+	Else
+	iProperties.Value("Custom", "LARGO") = "0" & LARGO
+	End If
+	
+	If ANCHO >= 1000 Then
+	iProperties.Value("Custom", "ANCHO") = VANCHO(0) & VANCHO(1)
+	Else
+	iProperties.Value("Custom", "ANCHO") = "0" & ANCHO
+	End If
+	
+	If HONDO >= 1000 Then
+	iProperties.Value("Custom", "HONDO") = VHONDO(0) & VHONDO(1)
+	Else
+	iProperties.Value("Custom", "HONDO") = "0" & HONDO
+	End If
+	iProperties.Value("Project", "Description") = Parameter("ABREV_TIPO_PIEZA") & " " & iProperties.Value("Custom", "LARGO") & "x" & iProperties.Value("Custom", "ANCHO") & "x" & iProperties.Value("Custom", "HONDO") & "mm"
+
+LA = CDbl(iProperties.Value("Custom", "LARGO"))
+AN = CDbl(iProperties.Value("Custom", "ANCHO"))
+ES = CDbl(iProperties.Value("Custom", "HONDO"))
+
+Dim Dimensiones As New ArrayList
+Dimensiones.Add(LA)
+Dimensiones.Add(AN)
+Dimensiones.Add(ES)
+Dimensiones.Sort
+LA = CDbl(Dimensiones(2))
+AN = CDbl(Dimensiones(1))
+ES = CDbl(Dimensiones(0))
+
+iProperties.Value("Custom", "LARGO") = LA
+iProperties.Value("Custom", "ANCHO") = AN
+iProperties.Value("Custom", "HONDO") = ES
+
+If LA<100 Then
+	iProperties.Value("Custom", "LARGO") = "00" & CDbl(iProperties.Value("Custom", "LARGO")).ToString
+	'iProperties.Value("Custom", "LARGO") = "00" & FormatNumber(LA, 0).ToString
+	ElseIf LA >= 100 And LA <1000 Then
+		iProperties.Value("Custom", "LARGO") = "0" & CDbl(iProperties.Value("Custom", "LARGO")).ToString
+		'iProperties.Value("Custom", "LARGO") = "0" & FormatNumber(LA, 0).ToString
+End If
+
+If AN<100 Then
+	iProperties.Value("Custom", "ANCHO") = "00" & CDbl(iProperties.Value("Custom", "ANCHO")).ToString
+	'iProperties.Value("Custom", "ANCHO") = "00" & FormatNumber(AN,0).ToString
+	ElseIf AN >= 100 And AN <1000 Then
+		iProperties.Value("Custom", "ANCHO") = "0" & CDbl(iProperties.Value("Custom", "ANCHO")).ToString
+		'iProperties.Value("Custom", "ANCHO") = "0" & FormatNumber(AN,0).ToString
+End If
+
+If ES<100 Then
+	iProperties.Value("Custom", "HONDO") = "00" & CDbl(iProperties.Value("Custom", "HONDO")).ToString
+	'iProperties.Value("Custom", "HONDO") = "00" & FormatNumber(ES,0).ToString
+	ElseIf ES >= 100 And ES <1000 Then
+		iProperties.Value("Custom", "HONDO") = "0" & CDbl(iProperties.Value("Custom", "HONDO")).ToString
+		'iProperties.Value("Custom", "HONDO") = "0" & FormatNumber(ES, 0).ToString
+End If
+
+If LA>1000 Then
+	iProperties.Value("Custom", "LARGO") = CDbl(iProperties.Value("Custom", "LARGO")).ToString
+	
+	'iProperties.Value("Custom", "LARGO") = FormatNumber(LA, 0).ToString
+End If
+If AN>1000 Then
+	iProperties.Value("Custom", "ANCHO") = CDbl(iProperties.Value("Custom", "ANCHO")).ToString
+	'iProperties.Value("Custom", "ANCHO") = FormatNumber(AN, 0).ToString
+End If
+If ES>1000 Then
+	iProperties.Value("Custom", "HONDO") = CDbl(iProperties.Value("Custom", "HONDO")).ToString
+	'iProperties.Value("Custom", "HONDO") = FormatNumber(ES, 0).ToString
+End If
+
+iProperties.Value("Project", "Description") = Parameter("ABREV_TIPO_PIEZA") & " " & iProperties.Value("Custom", "LARGO") & "x" & iProperties.Value("Custom", "ANCHO") & "x" & iProperties.Value("Custom", "HONDO") & "mm"
+iProperties.Value("Custom", "DESCRIPCION_PIEZA") = iProperties.Value("Project", "Description")
+iLogicVb.RunExternalRule("INSCA PESO ENSAMBLAJE")
+
+End Sub
+
+Sub con2(tabla As String, iProp As String, campo As String, BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+
+
+	'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_)
+
+
+	cnn.Open()
+	Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds, tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+
+		nombre.Add(row(campo))
+
+	Next
+
+	MultiValue.List(iProp) = nombre
+
+	iProperties.Value("Custom", "ABREV_TIPO_PIEZA") = nombre(0)
+	parameter("ABREV_TIPO_PIEZA") = iProperties.Value("Custom", "ABREV_TIPO_PIEZA")
+
+End Sub

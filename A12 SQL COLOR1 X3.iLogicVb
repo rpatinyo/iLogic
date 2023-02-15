@@ -1,0 +1,13 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+PARAMETER("COLOR_MATERIAL_2") = PARAMETER("COLOR_MATERIAL")
+PARAMETER("COLOR_MATERIAL_3") = PARAMETER("COLOR_MATERIAL")
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+iLogicVb.RunExternalRule("A12 SQL CODIGO COLOR MATERIAL")
+

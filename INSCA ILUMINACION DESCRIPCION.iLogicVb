@@ -1,0 +1,60 @@
+﻿AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.Data
+Sub main
+parameter("TSQL") = "x_bi_sql_view_iluminacion"
+parameter("PAR") = "DESCRIPCION"
+parameter("CSQL") = "x_descripcion"
+parameter("FILTRO") = "x_material"
+parameter("SQL") = "Select " & parameter("TSQL") & "." & parameter("CSQL") & " " &
+"From " & parameter("TSQL") & " " &
+"Where (" & parameter("TSQL") & "." & parameter("FILTRO") & " ='" & parameter("TIPO_ILUMINACION") & "')" &
+"Order by (" & parameter("TSQL") & "." & parameter("FILTRO") & ") ASC;"
+
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+	iProperties.Value("Custom", "TIPO_ILUMINACION") = Parameter("TIPO_ILUMINACION")
+End Sub
+
+
+
+
+Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	iProperties.Value("Custom", "DESCRIPCION") = parameter("DESCRIPCION")
+	
+	'iLogicVb.RunRule("CONEXION_CÓDIGO")
+End Sub
+
+

@@ -1,0 +1,30 @@
+﻿MED = MultiValue.List("ACA_TEMP")
+DE = MultiValue.List("F_DESCRIPCION_ACA")
+CV = MultiValue.List("F_CODIGO_VIRTUAL_MADERA_ACA")
+COD = MultiValue.List("F_CODE_ACA")
+DOD = MultiValue.List("F_DENSIDAD_ODOO_ACA")
+
+'Dim DESC_TEMP As New ArrayList
+'Dim COD_TEMP As New ArrayList
+'Dim DOD_TEMP As New ArrayList
+
+For i = 0 To MED.Count - 1
+	
+	If MED(i) = parameter("F_MEDIDAS_ACA") Then
+
+		iProperties.Value("Custom", "MATERIAL") = DE(i)
+'		iProperties.Value("Custom", "MATERIAL_CODE") = COD(i)
+		iProperties.Value("Custom", "MATERIAL_CODE") = "000"
+		iProperties.Value("Custom", "CODIGO_VIRTUAL") = CV(i)
+		iProperties.Value("Custom", "DENSIDAD_ODOO") = DOD(i)
+		
+	End If
+Next
+
+iLogicVb.RunExternalRule("INSCA ENCOLADO MEDIDAS")
+
+
+RuleParametersOutput()
+InventorVb.DocumentUpdate()
+
+

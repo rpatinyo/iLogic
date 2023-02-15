@@ -1,0 +1,11 @@
+﻿If Parameter("Tipo") = "Madera" Then
+	iLogicForm.ShowGlobal("APARIENCIA MADERA")
+Else If Parameter("Tipo") = "Chapa" Then
+	iLogicForm.ShowGlobal("APARIENCIA CHAPA")
+Else If Parameter("Tipo") = "Tubo redondo" Then
+	iLogicForm.ShowGlobal("APARIENCIA T. REDONDO")
+Else If Parameter("Tipo") = "Macizo redondo" Then
+	iLogicForm.ShowGlobal("APARIENCIA T. REDONDO")	
+Else If Parameter("Tipo") = "Tubo rectangular/cuadrado" Then
+	iLogicForm.ShowGlobal("APARIENCIA T. RECTANGULAR")
+End If

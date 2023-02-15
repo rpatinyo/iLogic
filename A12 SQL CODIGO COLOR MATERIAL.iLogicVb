@@ -1,0 +1,161 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+iProperties.Value("Custom", "COLOR_MATERIAL") = Parameter("COLOR_MATERIAL")
+iProperties.Value("Custom", "COLOR_MATERIAL_2") = Parameter("COLOR_MATERIAL_2")
+iProperties.Value("Custom", "COLOR_MATERIAL_3") = Parameter("COLOR_MATERIAL_3")
+
+parameter("TSQL") = "x_bi_sql_view_color_madera"
+parameter("PAR") = "CODIGO_COLOR_MATERIAL"
+parameter("CSQL") = "x_codigo"
+parameter("SQL") = "Select x_bi_sql_view_color_madera.x_codigo " &
+		"From x_bi_sql_view_color_madera " &
+		"Where (((x_bi_sql_view_color_madera.x_descripcion)='" & parameter("COLOR_MATERIAL") & "'));"
+
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+parameter("TSQL") = "x_bi_sql_view_color_madera"
+parameter("PAR") = "CODIGO_COLOR_MATERIAL_2"
+parameter("CSQL") = "x_codigo"
+parameter("SQL") = "Select x_bi_sql_view_color_madera.x_codigo " &
+		"From x_bi_sql_view_color_madera " &
+		"Where (((x_bi_sql_view_color_madera.x_descripcion)='" & parameter("COLOR_MATERIAL_2") & "'));"
+
+con3(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+parameter("TSQL") = "x_bi_sql_view_color_madera"
+parameter("PAR") = "CODIGO_COLOR_MATERIAL_3"
+parameter("CSQL") = "x_codigo"
+parameter("SQL") = "Select x_bi_sql_view_color_madera.x_codigo " &
+		"From x_bi_sql_view_color_madera " &
+		"Where (((x_bi_sql_view_color_madera.x_descripcion)='" & parameter("COLOR_MATERIAL_3") & "'));"
+
+con4(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+iLogicVb.RunExternalRule("A12 SQL TABLA A12-A15")
+
+
+End Sub
+
+
+Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	Try
+		iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL") = nombre(0)
+		parameter("CODIGO_COLOR_MATERIAL") = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL")
+	Catch
+	End Try
+	
+End Sub
+
+Sub con3(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	Try
+		iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_2") = nombre(0)
+		parameter("CODIGO_COLOR_MATERIAL_2") = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_2")
+	Catch
+	End Try
+	
+End Sub
+
+Sub con4(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	Try
+		iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_3") = nombre(0)
+		parameter("CODIGO_COLOR_MATERIAL_3") = iProperties.Value("Custom", "CODIGO_COLOR_MATERIAL_3")
+	Catch
+	End Try
+	
+End Sub

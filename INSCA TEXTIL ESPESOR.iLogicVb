@@ -1,0 +1,77 @@
+﻿' <FireOthersImmediately>False</FireOthersImmediately>
+AddReference "System.Data"
+AddReference "System.Core"
+AddReference "System.Xml"
+Imports System.Data.Odbc
+Imports System.Data.OleDb
+Imports System.data
+
+Sub main
+
+parameter("TSQL") = "product_template"
+parameter("PAR") = "L3"
+parameter("CSQL") = "product_thickness"
+parameter("SQL") = "Select product_template.product_thickness " &
+"From (((product_product INNER Join product_template On product_product.product_tmpl_id = product_template.id) INNER Join product_category On product_template.categ_id = product_category.id) INNER Join product_category_category_base On product_category.category_base_id = product_category_category_base.id) INNER Join product_category_material On product_category.categ_material_id = product_category_material.id " &
+"Where (((product_template.name)='" & PARAMETER("DESCRIPCION") & "') AND ((product_category_category_base.name)='TEXTIL') AND ((product_product.active)='1'));"
+		
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+
+If Parameter("VAULT_ID") = "0" Then
+	parameter("TSQL") = "a90_thickness"
+	parameter("PAR") = "L3"
+	parameter("CSQL") = "name"
+	Parameter("SQL") = "Select a90_thickness.name " &
+"From (a90_a90 INNER Join a90_thickness On a90_a90.thickness = a90_thickness.id) INNER Join a90_type On a90_a90.type = a90_type.id " &
+"Where (((a90_a90.name)='" & PARAMETER("DESCRIPCION") & "'));"
+con2(parameter("TSQL"), parameter("PAR"), parameter("CSQL"), parameter("SQL"))
+End If
+
+End Sub
+
+
+Sub con2(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
+
+	Dim Table_ As String = tabla
+	Dim query As String = CType(BUSQUEDA, String)
+	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=172.31.30.244;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+'	Dim MDBConnString_ As String = "DRIVER={PostgreSQL Unicode(x64)};SERVER=mail.insca.com;PORT=5432;DATABASE=base;UID=insca;PWD=insca2021; Persist Security Info=False;"
+	Dim ds As New DataSet
+	
+	
+'	Dim cnn As OleDbConnection = New OleDbConnection(MDBConnString_)
+	Dim cnn As OdbcConnection = New OdbcConnection(MDBConnString_) 
+	
+	
+	cnn.Open()
+    Dim cmd As New OdbcCommand(query, cnn)
+	Dim da As New OdbcDataAdapter(cmd)
+	da.Fill(ds,tabla)
+
+	cnn.Close()
+	Dim t1 As DataTable = ds.Tables(tabla)
+	Dim row As DataRow
+	
+	Dim nombre As New ArrayList
+
+	For Each row In t1.Rows
+		
+     nombre.Add(row(campo))
+
+	Next
+	
+	MultiValue.List(iProp) = nombre
+	
+	If nombre.Count = 0 Then
+		PARAMETER("VAULT_ID") = "0"
+		'iProperties.Value("Custom", "DESCRIPCION_TEXTIL") = ""
+'	iProperties.Value("Custom", "DESCRIPCION_TEXTIL") = nombre(0)
+'	parameter("DESCRIPCION") = iProperties.Value("Custom", "DESCRIPCION_TEXTIL")
+	Else
+		PARAMETER("VAULT_ID") = ""
+		'iProperties.Value("Custom", "DESCRIPCION_TEXTIL") = "HAY"
+		iProperties.Value("Custom", "L3") = nombre(0)
+''	parameter("DESCRIPCION") = iProperties.Value("Custom", "DESCRIPCION_TEXTIL")
+	End If
+	
+End Sub
