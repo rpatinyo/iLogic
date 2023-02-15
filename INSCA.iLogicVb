@@ -489,8 +489,8 @@ Sub conectar_chapa_sql()
 
 	Renombra_parametro("INS_LARGO", "L1")
 	Renombra_parametro("INS_ANCHO", "L2")
-	MessageBox.Show(parameter("INS_HONDO"), "INS_HONDO")
-	MessageBox.Show(parameter("INS_ESPESOR"), "INS_ESPESOR")
+	'MessageBox.Show(parameter("INS_HONDO"), "INS_HONDO")
+	'MessageBox.Show(parameter("INS_ESPESOR"), "INS_ESPESOR")
 	If Parameter("INS_HONDO") > 0 Then
 		Renombra_parametro("INS_HONDO", "L3")
 	Else If Parameter("INS_ESPESOR") > 0
@@ -1096,10 +1096,10 @@ Sub Prop_chapa_sql()
 	parametro("L2_DES_CHAPA")
 	parametro("CODIGO_COLOR_MATERIAL_INVENTOR")
 	parametro("ESPESOR_ORIGINAL")
-	MessageBox.Show(parameter("L3"), "L3")
+	'MessageBox.Show(parameter("L3"), "L3")
 
 	parameter("ESPESOR_ORIGINAL") = Parameter("L3")
-	MessageBox.Show(parameter("ESPESOR_ORIGINAL"), "ESPESOR_ORIGINAL")
+	'MessageBox.Show(parameter("ESPESOR_ORIGINAL"), "ESPESOR_ORIGINAL")
 
 	parametro_bool("OP_PINTAR")
 	parametro_bool("OP_PLEGAR")

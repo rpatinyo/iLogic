@@ -7,9 +7,12 @@ Imports System.Data.OleDb
 Imports System.data
 
 Sub main
+	Try
 	If Parameter("SECCION_MATERIAL") <> Parameter("SECCION_MATERIAL_ORIG") Then
 		MessageBox.Show("LA SECCIÓN SELECCIONADA ES DIFERENTE DE LA ORIGINAL (" & Parameter("SECCION_MATERIAL_ORIG") & ")", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
 	End If
+	Catch
+	End Try
 	parameter("TSQL") = "x_bi_sql_view_categoria_metal"
 	parameter("PAR") = "CODIGO_MATERIAL_VIRTUAL"
 	parameter("CSQL") = "x_codigo"

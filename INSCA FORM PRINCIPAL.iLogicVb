@@ -19,6 +19,7 @@
 		
 	Case "Tubo O_SQL"
 		iLogicVb.RunExternalRule("TUBO R-C SQL TIPO PIEZA")
+		PARAMETER("L1") = CDbl(Parameter("L1"))
 		If Parameter("TIPO_PIEZA") = "" Then
 			Parameter("TIPO_PIEZA") = "0_N#A"
 		End If
@@ -63,6 +64,8 @@
 			iLogicVb.RunExternalRule("CHAPA SQL TIPO MATERIAL")
 			iLogicVb.RunExternalRule("CHAPA SQL DESCRIPCION")
 			iLogicVb.RunExternalRule("CHAPA SQL COLOR MATERIAL")
+			iLogicVb.RunExternalRule("CHAPA SQL ACABADO MATERIAL")
+			iLogicVb.RunExternalRule("CHAPA SQL ESPESOR MATERIAL")
 			iProperties.Value("Custom", "VDS_NumSchm") = "METAL"
 			iLogicForm.ShowGlobal("CHAPA SQL")	
 

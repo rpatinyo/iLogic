@@ -201,10 +201,15 @@ Sub con5(tabla As String, iProp As String,campo As String,BUSQUEDA As String)
 	parameter("DENSIDAD_MATERIAL") = iProperties.Value("Custom", "DENSIDAD_MATERIAL")
 	iProperties.Value("Custom", "ESPESOR_MATERIAL") = Parameter("ESPESOR_MATERIAL")
 	parameter("L3") = FormatNumber(CDbl(Left(iProperties.Value("Custom", "ESPESOR_MATERIAL"),4)), "1", vbFalse)
+	
+	Try
 	If Parameter("L3") <> parameter("ESPESOR_ORIGINAL")
 		ESP_ORIG = Parameter("ESPESOR_ORIGINAL")
 		MessageBox.Show("EL ESPESOR SELECCIONADO ES DIFERENTE DEL ESPESOR ORIGINAL DE LA PIEZA (" & ESP_ORIG & "mm)", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1)
 	End If
+	Catch
+	End Try
+
 	volumen = iProperties.Volume / 1000000000
 	InventorVb.DocumentUpdate()
 	'volumen = Parameter("L1") /1000 * Parameter("L2")/1000 * Parameter("L3")/1000

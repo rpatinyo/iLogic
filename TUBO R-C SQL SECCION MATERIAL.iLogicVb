@@ -7,6 +7,7 @@ Imports System.Data.OleDb
 Imports System.data
 
 Sub main
+	Try
 	If (Parameter("ACABADO_MATERIAL") = "TR" Or Parameter("ACABADO_MATERIAL") = "TC") And parameter("SECCION_MATERIAL_ORIG") = "1mm" Then
 		If Parameter("HONDO") < 100 Then
 			hn = "0" & FormatNumber(CDbl(PARAMETER("HONDO")), "0", vbFalse)
@@ -78,7 +79,8 @@ Sub main
 		End If
 		parameter("SECCION_MATERIAL_ORIG") = "Ø" & dia & "mm"
 	End If
-
+Catch
+End Try
 	parameter("TSQL") = "x_bi_sql_view_categoria_metal"
 	parameter("PAR") = "SECCION_MATERIAL"
 	parameter("CSQL") = "x_medidas"
